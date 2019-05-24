@@ -10,8 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
             Guard.AgainstNullOrEmpty(appName, nameof(appName));
             Guard.AgainstNullOrEmpty(seqUrl, nameof(seqUrl));
             Guard.AgainstNull(services, nameof(services));
-            services.AddSingleton(new Poster(seqUrl, apikey));
-            services.AddSingleton(new PayloadBuilder(appName));
+            services.AddSingleton(new Poster(seqUrl, appName, apikey));
         }
     }
 }

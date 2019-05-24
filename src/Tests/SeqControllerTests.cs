@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -9,24 +10,30 @@ public class SeqControllerTests :
     XunitLoggingBase
 {
     [Fact]
-    public Task LogClassic()
+    public Task Log()
     {
         var timestamp = DateTime.Now.ToString("o");
-        var content = $@"
-{{
-  Events:[
-    {{
-      Timestamp: '{timestamp}',
-      MessageTemplate: 'LogClassic test. Property: {{@property1}}',
-      Level: 'Fatal',
-      Properties: {{
-        property1: 'some message'
-      }}
-    }}
-  ]
-}}";
+        var content = $@"{{""@t"":""{timestamp}"",""@mt"":""Hello, {{User}}"",""User"":""The USer""}}";
 
         return WriteAndVerify(content, false);
+    }
+
+    static async Task RawPost(string content, bool compact)
+    {
+        var client = new HttpClient
+        {
+            BaseAddress = new Uri("http://localhost:5341")
+        };
+        client.DefaultRequestHeaders.Add("User-Agent", "TheUserAgent");
+        var httpContent = new StringContent(content, Encoding.UTF8, "application/vnd.serilog.clef");
+        var apiEventsRaw = "/api/events/raw";
+        if (compact)
+        {
+            apiEventsRaw += "?clef";
+        }
+
+        var httpResponseMessage = await client.PostAsync(apiEventsRaw, httpContent);
+        httpResponseMessage.EnsureSuccessStatusCode();
     }
 
     static async Task WriteAndVerify(string content, bool compact)
@@ -38,12 +45,7 @@ public class SeqControllerTests :
             {
                 client.DefaultRequestHeaders.Add("User-Agent", "TheUserAgent");
                 var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-                var apiEventsRaw = "/api/events/raw";
-                if (compact)
-                {
-                    apiEventsRaw += "?clef";
-                }
-                var httpResponseMessage = await client.PostAsync(apiEventsRaw, httpContent);
+                var httpResponseMessage = await client.PostAsync("/api/events/raw", httpContent);
                 httpResponseMessage.EnsureSuccessStatusCode();
             }
             finally

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -14,34 +17,62 @@ namespace SeqWriter
         static byte[] defaultResponse = Encoding.ASCII.GetBytes("{\"MinimumLevelAccepted\":\"Information\"}");
         HttpClient httpClient = new HttpClient();
         string url;
+        SuffixBuilder suffixBuilder;
 
-        public Poster(string seqUrl, string apiKey)
+        public Poster(string seqUrl,string appName, string apiKey)
         {
             url = $"{seqUrl}/api/events/raw?apiKey={apiKey}";
+            suffixBuilder = new SuffixBuilder(appName);
         }
 
-        public async Task Write(string payload, HttpResponse httpResponse)
+        public async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response)
+        {
+            var builder = new StringBuilder();
+            var suffix = suffixBuilder.Build(user, request.GetUserAgent());
+            using (var streamReader = new StreamReader(request.Body))
+            {
+                string line;
+                while ((line = await streamReader.ReadLineAsync()) != null)
+                {
+                    if (string.IsNullOrWhiteSpace(line))
+                    {
+                        throw new Exception();
+                    }
+                    if (line.Last() != '}')
+                    {
+                        throw new Exception();
+                    }
+
+                    builder.Append(line);
+                    builder.Insert(builder.Length - 1, suffix);
+                }
+            }
+
+            await Write(builder.ToString(), response);
+        }
+
+        async Task Write(string payload, HttpResponse response)
         {
             int statusCode;
             byte[] buffer;
             try
             {
-                using (var content = new StringContent(payload, Encoding.UTF8, "application/json"))
-                using (var response = await httpClient.PostAsync(url, content))
+                using (var content = new StringContent(payload, Encoding.UTF8, "application/vnd.serilog.clef"))
+                using (var seqResponse = await httpClient.PostAsync(url, content))
                 {
-                    response.EnsureSuccessStatusCode();
-                    statusCode = (int) response.StatusCode;
-                    buffer = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                    seqResponse.EnsureSuccessStatusCode();
+                    statusCode = (int) seqResponse.StatusCode;
+                    buffer = await seqResponse.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
                 }
             }
             catch (Exception exception)
             {
-                await LogAndWriteDefault(httpResponse, exception);
+                await LogAndWriteDefault(response, exception);
                 return;
             }
 
-            httpResponse.StatusCode = statusCode;
-            await httpResponse.Body.WriteAsync(buffer, 0, buffer.Length).ConfigureAwait(false);
+            response.StatusCode = statusCode;
+            await response.Body.WriteAsync(buffer, 0, buffer.Length).ConfigureAwait(false);
         }
 
         Task LogAndWriteDefault(HttpResponse httpResponse, Exception exception)

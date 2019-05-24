@@ -3,8 +3,8 @@
 public class SeqController :
     BaseSeqController
 {
-    public SeqController(PayloadBuilder payloadBuilder, Poster poster) :
-        base(payloadBuilder, poster)
+    public SeqController(Poster poster) :
+        base(poster)
     {
     }
 }

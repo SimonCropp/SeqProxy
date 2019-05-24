@@ -7,11 +7,11 @@
     <Version>0.1.0</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Copyright $([System.DateTime]::UtcNow.ToString(yyyy)). All rights reserved</Copyright>
-    <PackageTags>NServiceBus, GraphQL</PackageTags>
-    <PackageIconUrl>https://raw.github.com/SimonCropp/Aspose.ApprovalTests/master/icon.png</PackageIconUrl>
-    <PackageProjectUrl>https://github.com/SimonCropp/Aspose.ApprovalTests</PackageProjectUrl>
+    <PackageTags>Seq, Serilog</PackageTags>
+    <PackageIconUrl>https://raw.github.com/SimonCropp/SeqWriter/master/icon.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/SimonCropp/SeqWriter</PackageProjectUrl>
     <PackageOutputPath>..\..\nugets</PackageOutputPath>
-    <Description>NServiceBus.GraphQL.</Description>
+    <Description>Enables writing seq logs by poxying requests through a ASP.NET MVC Controller.</Description>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <AssemblyOriginatorKeyFile>$(SolutionDir)key.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>

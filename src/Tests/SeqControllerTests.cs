@@ -9,7 +9,7 @@ public class SeqControllerTests :
     XunitLoggingBase
 {
     [Fact]
-    public async Task Log()
+    public Task LogClassic()
     {
         var timestamp = DateTime.Now.ToString("o");
         var content = $@"
@@ -17,7 +17,7 @@ public class SeqControllerTests :
   Events:[
     {{
       Timestamp: '{timestamp}',
-      MessageTemplate: 'Seq controller test. Property: {{@property1}}',
+      MessageTemplate: 'LogClassic test. Property: {{@property1}}',
       Level: 'Fatal',
       Properties: {{
         property1: 'some message'
@@ -26,6 +26,11 @@ public class SeqControllerTests :
   ]
 }}";
 
+        return WriteAndVerify(content, false);
+    }
+
+    static async Task WriteAndVerify(string content, bool compact)
+    {
         using (var server = TestServerBuilder.Build())
         using (var client = server.CreateClient())
         {
@@ -33,7 +38,12 @@ public class SeqControllerTests :
             {
                 client.DefaultRequestHeaders.Add("User-Agent", "TheUserAgent");
                 var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-                var httpResponseMessage = await client.PostAsync("/api/events/raw", httpContent);
+                var apiEventsRaw = "/api/events/raw";
+                if (compact)
+                {
+                    apiEventsRaw += "?clef";
+                }
+                var httpResponseMessage = await client.PostAsync(apiEventsRaw, httpContent);
                 httpResponseMessage.EnsureSuccessStatusCode();
             }
             finally
@@ -42,6 +52,7 @@ public class SeqControllerTests :
             }
         }
     }
+
     public SeqControllerTests(ITestOutputHelper output) :
         base(output)
     {

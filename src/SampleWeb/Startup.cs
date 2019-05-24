@@ -14,7 +14,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddMvcCore();
-        services.AddSeqWriter("http://localhost:5341","Sample");
+        services.AddSeqWriter("http://localhost:5341", "Sample", GetType().Assembly.GetName().Version);
     }
 
     public void Configure(IApplicationBuilder builder)

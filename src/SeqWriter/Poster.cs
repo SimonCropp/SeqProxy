@@ -19,10 +19,10 @@ namespace SeqWriter
         string url;
         SuffixBuilder suffixBuilder;
 
-        public Poster(string seqUrl,string appName, string apiKey)
+        public Poster(string seqUrl,string appName, Version version, string apiKey)
         {
             url = $"{seqUrl}/api/events/raw?apiKey={apiKey}";
-            suffixBuilder = new SuffixBuilder(appName);
+            suffixBuilder = new SuffixBuilder(appName,version);
         }
 
         public async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response)

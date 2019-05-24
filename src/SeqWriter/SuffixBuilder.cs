@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Http;
@@ -12,15 +11,15 @@ namespace SeqWriter
     public class SuffixBuilder
     {
         string suffix;
-        public SuffixBuilder(string appName)
+        public SuffixBuilder(string appName, Version version)
         {
             var suffix = new Suffix
             {
                 AppName= appName,
-                AppVersion = Assembly.GetEntryAssembly().GetName().Version.ToString(),
+                AppVersion = version.ToString(),
                 Server = Environment.MachineName,
             };
-            var serialized = JsonConvert.SerializeObject(suffix, Formatting.None);
+            var serialized = suffix.ToJson();
             this.suffix = ", "+ serialized.Substring(1,serialized.Length-2);
         }
 
@@ -36,10 +35,10 @@ namespace SeqWriter
             if (user.Claims.Any())
             {
                 var claims = user.Claims.ToDictionary(x => x.Type, x => x.Value);
-                builder.Append($",\"Claims\":{JObject.FromObject(claims)}");
+                builder.Append($",'Claims':{JObject.FromObject(claims)}");
             }
 
-            builder.Append($",\"UserAgent\":{JsonConvert.SerializeObject(userAgent)}");
+            builder.Append($",'UserAgent':{JsonConvert.SerializeObject(userAgent)}");
             return builder.ToString();
         }
     }

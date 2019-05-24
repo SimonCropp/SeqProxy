@@ -2,7 +2,6 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -13,7 +12,7 @@ public class SeqControllerTests :
     public Task Log()
     {
         var timestamp = DateTime.Now.ToString("o");
-        var content = $@"{{""@t"":""{timestamp}"",""@mt"":""Hello, {{User}}"",""User"":""The USer""}}";
+        var content = $@"{{'@t':'{timestamp}','@mt':'Hello, {{User}}','User':'John'}}";
 
         return WriteAndVerify(content, false);
     }

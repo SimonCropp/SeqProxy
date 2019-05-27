@@ -14,12 +14,12 @@ namespace SeqProxy
 {
     public class SeqWriter
     {
+        IHttpClientFactory httpFactory;
         bool swallowSeqExceptions;
         static ILogger logger = Log.ForContext(typeof(SeqWriter));
         static byte[] defaultResponse = Encoding.UTF8.GetBytes("{\"MinimumLevelAccepted\":\"Information\"}");
         string url;
         PrefixBuilder prefixBuilder;
-        HttpClient httpClient;
 
         internal SeqWriter()
         {
@@ -31,10 +31,10 @@ namespace SeqProxy
             Guard.AgainstNullOrEmpty(appName, nameof(appName));
             Guard.AgainstNullOrEmpty(seqUrl, nameof(seqUrl));
             Guard.AgainstNull(httpFactory, nameof(httpFactory));
+            this.httpFactory = httpFactory;
             this.swallowSeqExceptions = swallowSeqExceptions;
             url = $"{seqUrl}/api/events/raw?apiKey={apiKey}";
             prefixBuilder = new PrefixBuilder(appName, version);
-            httpClient = httpFactory.CreateClient("SeqProxy");
         }
 
         public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response, CancellationToken cancellation)
@@ -71,6 +71,7 @@ namespace SeqProxy
 
         async Task Write(string payload, HttpResponse response, CancellationToken cancellation)
         {
+            var httpClient = httpFactory.CreateClient("SeqProxy");
             try
             {
                 using (var content = new StringContent(payload, Encoding.UTF8, "application/vnd.serilog.clef"))

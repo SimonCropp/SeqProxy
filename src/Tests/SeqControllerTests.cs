@@ -18,6 +18,14 @@ public class SeqControllerTests :
         return WriteAndVerify(content);
     }
 
+    [Fact]
+    public Task LogNoTimestamp()
+    {
+        var content = "{'@mt':'LogNoTimestamp'}";
+
+        return WriteAndVerify(content);
+    }
+
     static async Task RawPost(string content, bool compact)
     {
         var client = new HttpClient

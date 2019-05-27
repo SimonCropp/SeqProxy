@@ -57,6 +57,11 @@ namespace SeqProxy
                     }
 
                     builder.Append(prefix);
+                    if (!line.Contains("\"@t\"") &&
+                        !line.Contains("'@t'"))
+                    {
+                        builder.Append($@"'@t':'{DateTime.UtcNow:o}',");
+                    }
                     builder.Append(line.Substring(1));
                 }
             }

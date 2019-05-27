@@ -8,17 +8,18 @@ namespace SeqProxy
     public abstract class BaseSeqController :
         ControllerBase
     {
-        Poster poster;
+        SeqWriter seqWriter;
 
-        protected BaseSeqController(Poster poster)
+        protected BaseSeqController(SeqWriter seqWriter)
         {
-            this.poster = poster;
+            Guard.AgainstNull(seqWriter, nameof(seqWriter));
+            this.seqWriter = seqWriter;
         }
 
         [HttpPost]
-        public Task Post()
+        public virtual Task Post()
         {
-            return poster.Handle(User,Request, Response);
+            return seqWriter.Handle(User, Request, Response);
         }
     }
 }

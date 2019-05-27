@@ -1,20 +1,62 @@
-# <img src="https://raw.githubusercontent.com/SimonCropp/SeqWriter/master/src/icon.png" height="40px"> SeqWriter
+# <img src="https://raw.githubusercontent.com/SimonCropp/SeqProxy/master/src/icon.png" height="40px"> SeqProxy
+
+An [Asp ApiController](https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller) that accepts incoming log requests and forwards them to [Seq](https://datalust.co/seq).
 
 
+## Why
+
+Avoid exposing the Seq API to the internet.
+
+Leverage [Asp AUthentication and Authorization](https://docs.microsoft.com/en-us/aspnet/core/security/) to verify and control incoming requests.
 
 
-## The NuGet package [![NuGet Status](http://img.shields.io/nuget/v/SeqWriter.svg)](https://www.nuget.org/packages/SeqWriter/)
+## The NuGet package [![NuGet Status](http://img.shields.io/nuget/v/SeqProxy.svg)](https://www.nuget.org/packages/SeqProxy/)
 
-https://nuget.org/packages/SeqWriter/
+https://nuget.org/packages/SeqProxy/
 
-    PM> Install-Package SeqWriter
+    PM> Install-Package SeqProxy
+
+
+## HTTP Format/Protocol
+
+Format: [Serilog compact](https://github.com/serilog/serilog-formatting-compact).
+
+Protocol: [Seq raw events](https://docs.datalust.co/docs/posting-raw-events).
 
 
 ## Usage
 
 
+### Enable in Startup
+
+Enable in `Startup.ConfigureServices`
+
+snippet: ConfigureServices
+
+
+### Implement a Controller
+
+Add a new controller that overrides `BaseSeqController`.
+
+snippet: SimpleController
+
+
+#### Authorization/Authentication
+
+Adding authorization and authentication can be done with an [AuthorizeAttribute](https://docs.microsoft.com/en-us/aspnet/core/security/authorization/simple).
+
+snippet: AuthorizeController
+
+
+### Method level attributes
+
+Method level Asp attributes can by applied by overriding `BaseSeqController.Post`.
+
+For example adding an [exception filter ](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters#exception-filters).
+
+snippet: OverridePostController
 
 
 ## Icon
 
-<a href="http://thenounproject.com/term/swirl/1568686/" target="_blank">Swirl</a> designed by <a href="http://thenounproject.com/creativepriyanka" target="_blank">creativepriyanka</a> from The Noun Project
+<a href="http://thenounproject.com/term/robot/883226/">Robot</a> designed by <a href="https://thenounproject.com/maxim221/">Maxim Kulikov</a> from The Noun Project

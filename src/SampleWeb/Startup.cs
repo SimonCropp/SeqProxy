@@ -11,6 +11,8 @@ public class Startup
 
     public IConfiguration Configuration { get; }
 
+    #region ConfigureServices
+
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddMvcCore();
@@ -19,6 +21,8 @@ public class Startup
             appName: "Sample",
             appVersion: GetType().Assembly.GetName().Version);
     }
+
+    #endregion
 
     public void Configure(IApplicationBuilder builder)
     {

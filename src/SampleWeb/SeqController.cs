@@ -3,8 +3,8 @@
 public class SeqController :
     BaseSeqController
 {
-    public SeqController(Poster poster) :
-        base(poster)
+    public SeqController(SeqWriter seqWriter) :
+        base(seqWriter)
     {
     }
 }

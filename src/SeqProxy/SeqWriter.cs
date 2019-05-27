@@ -11,20 +11,29 @@ using Serilog;
 
 namespace SeqProxy
 {
-    public class Poster
+    public class SeqWriter
     {
         bool swallowSeqExceptions;
-        static ILogger logger = Log.ForContext(typeof(Poster));
+        static ILogger logger = Log.ForContext(typeof(SeqWriter));
         static byte[] defaultResponse = Encoding.UTF8.GetBytes("{\"MinimumLevelAccepted\":\"Information\"}");
-        HttpClient httpClient = new HttpClient();
         string url;
         PrefixBuilder prefixBuilder;
+        HttpClient httpClient;
 
-        public Poster(string seqUrl, string appName, Version version, string apiKey, bool swallowSeqExceptions)
+        internal SeqWriter()
         {
+        }
+
+        public SeqWriter(IHttpClientFactory httpFactory, string seqUrl, string appName, Version version, string apiKey, bool swallowSeqExceptions)
+        {
+            Guard.AgainstEmpty(apiKey, nameof(apiKey));
+            Guard.AgainstNullOrEmpty(appName, nameof(appName));
+            Guard.AgainstNullOrEmpty(seqUrl, nameof(seqUrl));
+            Guard.AgainstNull(httpFactory, nameof(httpFactory));
             this.swallowSeqExceptions = swallowSeqExceptions;
             url = $"{seqUrl}/api/events/raw?apiKey={apiKey}";
             prefixBuilder = new PrefixBuilder(appName, version);
+            httpClient = httpFactory.CreateClient("SeqProxy");
         }
 
         public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response)
@@ -80,4 +89,5 @@ namespace SeqProxy
             }
         }
     }
+
 }

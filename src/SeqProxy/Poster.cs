@@ -19,10 +19,10 @@ namespace SeqProxy
         string url;
         SuffixBuilder suffixBuilder;
 
-        public Poster(string seqUrl,string appName, Version version, string apiKey)
+        public Poster(string seqUrl, string appName, Version version, string apiKey)
         {
             url = $"{seqUrl}/api/events/raw?apiKey={apiKey}";
-            suffixBuilder = new SuffixBuilder(appName,version);
+            suffixBuilder = new SuffixBuilder(appName, version);
         }
 
         public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response)
@@ -53,16 +53,13 @@ namespace SeqProxy
 
         async Task Write(string payload, HttpResponse response)
         {
-            int statusCode;
-            byte[] buffer;
             try
             {
                 using (var content = new StringContent(payload, Encoding.UTF8, "application/vnd.serilog.clef"))
                 using (var seqResponse = await httpClient.PostAsync(url, content))
                 {
-                    seqResponse.EnsureSuccessStatusCode();
-                    statusCode = (int) seqResponse.StatusCode;
-                    buffer = await seqResponse.Content.ReadAsByteArrayAsync();
+                    response.StatusCode =  (int)seqResponse.StatusCode;
+                    await seqResponse.Content.CopyToAsync(response.Body);
                 }
             }
             catch (Exception exception)
@@ -70,9 +67,6 @@ namespace SeqProxy
                 await LogAndWriteDefault(response, exception);
                 return;
             }
-
-            response.StatusCode = statusCode;
-            await response.Body.WriteAsync(buffer, 0, buffer.Length);
         }
 
         Task LogAndWriteDefault(HttpResponse httpResponse, Exception exception)

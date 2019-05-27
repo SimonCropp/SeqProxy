@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using ApprovalTests;
-using SeqWriter;
 using Xunit;
 using Xunit.Abstractions;
 

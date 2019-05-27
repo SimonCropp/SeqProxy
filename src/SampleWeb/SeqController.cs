@@ -1,4 +1,4 @@
-﻿using SeqWriter;
+﻿using SeqProxy;
 
 public class SeqController :
     BaseSeqController

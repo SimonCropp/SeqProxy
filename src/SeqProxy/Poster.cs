@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Serilog;
 
-namespace SeqWriter
+namespace SeqProxy
 {
     public class Poster
     {
@@ -25,7 +25,7 @@ namespace SeqWriter
             suffixBuilder = new SuffixBuilder(appName,version);
         }
 
-        public async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response)
+        public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response)
         {
             var builder = new StringBuilder();
             var suffix = suffixBuilder.Build(user, request.GetUserAgent());

@@ -1,0 +1,3 @@
+﻿, 'AppName':'TheAppName','AppVersion':'1.2','Server':'MACPRO','Claims':{
+  "claimType": "superadmin"
+},'UserAgent':"theUserAgent"

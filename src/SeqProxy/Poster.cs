@@ -13,14 +13,16 @@ namespace SeqProxy
 {
     public class Poster
     {
+        bool swallowSeqExceptions;
         static ILogger logger = Log.ForContext(typeof(Poster));
         static byte[] defaultResponse = Encoding.UTF8.GetBytes("{\"MinimumLevelAccepted\":\"Information\"}");
         HttpClient httpClient = new HttpClient();
         string url;
         PrefixBuilder prefixBuilder;
 
-        public Poster(string seqUrl, string appName, Version version, string apiKey)
+        public Poster(string seqUrl, string appName, Version version, string apiKey, bool swallowSeqExceptions)
         {
+            this.swallowSeqExceptions = swallowSeqExceptions;
             url = $"{seqUrl}/api/events/raw?apiKey={apiKey}";
             prefixBuilder = new PrefixBuilder(appName, version);
         }
@@ -59,22 +61,23 @@ namespace SeqProxy
                 using (var content = new StringContent(payload, Encoding.UTF8, "application/vnd.serilog.clef"))
                 using (var seqResponse = await httpClient.PostAsync(url, content))
                 {
-                    response.StatusCode =  (int)seqResponse.StatusCode;
+                    response.StatusCode = (int)seqResponse.StatusCode;
                     await seqResponse.Content.CopyToAsync(response.Body);
                 }
             }
             catch (Exception exception)
             {
-                await LogAndWriteDefault(response, exception);
-                return;
+                logger.Error(exception, $"Failed to write to Seq: {url}");
+                if (swallowSeqExceptions)
+                {
+                    response.StatusCode = (int) HttpStatusCode.Created;
+                    await response.Body.WriteAsync(defaultResponse, 0, defaultResponse.Length);
+                }
+                else
+                {
+                    throw;
+                }
             }
-        }
-
-        Task LogAndWriteDefault(HttpResponse httpResponse, Exception exception)
-        {
-            logger.Error(exception, $"Failed to write to Seq: {url}");
-            httpResponse.StatusCode = (int) HttpStatusCode.Created;
-            return httpResponse.Body.WriteAsync(defaultResponse, 0, defaultResponse.Length);
         }
     }
 }

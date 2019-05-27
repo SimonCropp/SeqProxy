@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
+[Trait("Category", "Integration")]
 public class SeqControllerTests :
     XunitLoggingBase
 {

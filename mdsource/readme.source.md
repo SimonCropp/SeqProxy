@@ -24,6 +24,17 @@ Format: [Serilog compact](https://github.com/serilog/serilog-formatting-compact)
 Protocol: [Seq raw events](https://docs.datalust.co/docs/posting-raw-events).
 
 
+## Extra data
+
+For every log entry written the following information is appended:
+
+ * The current application name (as `AppName`) defined in code at startup.
+ * The current application version (as `AppVersion`) defined in code at startup.
+ * The server name (as `Server`) using `Environment.MachineName`.
+ * All claims for the current User from `ControllerBase.User.Claims`.
+ * The [user agent header](https://en.wikipedia.org/wiki/User_agent) as `UserAgent`.
+
+
 ## Usage
 
 

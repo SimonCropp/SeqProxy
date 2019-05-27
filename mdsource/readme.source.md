@@ -5,9 +5,9 @@ Enables writing seq logs by proxying requests through an ASP.NET Controller.
 
 ## Why
 
-Avoid exposing the Seq API to the internet.
-
-Leverage [Asp AUthentication and Authorization](https://docs.microsoft.com/en-us/aspnet/core/security/) to verify and control incoming requests.
+ * Avoid exposing the Seq API to the internet.
+ * Leverage [Asp AUthentication and Authorization](https://docs.microsoft.com/en-us/aspnet/core/security/) to verify and control incoming requests.
+ * Append [extra data](#extra-data) to log messages during server processing.
 
 
 ## The NuGet package [![NuGet Status](http://img.shields.io/nuget/v/SeqProxy.svg)](https://www.nuget.org/packages/SeqProxy/)

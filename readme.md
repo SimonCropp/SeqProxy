@@ -6,7 +6,7 @@ To change this file edit the source file and then run MarkdownSnippets.
 -->
 # <img src="https://raw.githubusercontent.com/SimonCropp/SeqProxy/master/src/icon.png" height="30px"> SeqProxy
 
-Enables writing seq logs by poxying requests through an ASP.NET MVC Controller.
+Enables writing seq logs by proxying requests through an ASP.NET Controller.
 
 
 ## Why

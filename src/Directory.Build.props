@@ -11,7 +11,7 @@
     <PackageIconUrl>https://raw.github.com/SimonCropp/SeqProxy/master/icon.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/SimonCropp/SeqProxy</PackageProjectUrl>
     <PackageOutputPath>..\..\nugets</PackageOutputPath>
-    <Description>Enables writing seq logs by poxying requests through an ASP.NET MVC Controller.</Description>
+    <Description>Enables writing seq logs by proxying requests through an ASP.NET Controller.</Description>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <AssemblyOriginatorKeyFile>$(SolutionDir)key.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>

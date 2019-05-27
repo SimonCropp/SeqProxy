@@ -2,38 +2,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <script>
-    function PostToBus() {
-        var message = new Object();
-        message.Property1 = "Property1 Value";
-        message.Property2 = "Property2 Value";
-        var jsonString = JSON.stringify(message);
-
-        var data = new FormData();
-        var files = document.getElementById("files").files;
-        for (var i = 0; i < files.length; i++) {
-            data.append('files[]', files[i], files[i].name);
-        }
-        data.append("message", jsonString);
-
+    function LogMessage() {
         var postSettings = {
             method: 'POST',
             credentials: 'include',
             mode: 'cors',
-            headers: {
-                'MessageType': 'SampleMessage',
-                'MessageNamespace': 'SampleNamespace',
-                'MessageId': uuidv4(),
-                'Destination': 'SampleEndpoint'
-            },
-            body: data
+            body: "{'@mt':'Hello, {User}','User':'John'}",
         };
 
-        return fetch('SendMessage', postSettings);
+        return fetch('/api/events/raw', postSettings);
     }
     </script>
 </head>
 <body>
-    Select files: <input type="file" id="files" multiple /><br />
-    <button onclick="PostToBus()">PostToBus</button>
+    Message: <input type="text" id="message"/><br />
+    <button onclick="LogMessage()">LogMessage</button>
 </body>
 </html>

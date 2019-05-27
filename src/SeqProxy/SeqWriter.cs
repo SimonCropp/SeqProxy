@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Serilog;
@@ -36,7 +37,7 @@ namespace SeqProxy
             httpClient = httpFactory.CreateClient("SeqProxy");
         }
 
-        public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response)
+        public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response, CancellationToken cancellation)
         {
             var builder = new StringBuilder();
             var prefix = prefixBuilder.Build(user, request.GetUserAgent());
@@ -60,15 +61,15 @@ namespace SeqProxy
                 }
             }
 
-            await Write(builder.ToString(), response);
+            await Write(builder.ToString(), response,cancellation);
         }
 
-        async Task Write(string payload, HttpResponse response)
+        async Task Write(string payload, HttpResponse response, CancellationToken cancellation)
         {
             try
             {
                 using (var content = new StringContent(payload, Encoding.UTF8, "application/vnd.serilog.clef"))
-                using (var seqResponse = await httpClient.PostAsync(url, content))
+                using (var seqResponse = await httpClient.PostAsync(url, content, cancellation))
                 {
                     response.StatusCode = (int)seqResponse.StatusCode;
                     await seqResponse.Content.CopyToAsync(response.Body);
@@ -80,7 +81,7 @@ namespace SeqProxy
                 if (swallowSeqExceptions)
                 {
                     response.StatusCode = (int) HttpStatusCode.Created;
-                    await response.Body.WriteAsync(defaultResponse, 0, defaultResponse.Length);
+                    await response.Body.WriteAsync(defaultResponse, 0, defaultResponse.Length, cancellation);
                 }
                 else
                 {

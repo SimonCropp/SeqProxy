@@ -2,10 +2,8 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Web;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace SeqWriter
 {
@@ -32,7 +30,7 @@ namespace SeqWriter
                 builder.Append($",'Claims':{JsonConvert.SerializeObject(claims,Formatting.None)}");
             }
 
-            builder.Append($",'UserAgent':{JsonConvert.SerializeObject(userAgent)}");
+            builder.Append($",'UserAgent':'{userAgent.AsJson()}'");
             return builder.ToString();
         }
     }

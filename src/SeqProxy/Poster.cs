@@ -62,7 +62,7 @@ namespace SeqProxy
                 {
                     seqResponse.EnsureSuccessStatusCode();
                     statusCode = (int) seqResponse.StatusCode;
-                    buffer = await seqResponse.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                    buffer = await seqResponse.Content.ReadAsByteArrayAsync();
                 }
             }
             catch (Exception exception)
@@ -72,7 +72,7 @@ namespace SeqProxy
             }
 
             response.StatusCode = statusCode;
-            await response.Body.WriteAsync(buffer, 0, buffer.Length).ConfigureAwait(false);
+            await response.Body.WriteAsync(buffer, 0, buffer.Length);
         }
 
         Task LogAndWriteDefault(HttpResponse httpResponse, Exception exception)

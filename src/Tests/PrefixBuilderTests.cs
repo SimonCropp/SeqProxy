@@ -20,7 +20,7 @@ public class PrefixBuilderTests :
                 },
                 "Basic"));
         var build = builder.Build(user, "theUserAgent");
-        Approvals.Verify(build);
+        Approvals.Verify(build,s => s.Replace(Environment.MachineName,"TheMachineName"));
     }
 
     public PrefixBuilderTests(ITestOutputHelper output) :

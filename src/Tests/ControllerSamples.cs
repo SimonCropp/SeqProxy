@@ -35,7 +35,8 @@ namespace OverridePostController
     }
 
     #endregion
-    public class CustomExceptionFilterAttribute : ExceptionFilterAttribute
+    public class CustomExceptionFilterAttribute :
+        ExceptionFilterAttribute
     {
     }
 }

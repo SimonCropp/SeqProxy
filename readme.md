@@ -6,7 +6,7 @@ To change this file edit the source file and then run MarkdownSnippets.
 -->
 # <img src="https://raw.githubusercontent.com/SimonCropp/SeqProxy/master/src/icon.png" height="40px"> SeqProxy
 
-An [Asp ApiController](https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller) that accepts incoming log requests and forwards them to [Seq](https://datalust.co/seq).
+Enables writing seq logs by poxying requests through an ASP.NET MVC Controller.
 
 
 ## Why
@@ -87,7 +87,7 @@ public class SeqController :
     }
 }
 ```
-<sup>[snippet source](/src/Tests/ControllerSamples.cs#L45-L55)</sup>
+<sup>[snippet source](/src/Tests/ControllerSamples.cs#L46-L56)</sup>
 <!-- endsnippet -->
 
 

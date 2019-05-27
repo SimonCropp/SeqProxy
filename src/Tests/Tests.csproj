@@ -20,6 +20,6 @@
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.2.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <ProjectReference Include="..\SampleWeb\SampleWeb.csproj" />
-    <ProjectReference Include="..\SeqWriter\SeqWriter.csproj" />
+    <ProjectReference Include="..\SeqProxy\SeqProxy.csproj" />
   </ItemGroup>
 </Project>

@@ -3,16 +3,16 @@ This file was generate by MarkdownSnippets.
 Source File: /mdsource/readme.source.md
 To change this file edit the source file and then re-run the generation using either the dotnet global tool (https://github.com/SimonCropp/MarkdownSnippets#markdownsnippetstool) or using the api (https://github.com/SimonCropp/MarkdownSnippets#running-as-a-unit-test).
 -->
-# <img src="https://raw.githubusercontent.com/SimonCropp/SeqWriter/master/src/icon.png" height="40px"> SeqWriter
+# <img src="https://raw.githubusercontent.com/SimonCropp/SeqProxy/master/src/icon.png" height="40px"> SeqProxy
 
 
 
 
-## The NuGet package [![NuGet Status](http://img.shields.io/nuget/v/SeqWriter.svg)](https://www.nuget.org/packages/SeqWriter/)
+## The NuGet package [![NuGet Status](http://img.shields.io/nuget/v/SeqProxy.svg)](https://www.nuget.org/packages/SeqProxy/)
 
-https://nuget.org/packages/SeqWriter/
+https://nuget.org/packages/SeqProxy/
 
-    PM> Install-Package SeqWriter
+    PM> Install-Package SeqProxy
 
 
 ## Usage

@@ -36,7 +36,7 @@ namespace SeqWriter
             if (user.Claims.Any())
             {
                 var claims = user.Claims.ToDictionary(x => x.Type, x => x.Value);
-                builder.Append($",'Claims':{JObject.FromObject(claims)}");
+                builder.Append($",'Claims':{JsonConvert.SerializeObject(claims,Formatting.None)}");
             }
 
             builder.Append($",'UserAgent':{JsonConvert.SerializeObject(userAgent)}");

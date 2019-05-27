@@ -8,10 +8,10 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Copyright $([System.DateTime]::UtcNow.ToString(yyyy)). All rights reserved</Copyright>
     <PackageTags>Seq, Serilog</PackageTags>
-    <PackageIconUrl>https://raw.github.com/SimonCropp/SeqWriter/master/icon.png</PackageIconUrl>
-    <PackageProjectUrl>https://github.com/SimonCropp/SeqWriter</PackageProjectUrl>
+    <PackageIconUrl>https://raw.github.com/SimonCropp/SeqProxy/master/icon.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/SimonCropp/SeqProxy</PackageProjectUrl>
     <PackageOutputPath>..\..\nugets</PackageOutputPath>
-    <Description>Enables writing seq logs by poxying requests through a ASP.NET MVC Controller.</Description>
+    <Description>Enables writing seq logs by poxying requests through an ASP.NET MVC Controller.</Description>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <AssemblyOriginatorKeyFile>$(SolutionDir)key.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>

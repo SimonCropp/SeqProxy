@@ -5,13 +5,13 @@ using ApprovalTests;
 using Xunit;
 using Xunit.Abstractions;
 
-public class SuffixBuilderTests :
+public class PrefixBuilderTests :
     XunitLoggingBase
 {
     [Fact]
     public void Build()
     {
-        var builder = new SuffixBuilder("TheAppName", new Version(1, 2));
+        var builder = new PrefixBuilder("TheAppName", new Version(1, 2));
         var user = new ClaimsPrincipal(
             new ClaimsIdentity(
                 new List<Claim>
@@ -23,7 +23,7 @@ public class SuffixBuilderTests :
         Approvals.Verify(build);
     }
 
-    public SuffixBuilderTests(ITestOutputHelper output) :
+    public PrefixBuilderTests(ITestOutputHelper output) :
         base(output)
     {
     }

@@ -14,21 +14,21 @@ namespace SeqProxy
     public class Poster
     {
         static ILogger logger = Log.ForContext(typeof(Poster));
-        static byte[] defaultResponse = Encoding.ASCII.GetBytes("{\"MinimumLevelAccepted\":\"Information\"}");
+        static byte[] defaultResponse = Encoding.UTF8.GetBytes("{\"MinimumLevelAccepted\":\"Information\"}");
         HttpClient httpClient = new HttpClient();
         string url;
-        SuffixBuilder suffixBuilder;
+        PrefixBuilder prefixBuilder;
 
         public Poster(string seqUrl, string appName, Version version, string apiKey)
         {
             url = $"{seqUrl}/api/events/raw?apiKey={apiKey}";
-            suffixBuilder = new SuffixBuilder(appName, version);
+            prefixBuilder = new PrefixBuilder(appName, version);
         }
 
         public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response)
         {
             var builder = new StringBuilder();
-            var suffix = suffixBuilder.Build(user, request.GetUserAgent());
+            var prefix = prefixBuilder.Build(user, request.GetUserAgent());
             using (var streamReader = new StreamReader(request.Body))
             {
                 string line;
@@ -36,15 +36,16 @@ namespace SeqProxy
                 {
                     if (string.IsNullOrWhiteSpace(line))
                     {
-                        throw new Exception();
-                    }
-                    if (line.Last() != '}')
-                    {
-                        throw new Exception();
+                        throw new Exception("Blank lines are not allowed.");
                     }
 
-                    builder.Append(line);
-                    builder.Insert(builder.Length - 1, suffix);
+                    if (line.First() != '{')
+                    {
+                        throw new Exception($"Expected first char of line to be a '{{'. Line: {line}");
+                    }
+
+                    builder.Append(prefix);
+                    builder.Append(line.Substring(1));
                 }
             }
 

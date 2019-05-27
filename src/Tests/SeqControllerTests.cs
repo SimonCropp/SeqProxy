@@ -14,7 +14,7 @@ public class SeqControllerTests :
         var timestamp = DateTime.Now.ToString("o");
         var content = $@"{{'@t':'{timestamp}','@mt':'Hello, {{User}}','User':'John'}}";
 
-        return WriteAndVerify(content, false);
+        return WriteAndVerify(content);
     }
 
     static async Task RawPost(string content, bool compact)
@@ -35,7 +35,7 @@ public class SeqControllerTests :
         httpResponseMessage.EnsureSuccessStatusCode();
     }
 
-    static async Task WriteAndVerify(string content, bool compact)
+    static async Task WriteAndVerify(string content)
     {
         using (var server = TestServerBuilder.Build())
         using (var client = server.CreateClient())

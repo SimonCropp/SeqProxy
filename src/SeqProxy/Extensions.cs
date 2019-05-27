@@ -1,8 +1,14 @@
 ﻿using System.Linq;
+using System.Web;
 using Microsoft.AspNetCore.Http;
 
-static class RequestExtensions
+static class Extensions
 {
+    public static string AsJson(this string value)
+    {
+        return HttpUtility.JavaScriptStringEncode(value);
+    }
+
     public static string GetUserAgent(this HttpRequest request)
     {
         if (request.Headers.TryGetValue("User-Agent", out var values))

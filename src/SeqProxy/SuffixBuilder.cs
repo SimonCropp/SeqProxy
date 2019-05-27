@@ -14,14 +14,7 @@ namespace SeqWriter
         string suffix;
         public SuffixBuilder(string appName, Version version)
         {
-            var suffix = new Suffix
-            {
-                AppName= appName,
-                AppVersion = version.ToString(),
-                Server = Environment.MachineName,
-            };
-            var serialized = suffix.ToJson();
-            this.suffix = ", "+ serialized.Substring(1,serialized.Length-2);
+            suffix = $",'AppName':'{appName.AsJson()}','AppVersion':'{version.ToString().AsJson()}','Server':'{Environment.MachineName.AsJson()}'";
         }
 
         public string Build(HttpRequest request, ClaimsPrincipal user)

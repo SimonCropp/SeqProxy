@@ -23,18 +23,18 @@ namespace OverridePostController
     public class SeqController :
         BaseSeqController
     {
-        public SeqController(SeqWriter seqWriter) :
-            base(seqWriter)
-        {
-        }
         [CustomExceptionFilter]
         public override Task Post()
         {
             return base.Post();
         }
+    #endregion
+        public SeqController(SeqWriter seqWriter) :
+            base(seqWriter)
+        {
+        }
     }
 
-    #endregion
     public class CustomExceptionFilterAttribute :
         ExceptionFilterAttribute
     {
@@ -47,11 +47,11 @@ namespace AuthorizeController
     [Authorize]
     public class SeqController :
         BaseSeqController
+    #endregion
     {
         public SeqController(SeqWriter seqWriter) :
             base(seqWriter)
         {
         }
     }
-    #endregion
 }

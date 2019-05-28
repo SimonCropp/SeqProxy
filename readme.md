@@ -93,14 +93,8 @@ Adding authorization and authentication can be done with an [AuthorizeAttribute]
 [Authorize]
 public class SeqController :
     BaseSeqController
-{
-    public SeqController(SeqWriter seqWriter) :
-        base(seqWriter)
-    {
-    }
-}
 ```
-<sup>[snippet source](/src/Tests/ControllerSamples.cs#L46-L56)</sup>
+<sup>[snippet source](/src/Tests/ControllerSamples.cs#L46-L50)</sup>
 <!-- endsnippet -->
 
 
@@ -115,18 +109,13 @@ For example adding an [exception filter ](https://docs.microsoft.com/en-us/aspne
 public class SeqController :
     BaseSeqController
 {
-    public SeqController(SeqWriter seqWriter) :
-        base(seqWriter)
-    {
-    }
     [CustomExceptionFilter]
     public override Task Post()
     {
         return base.Post();
     }
-}
 ```
-<sup>[snippet source](/src/Tests/ControllerSamples.cs#L22-L37)</sup>
+<sup>[snippet source](/src/Tests/ControllerSamples.cs#L22-L31)</sup>
 <!-- endsnippet -->
 
 

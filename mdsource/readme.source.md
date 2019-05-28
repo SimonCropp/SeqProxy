@@ -1,4 +1,4 @@
-# <img src="https://raw.githubusercontent.com/SimonCropp/SeqProxy/master/src/icon.png" height="30px"> SeqProxy
+# <img src="https://raw.githubusercontent.com/SimonCropp/SeqProxy/master/src/icon.png" height="40px"> SeqProxy
 
 Enables writing seq logs by proxying requests through an ASP.NET Controller.
 

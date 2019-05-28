@@ -33,7 +33,9 @@ namespace SeqProxy
             Guard.AgainstNull(httpFactory, nameof(httpFactory));
             this.httpFactory = httpFactory;
             this.swallowSeqExceptions = swallowSeqExceptions;
-            url = $"{seqUrl}/api/events/raw?apiKey={apiKey}";
+            var baseUri = new Uri(seqUrl);
+            var  apiUrl = new Uri(baseUri, "api/events/raw?apiKey={apiKey}");
+            url = apiUrl.ToString();
             prefixBuilder = new PrefixBuilder(appName, version);
         }
 

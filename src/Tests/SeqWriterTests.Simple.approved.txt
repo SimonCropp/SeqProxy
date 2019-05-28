@@ -1,5 +1,5 @@
 ﻿[
   {
-    Body: '{\'AppName\':\'theAppName\',\'AppVersion\':\'1.2\',\'Server\':\'TheMachineName\',\'Claims\':{\'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress\':\'User@foo.bar\',\'http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata\':\'theUserData\'},\'UserAgent\':\'\',\'Referrer\':\'\',\'@t\':\'2019-05-28T12:40:41.3744709+10:00\',\'@mt\':\'Simple Message\'}'
+    Body: '{\'AppName\':\'theAppName\',\'AppVersion\':\'1.2\',\'Server\':\'TheMachineName\',\'Claims\':{\'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress\':\'User@foo.bar\',\'http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata\':\'theUserData\'},\'UserAgent\':\'\',\'Referrer\':\'\',\'@t\':\'2019-05-28\',\'@mt\':\'Simple Message\'}'
   }
 ]

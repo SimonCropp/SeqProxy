@@ -49,6 +49,7 @@ namespace SeqProxy
 
         public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response, CancellationToken cancellation = default)
         {
+            ThrowIfApiKeySpecified(request);
             var builder = new StringBuilder();
             var prefix = prefixBuilder.Build(user, request.GetUserAgent(), request.GetReferer());
             using (var streamReader = new StreamReader(request.Body))
@@ -77,6 +78,19 @@ namespace SeqProxy
             }
 
             await Write(builder.ToString(), response,cancellation);
+        }
+
+        static void ThrowIfApiKeySpecified(HttpRequest request)
+        {
+            if (request.Query.ContainsKey("apiKey"))
+            {
+                throw new Exception("apiKey is not allowed.");
+            }
+
+            if (request.Headers.ContainsKey("X-Seq-ApiKey"))
+            {
+                throw new Exception("apiKey is not allowed.");
+            }
         }
 
         async Task Write(string payload, HttpResponse response, CancellationToken cancellation)

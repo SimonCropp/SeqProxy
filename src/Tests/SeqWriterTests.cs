@@ -17,7 +17,7 @@ public class SeqWriterTests :
     public async Task Multiple()
     {
         var httpFactory = new MockClientFactory();
-        var writer = new SeqWriter(httpFactory, "http://theSeqUrl", "theAppName", new Version(1, 2), "theApiKey", false, s => s);
+        var writer = new SeqWriter(httpFactory, "http://theSeqUrl", "theAppName", new Version(1, 2), "theApiKey", s => s);
         var request = new MockRequest(
             @"{'@t':'2019-05-28','@mt':'Message1'}
 {'@t':'2019-05-29','@mt':'Message2'}");
@@ -34,7 +34,7 @@ public class SeqWriterTests :
     public async Task Simple()
     {
         var httpFactory = new MockClientFactory();
-        var writer = new SeqWriter(httpFactory, "http://theSeqUrl", "theAppName", new Version(1, 2), "theApiKey", false, s => s);
+        var writer = new SeqWriter(httpFactory, "http://theSeqUrl", "theAppName", new Version(1, 2), "theApiKey", s => s);
         var request = new MockRequest("{'@t':'2019-05-28','@mt':'Simple Message'}");
         await writer.Handle(ClaimsBuilder.Build(), request, new MockResponse());
         Verify(httpFactory);
@@ -44,7 +44,7 @@ public class SeqWriterTests :
     public async Task ApiKeyQueryString()
     {
         var httpFactory = new MockClientFactory();
-        var writer = new SeqWriter(httpFactory, "http://theSeqUrl", "theAppName", new Version(1, 2), "theApiKey", false, s => s);
+        var writer = new SeqWriter(httpFactory, "http://theSeqUrl", "theAppName", new Version(1, 2), "theApiKey", s => s);
         var request = new MockRequest("{'@t':'2019-05-28','@mt':'Simple Message'}")
         {
             Query = new QueryCollection(
@@ -63,7 +63,7 @@ public class SeqWriterTests :
     public async Task ApiKeyHeaderString()
     {
         var httpFactory = new MockClientFactory();
-        var writer = new SeqWriter(httpFactory, "http://theSeqUrl", "theAppName", new Version(1, 2), "theApiKey", false, s => s);
+        var writer = new SeqWriter(httpFactory, "http://theSeqUrl", "theAppName", new Version(1, 2), "theApiKey", s => s);
         var request = new MockRequest("{'@t':'2019-05-28','@mt':'Simple Message'}")
         {
             Headers =

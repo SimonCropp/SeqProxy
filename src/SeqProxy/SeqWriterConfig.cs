@@ -28,7 +28,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 provider =>
                 {
                     var httpFactory = provider.GetService<IHttpClientFactory>();
-                    return new SeqWriter(httpFactory, seqUrl, appName, appVersion, apiKey, swallowSeqExceptions, scrubClaimType);
+                    return new SeqWriter(httpFactory, seqUrl, appName, appVersion, apiKey, scrubClaimType);
                 });
         }
     }

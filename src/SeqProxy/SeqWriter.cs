@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
@@ -14,9 +13,7 @@ namespace SeqProxy
     public class SeqWriter
     {
         IHttpClientFactory httpFactory;
-        bool swallowSeqExceptions;
         static ILogger logger = Log.ForContext(typeof(SeqWriter));
-        static byte[] defaultResponse = Encoding.UTF8.GetBytes("{\"MinimumLevelAccepted\":\"Information\"}");
         string url;
         PrefixBuilder prefixBuilder;
 
@@ -30,7 +27,6 @@ namespace SeqProxy
             string appName,
             Version version,
             string apiKey,
-            bool swallowSeqExceptions,
             Func<string, string> scrubClaimType)
         {
             Guard.AgainstEmpty(apiKey, nameof(apiKey));
@@ -39,7 +35,6 @@ namespace SeqProxy
             Guard.AgainstNull(httpFactory, nameof(httpFactory));
             Guard.AgainstNull(scrubClaimType, nameof(scrubClaimType));
             this.httpFactory = httpFactory;
-            this.swallowSeqExceptions = swallowSeqExceptions;
             var baseUri = new Uri(seqUrl);
             var apiUrl = new Uri(baseUri, "api/events/raw?apiKey={apiKey}");
             url = apiUrl.ToString();
@@ -117,15 +112,7 @@ namespace SeqProxy
             catch (Exception exception)
             {
                 logger.Error(exception, $"Failed to write to Seq: {url}");
-                if (swallowSeqExceptions)
-                {
-                    response.StatusCode = (int) HttpStatusCode.Created;
-                    await response.Body.WriteAsync(defaultResponse, 0, defaultResponse.Length, cancellation);
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
         }
     }

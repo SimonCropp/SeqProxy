@@ -4,7 +4,7 @@ const log = structuredLog.configure()
     .writeTo(new structuredLog.ConsoleSink())
     .minLevel(levelSwitch)
     .writeTo(SeqSink({
-        url: "http://localhost:5341",
+        url: "http://localhost:5000",
         compact: true,
         levelSwitch: levelSwitch
     }))

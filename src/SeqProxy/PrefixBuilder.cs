@@ -14,7 +14,7 @@ class PrefixBuilder
         prefix = $"{{'AppName':'{appName.AsJson()}','AppVersion':'{version.ToString().AsJson()}','Server':'{Environment.MachineName.AsJson()}'";
     }
 
-    public string Build(ClaimsPrincipal user, string userAgent)
+    public string Build(ClaimsPrincipal user, string userAgent, string referrer)
     {
         var builder = new StringBuilder(prefix);
         if (user.Claims.Any())
@@ -29,7 +29,7 @@ class PrefixBuilder
             builder.Append("}");
         }
 
-        builder.Append($",'UserAgent':'{userAgent.AsJson()}',");
+        builder.Append($",'UserAgent':'{userAgent.AsJson()}','Referrer':'{referrer.AsJson()}',");
         return builder.ToString();
     }
 }

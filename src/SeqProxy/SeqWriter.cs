@@ -50,7 +50,7 @@ namespace SeqProxy
         public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response, CancellationToken cancellation = default)
         {
             var builder = new StringBuilder();
-            var prefix = prefixBuilder.Build(user, request.GetUserAgent());
+            var prefix = prefixBuilder.Build(user, request.GetUserAgent(), request.GetReferer());
             using (var streamReader = new StreamReader(request.Body))
             {
                 string line;

@@ -20,7 +20,7 @@ namespace SeqProxy
         [HttpPost]
         public virtual Task Post()
         {
-            return seqWriter.Handle(User, Request, Response,HttpContext.RequestAborted );
+            return seqWriter.Handle(User, Request, Response, HttpContext.RequestAborted);
         }
     }
 }

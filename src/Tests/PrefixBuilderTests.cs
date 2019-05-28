@@ -10,7 +10,7 @@ public class PrefixBuilderTests :
     public void Build()
     {
         var builder = new PrefixBuilder("TheAppName", new Version(1, 2),s => s);
-        var build = builder.Build(ClaimsBuilder.Build(), "theUserAgent");
+        var build = builder.Build(ClaimsBuilder.Build(), "theUserAgent", "theReferer");
         Approvals.Verify(build,s => s.Replace(Environment.MachineName,"TheMachineName"));
     }
 

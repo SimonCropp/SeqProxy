@@ -19,6 +19,7 @@ static class Extensions
 
         return null;
     }
+
     public static string GetReferer(this HttpRequest request)
     {
         if (request.Headers.TryGetValue(HeaderNames.Referer, out var values))

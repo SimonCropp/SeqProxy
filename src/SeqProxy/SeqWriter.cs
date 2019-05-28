@@ -39,7 +39,7 @@ namespace SeqProxy
             prefixBuilder = new PrefixBuilder(appName, version);
         }
 
-        public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response, CancellationToken cancellation)
+        public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response, CancellationToken cancellation = default)
         {
             var builder = new StringBuilder();
             var prefix = prefixBuilder.Build(user, request.GetUserAgent());

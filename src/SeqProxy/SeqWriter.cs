@@ -62,7 +62,7 @@ namespace SeqProxy
                         builder.Append($@"'@t':'{DateTime.UtcNow:o}',");
                     }
 
-                    builder.Append(line.Substring(1));
+                    builder.Append(line, 1, line.Length - 1);
                 }
             }
 

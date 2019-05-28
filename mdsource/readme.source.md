@@ -86,15 +86,22 @@ snippet: LogRawJs
 
 In combination with [structured-log-seq-sink](https://github.com/Wedvich/structured-log-seq-sink) it can be used to write to Seq
 
-To use this approach install both [structured-log npm](https://www.npmjs.com/package/structured-log) and [structured-log-seq-sink npm](https://www.npmjs.com/package/structured-log-seq-sink). Or include them from [jsDelivr](https://www.jsdelivr.com/):
+To use this approach:
+
+
+#### Include the libraries
+
+Install both [structured-log npm](https://www.npmjs.com/package/structured-log) and [structured-log-seq-sink npm](https://www.npmjs.com/package/structured-log-seq-sink). Or include them from [jsDelivr](https://www.jsdelivr.com/):
 
 snippet: StructuredLogInclude
 
-Configure the log:
+
+#### Configure the log
 
 snippet: StructuredLogConfig
 
-Write a log message:
+
+#### Write a log message
 
 snippet: StructuredLog
 

@@ -161,7 +161,12 @@ function LogRawJs() {
 
 In combination with [structured-log-seq-sink](https://github.com/Wedvich/structured-log-seq-sink) it can be used to write to Seq
 
-To use this approach install both [structured-log npm](https://www.npmjs.com/package/structured-log) and [structured-log-seq-sink npm](https://www.npmjs.com/package/structured-log-seq-sink). Or include them from [jsDelivr](https://www.jsdelivr.com/):
+To use this approach:
+
+
+#### Include the libraries
+
+Install both [structured-log npm](https://www.npmjs.com/package/structured-log) and [structured-log-seq-sink npm](https://www.npmjs.com/package/structured-log-seq-sink). Or include them from [jsDelivr](https://www.jsdelivr.com/):
 
 <!-- snippet: StructuredLogInclude -->
 ```html
@@ -171,7 +176,8 @@ To use this approach install both [structured-log npm](https://www.npmjs.com/pac
 <sup>[snippet source](/src/SampleWeb/sample.html#L4-L7)</sup>
 <!-- endsnippet -->
 
-Configure the log:
+
+#### Configure the log
 
 <!-- snippet: StructuredLogConfig -->
 ```js
@@ -189,7 +195,8 @@ const log = structuredLog.configure()
 <sup>[snippet source](/src/SampleWeb/sample.js#L1-L14)</sup>
 <!-- endsnippet -->
 
-Write a log message:
+
+#### Write a log message
 
 <!-- snippet: StructuredLog -->
 ```js

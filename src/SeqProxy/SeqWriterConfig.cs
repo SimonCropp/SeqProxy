@@ -12,18 +12,23 @@ namespace Microsoft.Extensions.DependencyInjection
             string appName,
             Version appVersion,
             string apiKey = null,
-            bool swallowSeqExceptions = false)
+            bool swallowSeqExceptions = false,
+            Func<string,string> scrubClaimType = null)
         {
             Guard.AgainstEmpty(apiKey, nameof(apiKey));
             Guard.AgainstNullOrEmpty(appName, nameof(appName));
             Guard.AgainstNullOrEmpty(seqUrl, nameof(seqUrl));
             Guard.AgainstNull(services, nameof(services));
             services.AddHttpClient();
+            if (scrubClaimType == null)
+            {
+                scrubClaimType = s => s;
+            }
             services.AddSingleton(
                 provider =>
                 {
                     var httpFactory = provider.GetService<IHttpClientFactory>();
-                    return new SeqWriter(httpFactory, seqUrl, appName, appVersion, apiKey, swallowSeqExceptions);
+                    return new SeqWriter(httpFactory, seqUrl, appName, appVersion, apiKey, swallowSeqExceptions, scrubClaimType);
                 });
         }
     }

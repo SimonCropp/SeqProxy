@@ -9,7 +9,7 @@ public class PrefixBuilderTests :
     [Fact]
     public void Build()
     {
-        var builder = new PrefixBuilder("TheAppName", new Version(1, 2));
+        var builder = new PrefixBuilder("TheAppName", new Version(1, 2),s => s);
         var build = builder.Build(ClaimsBuilder.Build(), "theUserAgent");
         Approvals.Verify(build,s => s.Replace(Environment.MachineName,"TheMachineName"));
     }

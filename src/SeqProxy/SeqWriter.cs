@@ -25,18 +25,26 @@ namespace SeqProxy
         {
         }
 
-        public SeqWriter(IHttpClientFactory httpFactory, string seqUrl, string appName, Version version, string apiKey, bool swallowSeqExceptions)
+        public SeqWriter(
+            IHttpClientFactory httpFactory,
+            string seqUrl,
+            string appName,
+            Version version,
+            string apiKey,
+            bool swallowSeqExceptions,
+            Func<string,string> scrubClaimType)
         {
             Guard.AgainstEmpty(apiKey, nameof(apiKey));
             Guard.AgainstNullOrEmpty(appName, nameof(appName));
             Guard.AgainstNullOrEmpty(seqUrl, nameof(seqUrl));
             Guard.AgainstNull(httpFactory, nameof(httpFactory));
+            Guard.AgainstNull(scrubClaimType, nameof(scrubClaimType));
             this.httpFactory = httpFactory;
             this.swallowSeqExceptions = swallowSeqExceptions;
             var baseUri = new Uri(seqUrl);
             var  apiUrl = new Uri(baseUri, "api/events/raw?apiKey={apiKey}");
             url = apiUrl.ToString();
-            prefixBuilder = new PrefixBuilder(appName, version);
+            prefixBuilder = new PrefixBuilder(appName, version, scrubClaimType);
         }
 
         public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response, CancellationToken cancellation = default)

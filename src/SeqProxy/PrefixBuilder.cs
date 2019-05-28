@@ -5,10 +5,12 @@ using System.Text;
 
 class PrefixBuilder
 {
+    Func<string, string> scrubClaimType;
     string prefix;
 
-    public PrefixBuilder(string appName, Version version)
+    public PrefixBuilder(string appName, Version version, Func<string, string> scrubClaimType)
     {
+        this.scrubClaimType = scrubClaimType;
         prefix = $"{{'AppName':'{appName.AsJson()}','AppVersion':'{version.ToString().AsJson()}','Server':'{Environment.MachineName.AsJson()}'";
     }
 
@@ -20,7 +22,7 @@ class PrefixBuilder
             builder.Append(",'Claims':{");
             foreach (var claim in user.Claims)
             {
-                builder.Append($"'{claim.Type.AsJson()}':'{claim.Value.AsJson()}',");
+                builder.Append($"'{scrubClaimType(claim.Type).AsJson()}':'{claim.Value.AsJson()}',");
             }
 
             builder.Length -= 1;

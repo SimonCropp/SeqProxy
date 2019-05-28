@@ -1,14 +1,21 @@
 ﻿using System.IO;
 using Microsoft.AspNetCore.Mvc;
 
-public class TestController :
+public class SampleController :
     ControllerBase
 {
     [HttpGet]
-    [Route("test")]
-    public IActionResult Test()
+    [Route("sample")]
+    public IActionResult Sample()
     {
-        var file = Path.Combine(Directory.GetCurrentDirectory(), "test.html");
+        var file = Path.Combine(Directory.GetCurrentDirectory(), "sample.html");
+        return PhysicalFile(file, "text/html");
+    }
+    [HttpGet]
+    [Route("sample.js")]
+    public IActionResult SampleHS()
+    {
+        var file = Path.Combine(Directory.GetCurrentDirectory(), "sample.js");
         return PhysicalFile(file, "text/html");
     }
 }

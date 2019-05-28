@@ -138,7 +138,7 @@ public class SeqController :
 Writing to Seq can be done using a HTTP post:
 
 <!-- snippet: LogRawJs -->
-```html
+```js
 function LogRawJs() {
     const textInput = document.getElementById("textInput").value;
     const postSettings = {
@@ -151,7 +151,7 @@ function LogRawJs() {
     return fetch('/api/events/raw', postSettings);
 }
 ```
-<sup>[snippet source](/src/SampleWeb/test.html#L30-L42)</sup>
+<sup>[snippet source](/src/SampleWeb/sample.js#L22-L34)</sup>
 <!-- endsnippet -->
 
 
@@ -168,13 +168,13 @@ To use this approach install both [structured-log npm](https://www.npmjs.com/pac
 <script src="https://cdn.jsdelivr.net/npm/structured-log@0.2.0/dist/structured-log.js" type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/structured-log-seq-sink@0.4.1/dist/structured-log-seq-sink.js" type="text/javascript"></script>
 ```
-<sup>[snippet source](/src/SampleWeb/test.html#L4-L7)</sup>
+<sup>[snippet source](/src/SampleWeb/sample.html#L4-L7)</sup>
 <!-- endsnippet -->
 
 Configure the log:
 
 <!-- snippet: StructuredLogConfig -->
-```html
+```js
 var levelSwitch = new structuredLog.DynamicLevelSwitch("info");
 const log = structuredLog.configure()
     .writeTo(new structuredLog.ConsoleSink())
@@ -186,19 +186,19 @@ const log = structuredLog.configure()
     }))
     .create();
 ```
-<sup>[snippet source](/src/SampleWeb/test.html#L9-L22)</sup>
+<sup>[snippet source](/src/SampleWeb/sample.js#L1-L14)</sup>
 <!-- endsnippet -->
 
 Write a log message:
 
 <!-- snippet: StructuredLog -->
-```html
+```js
 function LogStructured() {
     const textInput = document.getElementById("textInput").value;
     log.info('StructuredLog input: {Text}', textInput);
 }
 ```
-<sup>[snippet source](/src/SampleWeb/test.html#L23-L29)</sup>
+<sup>[snippet source](/src/SampleWeb/sample.js#L15-L21)</sup>
 <!-- endsnippet -->
 
 

@@ -1,5 +1,5 @@
 ﻿// begin-snippet: StructuredLogConfig
-var levelSwitch = new structuredLog.DynamicLevelSwitch("info");
+var levelSwitch = new structuredLog.DynamicLevelSwitch('info');
 const log = structuredLog.configure()
     .writeTo(new structuredLog.ConsoleSink())
     .minLevel(levelSwitch)
@@ -13,14 +13,14 @@ const log = structuredLog.configure()
 
 // begin-snippet: StructuredLog
 function LogStructured() {
-    const textInput = document.getElementById("textInput").value;
+    const textInput = document.getElementById('textInput').value;
     log.info('StructuredLog input: {Text}', textInput);
 }
 // end-snippet
 
 // begin-snippet: LogRawJs
 function LogRawJs() {
-    const textInput = document.getElementById("textInput").value;
+    const textInput = document.getElementById('textInput').value;
     const postSettings = {
         method: 'POST',
         credentials: 'include',

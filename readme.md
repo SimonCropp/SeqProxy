@@ -140,7 +140,7 @@ Writing to Seq can be done using a HTTP post:
 <!-- snippet: LogRawJs -->
 ```js
 function LogRawJs() {
-    const textInput = document.getElementById("textInput").value;
+    const textInput = document.getElementById('textInput').value;
     const postSettings = {
         method: 'POST',
         credentials: 'include',
@@ -170,8 +170,8 @@ Install both [structured-log npm](https://www.npmjs.com/package/structured-log) 
 
 <!-- snippet: StructuredLogInclude -->
 ```html
-<script src="https://cdn.jsdelivr.net/npm/structured-log/dist/structured-log.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/structured-log-seq-sink/dist/structured-log-seq-sink.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/structured-log/dist/structured-log.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/structured-log-seq-sink/dist/structured-log-seq-sink.js'></script>
 ```
 <sup>[snippet source](/src/SampleWeb/sample.html#L4-L7)</sup>
 <!-- endsnippet -->
@@ -181,7 +181,7 @@ Install both [structured-log npm](https://www.npmjs.com/package/structured-log) 
 
 <!-- snippet: StructuredLogConfig -->
 ```js
-var levelSwitch = new structuredLog.DynamicLevelSwitch("info");
+var levelSwitch = new structuredLog.DynamicLevelSwitch('info');
 const log = structuredLog.configure()
     .writeTo(new structuredLog.ConsoleSink())
     .minLevel(levelSwitch)
@@ -201,7 +201,7 @@ const log = structuredLog.configure()
 <!-- snippet: StructuredLog -->
 ```js
 function LogStructured() {
-    const textInput = document.getElementById("textInput").value;
+    const textInput = document.getElementById('textInput').value;
     log.info('StructuredLog input: {Text}', textInput);
 }
 ```

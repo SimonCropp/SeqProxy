@@ -6,14 +6,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Serilog;
 
 namespace SeqProxy
 {
     public class SeqWriter
     {
         IHttpClientFactory httpFactory;
-        static ILogger logger = Log.ForContext(typeof(SeqWriter));
         string url;
         PrefixBuilder prefixBuilder;
 
@@ -108,11 +106,6 @@ namespace SeqProxy
             }
             catch (TaskCanceledException)
             {
-            }
-            catch (Exception exception)
-            {
-                logger.Error(exception, $"Failed to write to Seq: {url}");
-                throw;
             }
         }
     }

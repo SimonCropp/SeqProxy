@@ -151,7 +151,7 @@ function LogRawJs() {
     return fetch('/api/events/raw', postSettings);
 }
 ```
-<sup>[snippet source](/src/SampleWeb/sample.js#L22-L34)</sup>
+<sup>[snippet source](/src/SampleWeb/sample.js#L21-L33)</sup>
 <!-- endsnippet -->
 
 
@@ -192,7 +192,7 @@ const log = structuredLog.configure()
     }))
     .create();
 ```
-<sup>[snippet source](/src/SampleWeb/sample.js#L1-L14)</sup>
+<sup>[snippet source](/src/SampleWeb/sample.js#L1-L12)</sup>
 <!-- endsnippet -->
 
 
@@ -205,7 +205,7 @@ function LogStructured() {
     log.info('StructuredLog input: {Text}', textInput);
 }
 ```
-<sup>[snippet source](/src/SampleWeb/sample.js#L15-L21)</sup>
+<sup>[snippet source](/src/SampleWeb/sample.js#L14-L19)</sup>
 <!-- endsnippet -->
 
 

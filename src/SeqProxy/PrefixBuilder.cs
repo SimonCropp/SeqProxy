@@ -11,7 +11,7 @@ class PrefixBuilder
     public PrefixBuilder(string appName, Version version, Func<string, string> scrubClaimType)
     {
         this.scrubClaimType = scrubClaimType;
-        prefix = $"{{'AppName':'{appName.AsJson()}','AppVersion':'{version.ToString().AsJson()}','Server':'{Environment.MachineName.AsJson()}'";
+        prefix = $"{{'AppName':'{appName.AsJson()}','AppVersion':'{version.ToString().AsJson()}','Server':'{Environment.MachineName.AsJson()}',";
     }
 
     public string Build(ClaimsPrincipal user, string userAgent, string referrer)
@@ -19,17 +19,24 @@ class PrefixBuilder
         var builder = new StringBuilder(prefix);
         if (user.Claims.Any())
         {
-            builder.Append(",'Claims':{");
+            builder.Append("'Claims':{");
             foreach (var claim in user.Claims)
             {
                 builder.Append($"'{scrubClaimType(claim.Type).AsJson()}':'{claim.Value.AsJson()}',");
             }
 
             builder.Length -= 1;
-            builder.Append("}");
+            builder.Append("},");
         }
 
-        builder.Append($",'UserAgent':'{userAgent.AsJson()}','Referrer':'{referrer.AsJson()}',");
+        if (userAgent != null)
+        {
+            builder.Append($"'UserAgent':'{userAgent.AsJson()}',");
+        }
+        if (referrer != null)
+        {
+            builder.Append($"'Referrer':'{referrer.AsJson()}',");
+        }
         return builder.ToString();
     }
 }

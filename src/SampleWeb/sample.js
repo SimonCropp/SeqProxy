@@ -29,7 +29,6 @@ function LogRawJs(text) {
     const postSettings = {
         method: 'POST',
         credentials: 'include',
-        mode: 'cors',
         body: `{'@mt':'RawJs input: {Text}','Text':'${text}'}`
     };
 

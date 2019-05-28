@@ -133,14 +133,13 @@ function LogRawJs(text) {
     const postSettings = {
         method: 'POST',
         credentials: 'include',
-        mode: 'cors',
         body: `{'@mt':'RawJs input: {Text}','Text':'${text}'}`
     };
 
     return fetch('/api/events/raw', postSettings);
 }
 ```
-<sup>[snippet source](/src/SampleWeb/sample.js#L27-L38)</sup>
+<sup>[snippet source](/src/SampleWeb/sample.js#L27-L37)</sup>
 <!-- endsnippet -->
 
 

@@ -12,7 +12,6 @@ namespace Microsoft.Extensions.DependencyInjection
             string appName,
             Version appVersion,
             string apiKey = null,
-            bool swallowSeqExceptions = false,
             Func<string,string> scrubClaimType = null)
         {
             Guard.AgainstEmpty(apiKey, nameof(apiKey));

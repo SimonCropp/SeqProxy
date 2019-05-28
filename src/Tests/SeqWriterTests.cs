@@ -48,7 +48,7 @@ public class SeqWriterTests :
         var request = new MockRequest("{'@t':'2019-05-28','@mt':'Simple Message'}")
         {
             Query = new QueryCollection(
-                new Dictionary<string, StringValues>()
+                new Dictionary<string, StringValues>
                 {
                     {"apiKey", "foo"}
                 })

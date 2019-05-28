@@ -29,6 +29,8 @@ Format: [Serilog compact](https://github.com/serilog/serilog-formatting-compact)
 
 Protocol: [Seq raw events](https://docs.datalust.co/docs/posting-raw-events).
 
+Note that timestamp (`@t`) is optional when using this project. If it is not supplied the server timestamp will be used.
+
 
 ## Extra data
 
@@ -125,6 +127,78 @@ public class SeqController :
 }
 ```
 <sup>[snippet source](/src/Tests/ControllerSamples.cs#L22-L37)</sup>
+<!-- endsnippet -->
+
+
+## Client Side Usage
+
+
+### Using raw JavaScript
+
+Writing to Seq can be done using a HTTP post:
+
+<!-- snippet: LogRawJs -->
+```html
+function LogRawJs() {
+    const textInput = document.getElementById("textInput").value;
+    const postSettings = {
+        method: 'POST',
+        credentials: 'include',
+        mode: 'cors',
+        body: `{'@mt':'RawJs input: {Text}','Text':'${textInput}'}`
+    };
+
+    return fetch('/api/events/raw', postSettings);
+}
+```
+<sup>[snippet source](/src/SampleWeb/test.html#L30-L42)</sup>
+<!-- endsnippet -->
+
+
+### Using Structured-Log
+
+[structured-log](https://github.com/structured-log/structured-log/) is a structured logging framework for JavaScript, inspired by Serilog.
+
+In combination with [structured-log-seq-sink](https://github.com/Wedvich/structured-log-seq-sink) it can be used to write to Seq
+
+To use this approach install both [structured-log npm](https://www.npmjs.com/package/structured-log) and [structured-log-seq-sink npm](https://www.npmjs.com/package/structured-log-seq-sink). Or include them from [jsDelivr ](https://www.jsdelivr.com/):
+
+<!-- snippet: StructuredLogInclude -->
+```html
+<script src="https://cdn.jsdelivr.net/npm/structured-log@0.2.0/dist/structured-log.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/structured-log-seq-sink@0.4.1/dist/structured-log-seq-sink.js" type="text/javascript"></script>
+```
+<sup>[snippet source](/src/SampleWeb/test.html#L4-L7)</sup>
+<!-- endsnippet -->
+
+Configure the log:
+
+<!-- snippet: StructuredLogConfig -->
+```html
+var levelSwitch = new structuredLog.DynamicLevelSwitch("info");
+const log = structuredLog.configure()
+    .writeTo(new structuredLog.ConsoleSink())
+    .minLevel(levelSwitch)
+    .writeTo(SeqSink({
+        url: "http://localhost:5341",
+        compact: true,
+        levelSwitch: levelSwitch
+    }))
+    .create();
+```
+<sup>[snippet source](/src/SampleWeb/test.html#L9-L22)</sup>
+<!-- endsnippet -->
+
+Write a log message:
+
+<!-- snippet: StructuredLog -->
+```html
+function LogStructured() {
+    const textInput = document.getElementById("textInput").value;
+    log.info('StructuredLog input: {Text}', textInput);
+}
+```
+<sup>[snippet source](/src/SampleWeb/test.html#L23-L29)</sup>
 <!-- endsnippet -->
 
 

@@ -23,6 +23,8 @@ Format: [Serilog compact](https://github.com/serilog/serilog-formatting-compact)
 
 Protocol: [Seq raw events](https://docs.datalust.co/docs/posting-raw-events).
 
+Note that timestamp (`@t`) is optional when using this project. If it is not supplied the server timestamp will be used.
+
 
 ## Extra data
 
@@ -66,6 +68,35 @@ Method level Asp attributes can by applied by overriding `BaseSeqController.Post
 For example adding an [exception filter ](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters#exception-filters).
 
 snippet: OverridePostController
+
+
+## Client Side Usage
+
+
+### Using raw JavaScript
+
+Writing to Seq can be done using a HTTP post:
+
+snippet: LogRawJs
+
+
+### Using Structured-Log
+
+[structured-log](https://github.com/structured-log/structured-log/) is a structured logging framework for JavaScript, inspired by Serilog.
+
+In combination with [structured-log-seq-sink](https://github.com/Wedvich/structured-log-seq-sink) it can be used to write to Seq
+
+To use this approach install both [structured-log npm](https://www.npmjs.com/package/structured-log) and [structured-log-seq-sink npm](https://www.npmjs.com/package/structured-log-seq-sink). Or include them from [jsDelivr ](https://www.jsdelivr.com/):
+
+snippet: StructuredLogInclude
+
+Configure the log:
+
+snippet: StructuredLogConfig
+
+Write a log message:
+
+snippet: StructuredLog
 
 
 ## Icon

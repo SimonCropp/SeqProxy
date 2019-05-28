@@ -165,8 +165,8 @@ To use this approach install both [structured-log npm](https://www.npmjs.com/pac
 
 <!-- snippet: StructuredLogInclude -->
 ```html
-<script src="https://cdn.jsdelivr.net/npm/structured-log/dist/structured-log.js" type="text/javascript"></script>
-<script src="https://cdn.jsdelivr.net/npm/structured-log-seq-sink/dist/structured-log-seq-sink.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/structured-log/dist/structured-log.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/structured-log-seq-sink/dist/structured-log-seq-sink.js"></script>
 ```
 <sup>[snippet source](/src/SampleWeb/sample.html#L4-L7)</sup>
 <!-- endsnippet -->

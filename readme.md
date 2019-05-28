@@ -129,19 +129,18 @@ Writing to Seq can be done using a HTTP post:
 
 <!-- snippet: LogRawJs -->
 ```js
-function LogRawJs() {
-    const textInput = document.getElementById('textInput').value;
+function LogRawJs(text) {
     const postSettings = {
         method: 'POST',
         credentials: 'include',
         mode: 'cors',
-        body: `{'@mt':'RawJs input: {Text}','Text':'${textInput}'}`
+        body: `{'@mt':'RawJs input: {Text}','Text':'${text}'}`
     };
 
     return fetch('/api/events/raw', postSettings);
 }
 ```
-<sup>[snippet source](/src/SampleWeb/sample.js#L21-L33)</sup>
+<sup>[snippet source](/src/SampleWeb/sample.js#L27-L38)</sup>
 <!-- endsnippet -->
 
 
@@ -190,12 +189,11 @@ const log = structuredLog.configure()
 
 <!-- snippet: StructuredLog -->
 ```js
-function LogStructured() {
-    const textInput = document.getElementById('textInput').value;
-    log.info('StructuredLog input: {Text}', textInput);
+function LogStructured(text) {
+    log.info('StructuredLog input: {Text}', text);
 }
 ```
-<sup>[snippet source](/src/SampleWeb/sample.js#L14-L19)</sup>
+<sup>[snippet source](/src/SampleWeb/sample.js#L18-L22)</sup>
 <!-- endsnippet -->
 
 

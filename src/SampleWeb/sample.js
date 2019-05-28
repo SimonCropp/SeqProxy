@@ -11,21 +11,26 @@ const log = structuredLog.configure()
     .create();
 // end-snippet
 
+function LogInputStructured() {
+    LogStructured(document.getElementById('textInput').value);
+}
+
 // begin-snippet: StructuredLog
-function LogStructured() {
-    const textInput = document.getElementById('textInput').value;
-    log.info('StructuredLog input: {Text}', textInput);
+function LogStructured(text) {
+    log.info('StructuredLog input: {Text}', text);
 }
 // end-snippet
 
+function LogInputRawJs() {
+    return LogRawJs(document.getElementById('textInput').value);
+}
 // begin-snippet: LogRawJs
-function LogRawJs() {
-    const textInput = document.getElementById('textInput').value;
+function LogRawJs(text) {
     const postSettings = {
         method: 'POST',
         credentials: 'include',
         mode: 'cors',
-        body: `{'@mt':'RawJs input: {Text}','Text':'${textInput}'}`
+        body: `{'@mt':'RawJs input: {Text}','Text':'${text}'}`
     };
 
     return fetch('/api/events/raw', postSettings);

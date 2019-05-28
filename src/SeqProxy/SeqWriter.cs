@@ -111,6 +111,9 @@ namespace SeqProxy
                     await seqResponse.Content.CopyToAsync(response.Body);
                 }
             }
+            catch (TaskCanceledException)
+            {
+            }
             catch (Exception exception)
             {
                 logger.Error(exception, $"Failed to write to Seq: {url}");

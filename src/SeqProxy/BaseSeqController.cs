@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace SeqProxy
 {
     [Route("/api/events/raw")]
+    [Route("/seq")]
     [ApiController]
     public abstract class BaseSeqController :
         ControllerBase

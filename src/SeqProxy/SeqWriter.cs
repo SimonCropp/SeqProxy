@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
@@ -32,7 +31,7 @@ namespace SeqProxy
             Version version,
             string apiKey,
             bool swallowSeqExceptions,
-            Func<string,string> scrubClaimType)
+            Func<string, string> scrubClaimType)
         {
             Guard.AgainstEmpty(apiKey, nameof(apiKey));
             Guard.AgainstNullOrEmpty(appName, nameof(appName));
@@ -42,7 +41,7 @@ namespace SeqProxy
             this.httpFactory = httpFactory;
             this.swallowSeqExceptions = swallowSeqExceptions;
             var baseUri = new Uri(seqUrl);
-            var  apiUrl = new Uri(baseUri, "api/events/raw?apiKey={apiKey}");
+            var apiUrl = new Uri(baseUri, "api/events/raw?apiKey={apiKey}");
             url = apiUrl.ToString();
             prefixBuilder = new PrefixBuilder(appName, version, scrubClaimType);
         }
@@ -57,15 +56,7 @@ namespace SeqProxy
                 string line;
                 while ((line = await streamReader.ReadLineAsync()) != null)
                 {
-                    if (string.IsNullOrWhiteSpace(line))
-                    {
-                        throw new Exception("Blank lines are not allowed.");
-                    }
-
-                    if (line.First() != '{')
-                    {
-                        throw new Exception($"Expected first char of line to be a '{{'. Line: {line}");
-                    }
+                    ValidateLine(line);
 
                     builder.Append(prefix);
                     if (!line.Contains("\"@t\"") &&
@@ -73,11 +64,25 @@ namespace SeqProxy
                     {
                         builder.Append($@"'@t':'{DateTime.UtcNow:o}',");
                     }
+
                     builder.Append(line.Substring(1));
                 }
             }
 
-            await Write(builder.ToString(), response,cancellation);
+            await Write(builder.ToString(), response, cancellation);
+        }
+
+        static void ValidateLine(string line)
+        {
+            if (string.IsNullOrWhiteSpace(line))
+            {
+                throw new Exception("Blank lines are not allowed.");
+            }
+
+            if (line[0] != '{')
+            {
+                throw new Exception($"Expected first char of line to be a '{{'. Line: {line}");
+            }
         }
 
         static void ThrowIfApiKeySpecified(HttpRequest request)
@@ -101,7 +106,7 @@ namespace SeqProxy
                 using (var content = new StringContent(payload, Encoding.UTF8, "application/vnd.serilog.clef"))
                 using (var seqResponse = await httpClient.PostAsync(url, content, cancellation))
                 {
-                    response.StatusCode = (int)seqResponse.StatusCode;
+                    response.StatusCode = (int) seqResponse.StatusCode;
                     await seqResponse.Content.CopyToAsync(response.Body);
                 }
             }
@@ -120,5 +125,4 @@ namespace SeqProxy
             }
         }
     }
-
 }

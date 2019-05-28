@@ -22,7 +22,14 @@ public class SeqControllerTests :
     public Task LogNoTimestamp()
     {
         var content = "{'@mt':'LogNoTimestamp'}";
+        return WriteAndVerify(content);
+    }
 
+    [Fact]
+    public Task LogMultiple()
+    {
+        var content = @"{'@mt':'Message1'}
+{'@mt':'Message2'}";
         return WriteAndVerify(content);
     }
 

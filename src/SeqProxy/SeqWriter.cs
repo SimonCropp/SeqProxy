@@ -66,6 +66,7 @@ namespace SeqProxy
                     }
 
                     builder.Append(line, 1, line.Length - 1);
+                    builder.AppendLine();
                 }
             }
 

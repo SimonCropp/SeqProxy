@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Reflection;
 using SeqProxy;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -9,20 +10,34 @@ namespace Microsoft.Extensions.DependencyInjection
         public static void AddSeqWriter(
             this IServiceCollection services,
             string seqUrl,
-            string appName,
-            Version appVersion,
+            string appName = null,
+            Version appVersion = null,
             string apiKey = null,
             Func<string,string> scrubClaimType = null)
         {
             Guard.AgainstEmpty(apiKey, nameof(apiKey));
-            Guard.AgainstNullOrEmpty(appName, nameof(appName));
+            Guard.AgainstEmpty(appName, nameof(appName));
             Guard.AgainstNullOrEmpty(seqUrl, nameof(seqUrl));
             Guard.AgainstNull(services, nameof(services));
             services.AddHttpClient();
             if (scrubClaimType == null)
             {
-                scrubClaimType = s => s;
+                scrubClaimType = DefaultClaimTypeScrubber.Scrub;
             }
+
+            if (appName == null || appVersion == null)
+            {
+                var callingAssemblyName = Assembly.GetCallingAssembly().GetName();
+                if (appName == null)
+                {
+                    appName = callingAssemblyName.Name;
+                }
+                if (appVersion == null)
+                {
+                    appVersion = callingAssemblyName.Version;
+                }
+            }
+
             services.AddSingleton(
                 provider =>
                 {

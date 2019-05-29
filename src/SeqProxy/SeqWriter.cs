@@ -33,10 +33,25 @@ namespace SeqProxy
             Guard.AgainstNull(httpFactory, nameof(httpFactory));
             Guard.AgainstNull(scrubClaimType, nameof(scrubClaimType));
             this.httpFactory = httpFactory;
-            var baseUri = new Uri(seqUrl);
-            var apiUrl = new Uri(baseUri, "api/events/raw?apiKey={apiKey}");
-            url = apiUrl.ToString();
+            url= GetSeqUrl(seqUrl, apiKey);
             prefixBuilder = new PrefixBuilder(appName, version, scrubClaimType);
+        }
+
+        static string GetSeqUrl(string seqUrl, string apiKey)
+        {
+            var baseUri = new Uri(seqUrl);
+            string uri;
+            if (apiKey == null)
+            {
+                uri = $"api/events/raw";
+            }
+            else
+            {
+                uri = $"api/events/raw?apiKey={apiKey}";
+            }
+
+            var apiUrl = new Uri(baseUri, uri);
+            return apiUrl.ToString();
         }
 
         public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response, CancellationToken cancellation = default)

@@ -56,13 +56,56 @@ Enable in `Startup.ConfigureServices`
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddMvcCore();
-    services.AddSeqWriter(
-        seqUrl: "http://localhost:5341",
-        appName: "Sample",
-        appVersion: GetType().Assembly.GetName().Version);
+    services.AddSeqWriter(seqUrl: "http://localhost:5341");
 }
 ```
-<sup>[snippet source](/src/SampleWeb/Startup.cs#L14-L25)</sup>
+<sup>[snippet source](/src/SampleWeb/Startup.cs#L14-L22)</sup>
+<!-- endsnippet -->
+
+There are several optional parameters:
+
+<!-- snippet: ConfigureServicesFull -->
+```cs
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMvcCore();
+    services.AddSeqWriter(
+        seqUrl: "http://localhost:5341",
+        apiKey: "TheApiKey",
+        appName: "MyAppName",
+        appVersion: new Version(1, 2),
+        scrubClaimType: claimType => claimType.Split("/").Last());
+}
+```
+<sup>[snippet source](/src/Tests/FullStartupConfig.cs#L7-L20)</sup>
+<!-- endsnippet -->
+
+
+ * `appName` defaults to `Assembly.GetCallingAssembly().GetName().Name`.
+ * `appVersion` defaults to `Assembly.GetCallingAssembly().GetName().Version`.
+ * `scrubClaimType` is used to clean up claimtype strings. For example [ClaimTypes.Email](https://docs.microsoft.com/en-us/dotnet/api/system.identitymodel.claims.claimtypes.email?System_IdentityModel_Claims_ClaimTypes_Email) is `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress`, but when recording to Seq the value `emailaddress` is sufficient. Defaults to `DefaultClaimTypeScrubber.Scrub` to get the string after the last `/`.
+
+<!-- snippet: DefaultClaimTypeScrubber.cs -->
+```cs
+namespace SeqProxy
+{
+    public static class DefaultClaimTypeScrubber
+    {
+        public static string Scrub(string claimType)
+        {
+            Guard.AgainstNullOrEmpty(claimType, nameof(claimType));
+            var lastIndexOf = claimType.LastIndexOf("/");
+            if (lastIndexOf == -1)
+            {
+                return claimType;
+            }
+
+            return claimType.Substring(lastIndexOf + 1);
+        }
+    }
+}
+```
+<sup>[snippet source](/src/SeqProxy/DefaultClaimTypeScrubber.cs#L1-L17)</sup>
 <!-- endsnippet -->
 
 

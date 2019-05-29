@@ -16,10 +16,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddMvcCore();
-        services.AddSeqWriter(
-            seqUrl: "http://localhost:5341",
-            appName: "Sample",
-            appVersion: GetType().Assembly.GetName().Version);
+        services.AddSeqWriter(seqUrl: "http://localhost:5341");
     }
 
     #endregion

@@ -13,13 +13,16 @@ namespace Microsoft.Extensions.DependencyInjection
             string appName = null,
             Version appVersion = null,
             string apiKey = null,
-            Func<string,string> scrubClaimType = null)
+            Func<string, string> scrubClaimType = null,
+            Action<IServiceProvider, HttpClient> configureClient = null)
         {
             Guard.AgainstEmpty(apiKey, nameof(apiKey));
             Guard.AgainstEmpty(appName, nameof(appName));
             Guard.AgainstNullOrEmpty(seqUrl, nameof(seqUrl));
             Guard.AgainstNull(services, nameof(services));
-            services.AddHttpClient();
+
+            AddHttpClient(services, configureClient);
+
             if (scrubClaimType == null)
             {
                 scrubClaimType = DefaultClaimTypeScrubber.Scrub;
@@ -32,6 +35,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 {
                     appName = callingAssemblyName.Name;
                 }
+
                 if (appVersion == null)
                 {
                     appVersion = callingAssemblyName.Version;
@@ -42,8 +46,20 @@ namespace Microsoft.Extensions.DependencyInjection
                 provider =>
                 {
                     var httpFactory = provider.GetService<IHttpClientFactory>();
-                    return new SeqWriter(httpFactory, seqUrl, appName, appVersion, apiKey, scrubClaimType);
+                    return new SeqWriter(() => httpFactory.CreateClient("SeqProxy"), seqUrl, appName, appVersion, apiKey, scrubClaimType);
                 });
+        }
+
+        static void AddHttpClient(IServiceCollection services, Action<IServiceProvider, HttpClient> configureClient)
+        {
+            if (configureClient == null)
+            {
+                services.AddHttpClient("SeqProxy");
+            }
+            else
+            {
+                services.AddHttpClient("SeqProxy", configureClient);
+            }
         }
     }
 }

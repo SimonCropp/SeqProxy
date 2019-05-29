@@ -80,7 +80,6 @@ public void ConfigureServices(IServiceCollection services)
 <sup>[snippet source](/src/Tests/FullStartupConfig.cs#L7-L20)</sup>
 <!-- endsnippet -->
 
-
  * `appName` defaults to `Assembly.GetCallingAssembly().GetName().Name`.
  * `appVersion` defaults to `Assembly.GetCallingAssembly().GetName().Version`.
  * `scrubClaimType` is used to clean up claimtype strings. For example [ClaimTypes.Email](https://docs.microsoft.com/en-us/dotnet/api/system.identitymodel.claims.claimtypes.email?System_IdentityModel_Claims_ClaimTypes_Email) is `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress`, but when recording to Seq the value `emailaddress` is sufficient. Defaults to `DefaultClaimTypeScrubber.Scrub` to get the string after the last `/`.

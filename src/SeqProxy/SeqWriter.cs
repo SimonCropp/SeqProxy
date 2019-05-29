@@ -11,7 +11,7 @@ namespace SeqProxy
 {
     public class SeqWriter
     {
-        IHttpClientFactory httpFactory;
+        Func<HttpClient> httpClientFunc;
         string url;
         PrefixBuilder prefixBuilder;
 
@@ -20,7 +20,7 @@ namespace SeqProxy
         }
 
         public SeqWriter(
-            IHttpClientFactory httpFactory,
+            Func<HttpClient> httpClientFunc,
             string seqUrl,
             string appName,
             Version version,
@@ -30,9 +30,9 @@ namespace SeqProxy
             Guard.AgainstEmpty(apiKey, nameof(apiKey));
             Guard.AgainstNullOrEmpty(appName, nameof(appName));
             Guard.AgainstNullOrEmpty(seqUrl, nameof(seqUrl));
-            Guard.AgainstNull(httpFactory, nameof(httpFactory));
+            Guard.AgainstNull(httpClientFunc, nameof(httpClientFunc));
             Guard.AgainstNull(scrubClaimType, nameof(scrubClaimType));
-            this.httpFactory = httpFactory;
+            this.httpClientFunc = httpClientFunc;
             url= GetSeqUrl(seqUrl, apiKey);
             prefixBuilder = new PrefixBuilder(appName, version, scrubClaimType);
         }
@@ -109,11 +109,10 @@ namespace SeqProxy
 
         async Task Write(string payload, HttpResponse response, CancellationToken cancellation)
         {
-            var httpClient = httpFactory.CreateClient("SeqProxy");
             try
             {
                 using (var content = new StringContent(payload, Encoding.UTF8, "application/vnd.serilog.clef"))
-                using (var seqResponse = await httpClient.PostAsync(url, content, cancellation))
+                using (var seqResponse = await httpClientFunc().PostAsync(url, content, cancellation))
                 {
                     response.StatusCode = (int) seqResponse.StatusCode;
                     await seqResponse.Content.CopyToAsync(response.Body);

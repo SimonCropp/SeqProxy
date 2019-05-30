@@ -43,7 +43,7 @@ For every log entry written the following information is appended:
  * The [user-agent header](https://en.wikipedia.org/wiki/User_agent) as `UserAgent`.
  * The [referer header](https://en.wikipedia.org/wiki/HTTP_referer) as `Referrer`.
 
-<img src="https://raw.githubusercontent.com/SimonCropp/SeqProxy/master/src/extraData.png">
+<img src="https://raw.githubusercontent.com/SimonCropp/SeqProxy/master/src/extraData.png" border="1">
 
 
 ## Usage
@@ -290,7 +290,7 @@ function LogStructuredWithExtraProps(text) {
 
 Then a destructured property will be written to Seq.
 
-<img src="https://raw.githubusercontent.com/SimonCropp/SeqProxy/master/src/omitFromMessage.png">
+<img src="https://raw.githubusercontent.com/SimonCropp/SeqProxy/master/src/omitFromMessage.png" border="1">
 
 
 ## Icon

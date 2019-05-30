@@ -14,7 +14,8 @@ const log = structuredLog.configure()
 // begin-snippet: StructuredLogConfigExtraProp
 const logWithExtraProps = structuredLog.configure()
     .filter(logEvent => {
-        logEvent.messageTemplate.raw = logEvent.messageTemplate.raw.replace('{@Properties}','');
+        const template = logEvent.messageTemplate;
+        template.raw = template.raw.replace('{@Properties}','');
         return true;
     })
     .writeTo(SeqSink({

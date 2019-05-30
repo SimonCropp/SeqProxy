@@ -183,7 +183,7 @@ function LogRawJs(text) {
     return fetch('/api/events/raw', postSettings);
 }
 ```
-<sup>[snippet source](/src/SampleWeb/sample.js#L58-L68)</sup>
+<sup>[snippet source](/src/SampleWeb/sample.js#L59-L69)</sup>
 <!-- endsnippet -->
 
 
@@ -236,7 +236,7 @@ function LogStructured(text) {
     log.info('StructuredLog input: {Text}', text);
 }
 ```
-<sup>[snippet source](/src/SampleWeb/sample.js#L49-L53)</sup>
+<sup>[snippet source](/src/SampleWeb/sample.js#L50-L54)</sup>
 <!-- endsnippet -->
 
 
@@ -258,7 +258,8 @@ Include a filter that replaces a known token name (in this case `{@Properties}`)
 ```js
 const logWithExtraProps = structuredLog.configure()
     .filter(logEvent => {
-        logEvent.messageTemplate.raw = logEvent.messageTemplate.raw.replace('{@Properties}','');
+        const template = logEvent.messageTemplate;
+        template.raw = template.raw.replace('{@Properties}','');
         return true;
     })
     .writeTo(SeqSink({
@@ -268,7 +269,7 @@ const logWithExtraProps = structuredLog.configure()
     }))
     .create();
 ```
-<sup>[snippet source](/src/SampleWeb/sample.js#L14-L26)</sup>
+<sup>[snippet source](/src/SampleWeb/sample.js#L14-L27)</sup>
 <!-- endsnippet -->
 
 Include that token name in the message template, and then include an object at the same position in the log parameters:
@@ -285,7 +286,7 @@ function LogStructuredWithExtraProps(text) {
         });
 }
 ```
-<sup>[snippet source](/src/SampleWeb/sample.js#L37-L47)</sup>
+<sup>[snippet source](/src/SampleWeb/sample.js#L38-L48)</sup>
 <!-- endsnippet -->
 
 Then a destructured property will be written to Seq.

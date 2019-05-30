@@ -11,9 +11,40 @@ const log = structuredLog.configure()
     .create();
 // end-snippet
 
+// begin-snippet: StructuredLogConfigExtraProp
+const logWithExtraProps = structuredLog.configure()
+    .filter(logEvent => {
+        logEvent.messageTemplate.raw = logEvent.messageTemplate.raw.replace('{@Properties}','');
+        return true;
+    })
+    .writeTo(SeqSink({
+        url: `${location.protocol}//${location.host}`,
+        compact: true,
+        levelSwitch: levelSwitch
+    }))
+    .create();
+// end-snippet
+
+
 function LogInputStructured() {
     LogStructured(document.getElementById('textInput').value);
 }
+
+function LogInputStructuredWithExtraProps() {
+    LogStructuredWithExtraProps(document.getElementById('textInput').value);
+}
+
+// begin-snippet: StructuredLogWithExtraProps
+function LogStructuredWithExtraProps(text) {
+    logWithExtraProps.info(
+        'StructuredLog input: {Text} {@Properties}',
+        text,
+        {
+            Timezone: new Date().getTimezoneOffset(),
+            Language: navigator.language
+        });
+}
+// end-snippet
 
 // begin-snippet: StructuredLog
 function LogStructured(text) {

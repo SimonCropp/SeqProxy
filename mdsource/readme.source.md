@@ -117,6 +117,29 @@ snippet: StructuredLogConfig
 snippet: StructuredLog
 
 
+#### Including data but omitting from the message template
+
+When using structured-log, data not included in the message template will be named with a convention of `a+counter`. So for example if the following is logged:
+
+````
+log.info('The text: {Text}', text, "OtherData");
+```
+
+Then `OtherData` would be written to Seq with the property name `a1`.
+
+To work around this:
+
+Include a filter that replaces a known token name (in this case `{@Properties}`):
+
+snippet: StructuredLogConfigExtraProp
+
+Include that token name in the message template, and then include an object at the same position in the log parameters:
+
+snippet: StructuredLogWithExtraProps
+
+Then a destructured property will be written to Seq.
+
+
 ## Icon
 
 <a href="http://thenounproject.com/term/robot/883226/">Robot</a> designed by <a href="https://thenounproject.com/maxim221/">Maxim Kulikov</a> from The Noun Project

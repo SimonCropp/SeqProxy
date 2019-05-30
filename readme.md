@@ -181,7 +181,7 @@ function LogRawJs(text) {
     return fetch('/api/events/raw', postSettings);
 }
 ```
-<sup>[snippet source](/src/SampleWeb/sample.js#L27-L37)</sup>
+<sup>[snippet source](/src/SampleWeb/sample.js#L58-L68)</sup>
 <!-- endsnippet -->
 
 
@@ -234,8 +234,59 @@ function LogStructured(text) {
     log.info('StructuredLog input: {Text}', text);
 }
 ```
-<sup>[snippet source](/src/SampleWeb/sample.js#L18-L22)</sup>
+<sup>[snippet source](/src/SampleWeb/sample.js#L49-L53)</sup>
 <!-- endsnippet -->
+
+
+#### Including data but omitting from the message template
+
+When using structured-log, data not included in the message template will be named with a convention of `a+counter`. So for example if the following is logged:
+
+````
+log.info('The text: {Text}', text, "OtherData");
+```
+
+Then `OtherData` would be written to Seq with the property name `a1`.
+
+To work around this:
+
+Include a filter that replaces a known token name (in this case `{@Properties}`):
+
+<!-- snippet: StructuredLogConfigExtraProp -->
+```js
+const logWithExtraProps = structuredLog.configure()
+    .filter(logEvent => {
+        logEvent.messageTemplate.raw = logEvent.messageTemplate.raw.replace('{@Properties}','');
+        return true;
+    })
+    .writeTo(SeqSink({
+        url: `${location.protocol}//${location.host}`,
+        compact: true,
+        levelSwitch: levelSwitch
+    }))
+    .create();
+```
+<sup>[snippet source](/src/SampleWeb/sample.js#L14-L26)</sup>
+<!-- endsnippet -->
+
+Include that token name in the message template, and then include an object at the same position in the log parameters:
+
+<!-- snippet: StructuredLogWithExtraProps -->
+```js
+function LogStructuredWithExtraProps(text) {
+    logWithExtraProps.info(
+        'StructuredLog input: {Text} {@Properties}',
+        text,
+        {
+            Timezone: new Date().getTimezoneOffset(),
+            Language: navigator.language
+        });
+}
+```
+<sup>[snippet source](/src/SampleWeb/sample.js#L37-L47)</sup>
+<!-- endsnippet -->
+
+Then a destructured property will be written to Seq.
 
 
 ## Icon

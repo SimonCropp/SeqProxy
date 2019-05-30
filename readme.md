@@ -242,7 +242,7 @@ function LogStructured(text) {
 
 When using structured-log, data not included in the message template will be named with a convention of `a+counter`. So for example if the following is logged:
 
-````
+```
 log.info('The text: {Text}', text, "OtherData");
 ```
 

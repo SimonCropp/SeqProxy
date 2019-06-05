@@ -1,12 +1,23 @@
 ﻿using System;
 using System.Net.Http;
 using System.Reflection;
+using Microsoft.AspNetCore.Builder;
 using SeqProxy;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class SeqWriterConfig
     {
+        public static void UseSeq(this IApplicationBuilder builder, bool useAuthorizationService = false)
+        {
+            if (useAuthorizationService)
+            {
+                builder.UseMiddleware<SeqMiddlewareWithAuth>();
+                return;
+            }
+            builder.UseMiddleware<SeqMiddleware>();
+        }
+
         public static void AddSeqWriter(
             this IServiceCollection services,
             string seqUrl,

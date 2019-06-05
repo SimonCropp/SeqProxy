@@ -6,7 +6,7 @@ using Xunit;
 using Xunit.Abstractions;
 
 [Trait("Category", "Integration")]
-public class SeqControllerTests :
+public class SeqIntegrationTests :
     XunitLoggingBase
 {
     [Fact]
@@ -14,8 +14,15 @@ public class SeqControllerTests :
     {
         var timestamp = DateTime.Now.ToString("o");
         var content = $@"{{'@t':'{timestamp}','@mt':'Hello, {{User}}','User':'John'}}";
-
         return WriteAndVerify(content);
+    }
+
+    [Fact]
+    public Task LogToController()
+    {
+        var timestamp = DateTime.Now.ToString("o");
+        var content = $@"{{'@t':'{timestamp}','@mt':'Hello, {{User}}','User':'John'}}";
+        return WriteAndVerify(content,"/seqcontroller");
     }
 
     [Fact]
@@ -33,25 +40,7 @@ public class SeqControllerTests :
         return WriteAndVerify(content);
     }
 
-    static async Task RawPost(string content, bool compact)
-    {
-        var client = new HttpClient
-        {
-            BaseAddress = new Uri("http://localhost:5341")
-        };
-        client.DefaultRequestHeaders.Add("User-Agent", "TheUserAgent");
-        var httpContent = new StringContent(content, Encoding.UTF8, "application/vnd.serilog.clef");
-        var apiEventsRaw = "/api/events/raw";
-        if (compact)
-        {
-            apiEventsRaw += "?clef";
-        }
-
-        var httpResponseMessage = await client.PostAsync(apiEventsRaw, httpContent);
-        httpResponseMessage.EnsureSuccessStatusCode();
-    }
-
-    static async Task WriteAndVerify(string content)
+    static async Task WriteAndVerify(string content, string url = "/api/events/raw")
     {
         using (var server = TestServerBuilder.Build())
         using (var client = server.CreateClient())
@@ -60,7 +49,7 @@ public class SeqControllerTests :
             {
                 client.DefaultRequestHeaders.Add("User-Agent", "TheUserAgent");
                 var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-                var httpResponseMessage = await client.PostAsync("/api/events/raw", httpContent);
+                var httpResponseMessage = await client.PostAsync(url, httpContent);
                 httpResponseMessage.EnsureSuccessStatusCode();
             }
             finally
@@ -70,7 +59,7 @@ public class SeqControllerTests :
         }
     }
 
-    public SeqControllerTests(ITestOutputHelper output) :
+    public SeqIntegrationTests(ITestOutputHelper output) :
         base(output)
     {
     }

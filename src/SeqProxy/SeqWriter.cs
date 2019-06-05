@@ -15,10 +15,6 @@ namespace SeqProxy
         string url;
         PrefixBuilder prefixBuilder;
 
-        internal SeqWriter()
-        {
-        }
-
         public SeqWriter(
             Func<HttpClient> httpClientFunc,
             string seqUrl,
@@ -33,7 +29,7 @@ namespace SeqProxy
             Guard.AgainstNull(httpClientFunc, nameof(httpClientFunc));
             Guard.AgainstNull(scrubClaimType, nameof(scrubClaimType));
             this.httpClientFunc = httpClientFunc;
-            url= GetSeqUrl(seqUrl, apiKey);
+            url = GetSeqUrl(seqUrl, apiKey);
             prefixBuilder = new PrefixBuilder(appName, version, scrubClaimType);
         }
 
@@ -56,7 +52,7 @@ namespace SeqProxy
 
         public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response, CancellationToken cancellation = default)
         {
-            ThrowIfApiKeySpecified(request);
+            ApiKeyValidator.ThrowIfApiKeySpecified(request);
             var builder = new StringBuilder();
             var prefix = prefixBuilder.Build(user, request.GetUserAgent(), request.GetReferer());
             using (var streamReader = new StreamReader(request.Body))
@@ -81,6 +77,23 @@ namespace SeqProxy
             await Write(builder.ToString(), response, cancellation);
         }
 
+        async Task Write(string payload, HttpResponse response, CancellationToken cancellation)
+        {
+            var httpClient = httpClientFunc();
+            try
+            {
+                using (var content = new StringContent(payload, Encoding.UTF8, "application/vnd.serilog.clef"))
+                using (var seqResponse = await httpClient.PostAsync(url, content, cancellation))
+                {
+                    response.StatusCode = (int) seqResponse.StatusCode;
+                    await seqResponse.Content.CopyToAsync(response.Body);
+                }
+            }
+            catch (TaskCanceledException)
+            {
+            }
+        }
+
         static void ValidateLine(string line)
         {
             if (string.IsNullOrWhiteSpace(line))
@@ -91,35 +104,6 @@ namespace SeqProxy
             if (line[0] != '{')
             {
                 throw new Exception($"Expected first char of line to be a '{{'. Line: {line}");
-            }
-        }
-
-        static void ThrowIfApiKeySpecified(HttpRequest request)
-        {
-            if (request.Query.ContainsKey("apiKey"))
-            {
-                throw new Exception("apiKey is not allowed.");
-            }
-
-            if (request.Headers.ContainsKey("X-Seq-ApiKey"))
-            {
-                throw new Exception("apiKey is not allowed.");
-            }
-        }
-
-        async Task Write(string payload, HttpResponse response, CancellationToken cancellation)
-        {
-            try
-            {
-                using (var content = new StringContent(payload, Encoding.UTF8, "application/vnd.serilog.clef"))
-                using (var seqResponse = await httpClientFunc().PostAsync(url, content, cancellation))
-                {
-                    response.StatusCode = (int) seqResponse.StatusCode;
-                    await seqResponse.Content.CopyToAsync(response.Body);
-                }
-            }
-            catch (TaskCanceledException)
-            {
             }
         }
     }

@@ -1,6 +1,6 @@
 # <img src="https://raw.githubusercontent.com/SimonCropp/SeqProxy/master/src/icon.png" height="40px"> SeqProxy
 
-Enables writing seq logs by proxying requests through an ASP.NET Controller.
+Enables writing seq logs by proxying requests through an ASP.NET Controller or Middleware.
 
 
 ## Why

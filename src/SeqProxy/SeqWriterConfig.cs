@@ -8,8 +8,13 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class SeqWriterConfig
     {
-        public static void UseSeq(this IApplicationBuilder builder)
+        public static void UseSeq(this IApplicationBuilder builder, bool useAuthorizationService = false)
         {
+            if (useAuthorizationService)
+            {
+                builder.UseMiddleware<SeqMiddlewareWithAuth>();
+                return;
+            }
             builder.UseMiddleware<SeqMiddleware>();
         }
 

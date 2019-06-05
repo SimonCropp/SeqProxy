@@ -21,9 +21,12 @@ public class Startup
 
     #endregion
 
+    #region ConfigureBuilder
+
     public void Configure(IApplicationBuilder builder)
     {
         builder.UseSeq();
+    #endregion
         builder.UseMvc();
     }
 }

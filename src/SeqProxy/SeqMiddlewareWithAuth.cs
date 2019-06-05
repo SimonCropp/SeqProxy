@@ -1,33 +1,45 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using SeqProxy;
 
-public class SeqMiddlewareWithAuth
+class SeqMiddlewareWithAuth
 {
     RequestDelegate next;
     SeqWriter seqWriter;
-    IAuthorizationService authorizationService;
+    IAuthorizationService authService;
 
-    public SeqMiddlewareWithAuth(RequestDelegate next, SeqWriter seqWriter, IAuthorizationService authorizationService)
+    public SeqMiddlewareWithAuth(RequestDelegate next, SeqWriter seqWriter, IAuthorizationService authService = null)
     {
         this.next = next;
         this.seqWriter = seqWriter;
-        this.authorizationService = authorizationService;
+        if (authService == null)
+        {
+            throw new Exception("Expected IAuthorizationService to be configured.");
+        }
+
+        this.authService = authService;
     }
 
     public async Task InvokeAsync(HttpContext context)
     {
-        if (context.Request.Path != "/api/events/raw")
+        if (!context.IsSeqUrl())
         {
             await next(context);
             return;
         }
 
-        var authorizationResult = await authorizationService.AuthorizeAsync(context.User, null, "null");
+        await HandleWithAuth(context, authService);
+    }
 
-        if (!authorizationResult.Succeeded)
+    #region HandleWithAuth
+    async Task HandleWithAuth(HttpContext context, IAuthorizationService authService)
+    {
+        var authResult = await authService.AuthorizeAsync(context.User, null, "SeqLog");
+
+        if (!authResult.Succeeded)
         {
             await context.ChallengeAsync();
             return;
@@ -35,4 +47,5 @@ public class SeqMiddlewareWithAuth
 
         await seqWriter.Handle(context.User, context.Request, context.Response, context.RequestAborted);
     }
+    #endregion
 }

@@ -1,10 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using SeqProxy;
 
-public class SeqMiddleware
+class SeqMiddleware
 {
     RequestDelegate next;
     SeqWriter seqWriter;
@@ -17,11 +15,10 @@ public class SeqMiddleware
 
     public Task InvokeAsync(HttpContext context)
     {
-        if (context.Request.Path == "/api/events/raw")
+        if (!context.IsSeqUrl())
         {
-            return seqWriter.Handle(context.User, context.Request, context.Response, context.RequestAborted);
+            return next(context);
         }
-
-        return next(context);
+        return seqWriter.Handle(context.User, context.Request, context.Response, context.RequestAborted);
     }
 }

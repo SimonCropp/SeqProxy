@@ -60,21 +60,44 @@ snippet: ConfigureServicesFull
 snippet: DefaultClaimTypeScrubber.cs
 
 
-### Implement a Controller
+### Add HTTP handling
 
-Add a new controller that overrides `BaseSeqController`.
+There are two approaches to handling the HTTP containing log events. Using a Middleware and using a Controller.
+
+
+#### Using a Middleware
+
+Using a [Middleware](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/) is done by calling `SeqWriterConfig.UseSeq` in `Startup.Configure(IApplicationBuilder builder)`:
+
+snippet: ConfigureBuilder
+
+
+##### Authorization
+
+Authorization in the middleware can bu done by using `useAuthorizationService = true` in `UseSeq`.
+
+snippet: StartupWithAuth
+
+This then uses [IAuthorizationService](https://docs.microsoft.com/en-us/aspnet/core/security/authorization/resourcebased) to verify the request:
+
+snippet: HandleWithAuth
+
+
+#### Using a Controller
+
+Add a new [controller](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/actions) that overrides `BaseSeqController`.
 
 snippet: SimpleController
 
 
-#### Authorization/Authentication
+##### Authorization/Authentication
 
 Adding authorization and authentication can be done with an [AuthorizeAttribute](https://docs.microsoft.com/en-us/aspnet/core/security/authorization/simple).
 
 snippet: AuthorizeController
 
 
-### Method level attributes
+##### Method level attributes
 
 Method level Asp attributes can by applied by overriding `BaseSeqController.Post`.
 

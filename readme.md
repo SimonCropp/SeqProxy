@@ -110,6 +110,11 @@ namespace SeqProxy
 <!-- endsnippet -->
 
 
+### 
+
+https://docs.microsoft.com/en-us/aspnet/core/security/authorization/resourcebased
+
+
 ### Implement a Controller
 
 Add a new controller that overrides `BaseSeqController`.
@@ -143,7 +148,7 @@ public class SeqController :
 <!-- endsnippet -->
 
 
-### Method level attributes
+#### Method level attributes
 
 Method level Asp attributes can by applied by overriding `BaseSeqController.Post`.
 

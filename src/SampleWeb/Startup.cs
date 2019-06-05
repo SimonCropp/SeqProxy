@@ -23,6 +23,7 @@ public class Startup
 
     public void Configure(IApplicationBuilder builder)
     {
+        builder.UseSeq();
         builder.UseMvc();
     }
 }

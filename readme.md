@@ -110,14 +110,62 @@ namespace SeqProxy
 <!-- endsnippet -->
 
 
-### 
+### Add HTTP handling
 
-https://docs.microsoft.com/en-us/aspnet/core/security/authorization/resourcebased
+There are two approaches to handling the HTTP containing log events. Using a Middleware and using a Controller.
 
 
-### Implement a Controller
+#### Using a Middleware
 
-Add a new controller that overrides `BaseSeqController`.
+Using a [Middleware](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/) is done by calling `SeqWriterConfig.UseSeq` in `Startup.Configure(IApplicationBuilder builder)`:
+
+<!-- snippet: ConfigureBuilder -->
+```cs
+public void Configure(IApplicationBuilder builder)
+{
+    builder.UseSeq();
+```
+<sup>[snippet source](/src/SampleWeb/Startup.cs#L24-L29)</sup>
+<!-- endsnippet -->
+
+
+##### Authorization
+
+Authorization in the middleware can bu done by using `useAuthorizationService = true` in `UseSeq`.
+
+<!-- snippet: StartupWithAuth -->
+```cs
+public void Configure(IApplicationBuilder builder)
+{
+    builder.UseSeq(useAuthorizationService: true);
+```
+<sup>[snippet source](/src/Tests/StartupWithAuth.cs#L6-L11)</sup>
+<!-- endsnippet -->
+
+This then uses [IAuthorizationService](https://docs.microsoft.com/en-us/aspnet/core/security/authorization/resourcebased) to verify the request:
+
+<!-- snippet: HandleWithAuth -->
+```cs
+async Task HandleWithAuth(HttpContext context, IAuthorizationService authService)
+{
+    var authResult = await authService.AuthorizeAsync(context.User, null, "SeqLog");
+
+    if (!authResult.Succeeded)
+    {
+        await context.ChallengeAsync();
+        return;
+    }
+
+    await seqWriter.Handle(context.User, context.Request, context.Response, context.RequestAborted);
+}
+```
+<sup>[snippet source](/src/SeqProxy/SeqMiddlewareWithAuth.cs#L37-L50)</sup>
+<!-- endsnippet -->
+
+
+#### Using a Controller
+
+Add a new [controller](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/actions) that overrides `BaseSeqController`.
 
 <!-- snippet: SimpleController -->
 ```cs
@@ -134,7 +182,7 @@ public class SeqController :
 <!-- endsnippet -->
 
 
-#### Authorization/Authentication
+##### Authorization/Authentication
 
 Adding authorization and authentication can be done with an [AuthorizeAttribute](https://docs.microsoft.com/en-us/aspnet/core/security/authorization/simple).
 
@@ -148,7 +196,7 @@ public class SeqController :
 <!-- endsnippet -->
 
 
-#### Method level attributes
+##### Method level attributes
 
 Method level Asp attributes can by applied by overriding `BaseSeqController.Post`.
 

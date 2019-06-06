@@ -1,5 +1,5 @@
 ﻿[
-  '{\'AppName\':\'theAppName\',\'AppVersion\':\'1.2\',\'Server\':\'TheMachineName\',\'Claims\':{\'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress\':\'User@foo.bar\',\'http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata\':\'theUserData\'},\'@t\':\'2019-05-28\',\'@mt\':\'Message1\'}',
-  '{\'AppName\':\'theAppName\',\'AppVersion\':\'1.2\',\'Server\':\'TheMachineName\',\'Claims\':{\'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress\':\'User@foo.bar\',\'http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata\':\'theUserData\'},\'@t\':\'2019-05-29\',\'@mt\':\'Message2\'}',
+  '{\'Application\':\'theAppName\',\'ApplicationVersion\':\'1.2\',\'Server\':\'TheMachineName\',\'Claims\':{\'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress\':\'User@foo.bar\',\'http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata\':\'theUserData\'},\'@t\':\'2019-05-28\',\'@mt\':\'Message1\'}',
+  '{\'Application\':\'theAppName\',\'ApplicationVersion\':\'1.2\',\'Server\':\'TheMachineName\',\'Claims\':{\'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress\':\'User@foo.bar\',\'http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata\':\'theUserData\'},\'@t\':\'2019-05-29\',\'@mt\':\'Message2\'}',
   ''
 ]

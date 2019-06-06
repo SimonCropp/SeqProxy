@@ -30,8 +30,8 @@ Note that timestamp (`@t`) is optional when using this project. If it is not sup
 
 For every log entry written the following information is appended:
 
- * The current application name (as `AppName`) defined in code at startup.
- * The current application version (as `AppVersion`) defined in code at startup.
+ * The current application name (as `Application`) defined in code at startup.
+ * The current application version (as `ApplicationVersion`) defined in code at startup.
  * The server name (as `Server`) using `Environment.MachineName`.
  * All claims for the current User from `ControllerBase.User.Claims`.
  * The [user-agent header](https://en.wikipedia.org/wiki/User_agent) as `UserAgent`.
@@ -53,8 +53,8 @@ There are several optional parameters:
 
 snippet: ConfigureServicesFull
 
- * `appName` defaults to `Assembly.GetCallingAssembly().GetName().Name`.
- * `appVersion` defaults to `Assembly.GetCallingAssembly().GetName().Version`.
+ * `application` defaults to `Assembly.GetCallingAssembly().GetName().Name`.
+ * `applicationVersion` defaults to `Assembly.GetCallingAssembly().GetName().Version`.
  * `scrubClaimType` is used to clean up claimtype strings. For example [ClaimTypes.Email](https://docs.microsoft.com/en-us/dotnet/api/system.identitymodel.claims.claimtypes.email?System_IdentityModel_Claims_ClaimTypes_Email) is `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress`, but when recording to Seq the value `emailaddress` is sufficient. Defaults to `DefaultClaimTypeScrubber.Scrub` to get the string after the last `/`.
 
 snippet: DefaultClaimTypeScrubber.cs

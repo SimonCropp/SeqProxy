@@ -8,10 +8,10 @@ class PrefixBuilder
     Func<string, string> scrubClaimType;
     string prefix;
 
-    public PrefixBuilder(string appName, Version version, Func<string, string> scrubClaimType)
+    public PrefixBuilder(string application, Version version, Func<string, string> scrubClaimType)
     {
         this.scrubClaimType = scrubClaimType;
-        prefix = $"{{'AppName':'{appName.AsJson()}','AppVersion':'{version.ToString().AsJson()}','Server':'{Environment.MachineName.AsJson()}',";
+        prefix = $"{{'Application':'{application.AsJson()}','ApplicationVersion':'{version.ToString().AsJson()}','Server':'{Environment.MachineName.AsJson()}',";
     }
 
     public string Build(ClaimsPrincipal user, string userAgent, string referrer)

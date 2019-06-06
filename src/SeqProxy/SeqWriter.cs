@@ -18,19 +18,19 @@ namespace SeqProxy
         public SeqWriter(
             Func<HttpClient> httpClientFunc,
             string seqUrl,
-            string appName,
+            string application,
             Version version,
             string apiKey,
             Func<string, string> scrubClaimType)
         {
             Guard.AgainstEmpty(apiKey, nameof(apiKey));
-            Guard.AgainstNullOrEmpty(appName, nameof(appName));
+            Guard.AgainstNullOrEmpty(application, nameof(application));
             Guard.AgainstNullOrEmpty(seqUrl, nameof(seqUrl));
             Guard.AgainstNull(httpClientFunc, nameof(httpClientFunc));
             Guard.AgainstNull(scrubClaimType, nameof(scrubClaimType));
             this.httpClientFunc = httpClientFunc;
             url = GetSeqUrl(seqUrl, apiKey);
-            prefixBuilder = new PrefixBuilder(appName, version, scrubClaimType);
+            prefixBuilder = new PrefixBuilder(application, version, scrubClaimType);
         }
 
         static string GetSeqUrl(string seqUrl, string apiKey)

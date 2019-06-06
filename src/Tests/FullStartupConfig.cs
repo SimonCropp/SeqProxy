@@ -12,7 +12,7 @@ public class StartupSnippets
         services.AddSeqWriter(
             seqUrl: "http://localhost:5341",
             apiKey: "TheApiKey",
-            appName: "MyAppName",
+            application: "MyAppName",
             appVersion: new Version(1, 2),
             scrubClaimType: claimType => claimType.Split("/").Last());
     }

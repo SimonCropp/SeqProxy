@@ -39,7 +39,7 @@ namespace SeqProxy
             string uri;
             if (apiKey == null)
             {
-                uri = $"api/events/raw";
+                uri = "api/events/raw";
             }
             else
             {
@@ -99,6 +99,11 @@ namespace SeqProxy
             if (string.IsNullOrWhiteSpace(line))
             {
                 throw new Exception("Blank lines are not allowed.");
+            }
+
+            if (line.StartsWith(@"{{""Events"":"))
+            {
+                throw new Exception("Only compact format is supported supported");
             }
 
             if (line[0] != '{')

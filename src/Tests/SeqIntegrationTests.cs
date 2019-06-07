@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using ApprovalTests;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -15,6 +16,22 @@ public class SeqIntegrationTests :
         var timestamp = DateTime.Now.ToString("o");
         var content = $@"{{'@t':'{timestamp}','@mt':'Hello, {{User}}','User':'John'}}";
         return WriteAndVerify(content);
+    }
+
+    [Fact]
+    public async Task OldFormat1()
+    {
+        var content = @"{{""Events"": [{{""Level"": ""Error"",""MessageTemplate"": ""The Message""}}]}}";
+        var exception = await Assert.ThrowsAsync<Exception>(() => WriteAndVerify(content));
+        Approvals.Verify(exception .Message);
+    }
+
+    [Fact]
+    public async Task OldFormat2()
+    {
+        var content = @"{{'Events': [{{'Level': 'Error','MessageTemplate': 'The Message'}}]}}";
+        var exception = await Assert.ThrowsAsync<Exception>(() => WriteAndVerify(content));
+        Approvals.Verify(exception.Message);
     }
 
     [Fact]

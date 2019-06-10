@@ -57,7 +57,13 @@ namespace Microsoft.Extensions.DependencyInjection
                 provider =>
                 {
                     var httpFactory = provider.GetService<IHttpClientFactory>();
-                    return new SeqWriter(() => httpFactory.CreateClient("SeqProxy"), seqUrl, application, appVersion, apiKey, scrubClaimType);
+                    return new SeqWriter(
+                        httpClientFunc: () => httpFactory.CreateClient("SeqProxy"),
+                        seqUrl,
+                        application,
+                        appVersion,
+                        apiKey,
+                        scrubClaimType);
                 });
         }
 

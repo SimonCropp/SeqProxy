@@ -11,9 +11,10 @@ public class SampleController :
         var file = Path.Combine(Directory.GetCurrentDirectory(), "sample.html");
         return PhysicalFile(file, "text/html");
     }
+
     [HttpGet]
     [Route("sample.js")]
-    public IActionResult SampleHS()
+    public IActionResult SampleJS()
     {
         var file = Path.Combine(Directory.GetCurrentDirectory(), "sample.js");
         return PhysicalFile(file, "text/html");

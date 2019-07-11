@@ -20,8 +20,6 @@ Enables writing seq logs by proxying requests through an ASP.NET Controller or M
 
 https://nuget.org/packages/SeqProxy/
 
-    PM> Install-Package SeqProxy
-
 
 ## HTTP Format/Protocol
 

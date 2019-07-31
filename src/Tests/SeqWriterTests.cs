@@ -27,7 +27,7 @@ public class SeqWriterTests :
 
     static void Verify(MockHttpClient httpClient)
     {
-        ObjectApprover.VerifyWithJson(httpClient.Requests.Single().Body.Split(Environment.NewLine), Scrubber.Scrub);
+        ObjectApprover.Verify(httpClient.Requests.Single().Body.Split(Environment.NewLine), Scrubber.Scrub);
     }
 
     [Fact]

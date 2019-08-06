@@ -1,21 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
   <PropertyGroup>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <LangVersion>latest</LangVersion>
-    <NoWarn>CS1591;CS0649</NoWarn>
     <Version>0.7.0</Version>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Copyright>Copyright $([System.DateTime]::UtcNow.ToString(yyyy)). All rights reserved</Copyright>
     <PackageTags>Seq, Serilog</PackageTags>
-    <PackageIconUrl>https://raw.githubusercontent.com/SimonCropp/SeqProxy/master/src/icon.png</PackageIconUrl>
-    <PackageProjectUrl>https://github.com/SimonCropp/SeqProxy</PackageProjectUrl>
-    <PackageOutputPath>..\..\nugets</PackageOutputPath>
     <Description>Enables writing seq logs by proxying requests through an ASP.NET Controller or Middleware.</Description>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <AssemblyOriginatorKeyFile>$(SolutionDir)key.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>
-    <DebugType>embedded</DebugType>
-    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 </Project>

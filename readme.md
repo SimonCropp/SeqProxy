@@ -16,10 +16,26 @@ Enables writing seq logs by proxying requests through an ASP.NET Controller or M
  * Leverage [Asp Authentication and Authorization](https://docs.microsoft.com/en-us/aspnet/core/security/) to verify and control incoming requests.
  * Append [extra data](#extra-data) to log messages during server processing.
 
+<!-- toc -->
+## Contents
 
-## The NuGet package [![NuGet Status](http://img.shields.io/nuget/v/SeqProxy.svg)](https://www.nuget.org/packages/SeqProxy/)
+  * [NuGet package](#nuget-package)
+  * [HTTP Format/Protocol](#http-formatprotocol)
+  * [Extra data](#extra-data)
+  * [Usage](#usage)
+    * [Enable in Startup](#enable-in-startup)
+    * [Add HTTP handling](#add-http-handling)
+  * [Client Side Usage](#client-side-usage)
+    * [Using raw JavaScript](#using-raw-javascript)
+    * [Using Structured-Log](#using-structured-log)
+  * [Icon](#icon)
+<!-- endtoc -->
 
-https://nuget.org/packages/SeqProxy/
+
+
+## NuGet package
+
+https://nuget.org/packages/SeqProxy/ [![NuGet Status](http://img.shields.io/nuget/v/SeqProxy.svg)](https://www.nuget.org/packages/SeqProxy/)
 
 
 ## HTTP Format/Protocol

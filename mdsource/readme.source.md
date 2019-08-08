@@ -9,10 +9,12 @@ Enables writing seq logs by proxying requests through an ASP.NET Controller or M
  * Leverage [Asp Authentication and Authorization](https://docs.microsoft.com/en-us/aspnet/core/security/) to verify and control incoming requests.
  * Append [extra data](#extra-data) to log messages during server processing.
 
+toc
 
-## The NuGet package [![NuGet Status](http://img.shields.io/nuget/v/SeqProxy.svg)](https://www.nuget.org/packages/SeqProxy/)
 
-https://nuget.org/packages/SeqProxy/
+## NuGet package
+
+https://nuget.org/packages/SeqProxy/ [![NuGet Status](http://img.shields.io/nuget/v/SeqProxy.svg)](https://www.nuget.org/packages/SeqProxy/)
 
 
 ## HTTP Format/Protocol

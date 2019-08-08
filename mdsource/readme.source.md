@@ -1,4 +1,4 @@
-# <img src="https://raw.githubusercontent.com/SimonCropp/SeqProxy/master/src/icon.png" height="40px"> SeqProxy
+# <img src="/src/icon.png" height="40px"> SeqProxy
 
 Enables writing seq logs by proxying requests through an ASP.NET Controller or Middleware.
 
@@ -35,7 +35,7 @@ For every log entry written the following information is appended:
  * The [user-agent header](https://en.wikipedia.org/wiki/User_agent) as `UserAgent`.
  * The [referer header](https://en.wikipedia.org/wiki/HTTP_referer) as `Referrer`.
 
-<img src="https://raw.githubusercontent.com/SimonCropp/SeqProxy/master/src/extraData.png">
+<img src="/src/extraData.png">
 
 
 ## Usage
@@ -162,7 +162,7 @@ snippet: StructuredLogWithExtraProps
 
 Then a destructured property will be written to Seq.
 
-<img src="https://raw.githubusercontent.com/SimonCropp/SeqProxy/master/src/omitFromMessage.png">
+<img src="/src/omitFromMessage.png">
 
 
 ## Icon

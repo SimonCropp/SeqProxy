@@ -1,4 +1,7 @@
-# <img src="/src/icon.png" height="40px"> SeqProxy
+# <img src="/src/icon.png" height="30px"> SeqProxy
+
+[![Build status](https://ci.appveyor.com/api/projects/status/7996jd4uoooy5qy2/branch/master?svg=true)](https://ci.appveyor.com/project/SimonCropp/SeqProxy)
+[![NuGet Status](https://img.shields.io/nuget/v/SeqProxy.svg?cacheSeconds=86400)](https://www.nuget.org/packages/SeqProxy/)
 
 Enables writing seq logs by proxying requests through an ASP.NET Controller or Middleware.
 
@@ -14,7 +17,7 @@ toc
 
 ## NuGet package
 
-https://nuget.org/packages/SeqProxy/ [![NuGet Status](http://img.shields.io/nuget/v/SeqProxy.svg)](https://www.nuget.org/packages/SeqProxy/)
+https://nuget.org/packages/SeqProxy/
 
 
 ## HTTP Format/Protocol
@@ -165,6 +168,11 @@ snippet: StructuredLogWithExtraProps
 Then a destructured property will be written to Seq.
 
 <img src="/src/omitFromMessage.png">
+
+
+## Release Notes
+
+See [closed milestones](../../milestones?state=closed).
 
 
 ## Icon

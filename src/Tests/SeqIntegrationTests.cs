@@ -8,7 +8,7 @@ using Xunit.Abstractions;
 
 [Trait("Category", "Integration")]
 public class SeqIntegrationTests :
-    XunitLoggingBase
+    XunitApprovalBase
 {
     [Fact]
     public Task Log()

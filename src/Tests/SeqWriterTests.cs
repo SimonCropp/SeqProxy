@@ -10,7 +10,7 @@ using Xunit;
 using Xunit.Abstractions;
 
 public class SeqWriterTests :
-    XunitLoggingBase
+    XunitApprovalBase
 {
     [Fact]
     public async Task Multiple()

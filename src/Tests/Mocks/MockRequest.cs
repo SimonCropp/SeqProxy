@@ -4,7 +4,6 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.Extensions.Primitives;
 
 public class MockRequest : HttpRequest
@@ -35,7 +34,7 @@ public class MockRequest : HttpRequest
     public override IQueryCollection Query { get; set; } = new QueryCollection();
     public override string Protocol { get; set; }
     public override IHeaderDictionary Headers { get; } = new HeaderDictionary();
-    public override IRequestCookieCollection Cookies { get; set; } = new RequestCookieCollection();
+    public override IRequestCookieCollection Cookies { get; set; } = new MockCookieCollection();
     public override long? ContentLength { get; set; }
     public override string ContentType { get; set; }
     public override Stream Body { get; set; }

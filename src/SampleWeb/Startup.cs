@@ -15,7 +15,7 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddMvcCore();
+        services.AddMvcCore(option => option.EnableEndpointRouting = false);
         services.AddSeqWriter(seqUrl: "http://localhost:5341");
     }
 

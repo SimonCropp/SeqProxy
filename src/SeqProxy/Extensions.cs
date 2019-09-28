@@ -10,7 +10,7 @@ static class Extensions
         return HttpUtility.JavaScriptStringEncode(value);
     }
 
-    public static string GetUserAgent(this HttpRequest request)
+    public static string? GetUserAgent(this HttpRequest request)
     {
         if (request.Headers.TryGetValue(HeaderNames.UserAgent, out var values))
         {
@@ -20,7 +20,7 @@ static class Extensions
         return null;
     }
 
-    public static string GetReferer(this HttpRequest request)
+    public static string? GetReferer(this HttpRequest request)
     {
         if (request.Headers.TryGetValue(HeaderNames.Referer, out var values))
         {

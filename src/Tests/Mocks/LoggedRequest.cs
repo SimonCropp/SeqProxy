@@ -1,4 +1,8 @@
 ﻿public class LoggedRequest
 {
-    public string Body;
+    public LoggedRequest(string body)
+    {
+        Body = body;
+    }
+    public readonly string Body;
 }

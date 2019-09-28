@@ -3,7 +3,10 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-public class MockResponse : HttpResponse
+// Non-nullable field is uninitialized.
+#pragma warning disable CS8618 
+public class MockResponse :
+    HttpResponse
 {
     public override void OnStarting(Func<object, Task> callback, object state)
     {

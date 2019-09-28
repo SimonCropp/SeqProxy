@@ -11,7 +11,7 @@ class SeqMiddlewareWithAuth
     SeqWriter seqWriter;
     IAuthorizationService authService;
 
-    public SeqMiddlewareWithAuth(RequestDelegate next, SeqWriter seqWriter, IAuthorizationService authService = null)
+    public SeqMiddlewareWithAuth(RequestDelegate next, SeqWriter seqWriter, IAuthorizationService? authService = null)
     {
         this.next = next;
         this.seqWriter = seqWriter;

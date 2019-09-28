@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 
-public class MockRequest : HttpRequest
+// Non-nullable field is uninitialized.
+#pragma warning disable CS8618
+public class MockRequest :
+    HttpRequest
 {
     public MockRequest(string body)
     {

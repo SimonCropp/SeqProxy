@@ -20,12 +20,12 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static void AddSeqWriter(
             this IServiceCollection services,
-            string seqUrl,
-            string application = null,
-            Version appVersion = null,
-            string apiKey = null,
-            Func<string, string> scrubClaimType = null,
-            Action<IServiceProvider, HttpClient> configureClient = null)
+            string? seqUrl,
+            string? application = null,
+            Version? appVersion = null,
+            string? apiKey = null,
+            Func<string, string>? scrubClaimType = null,
+            Action<IServiceProvider, HttpClient>? configureClient = null)
         {
             Guard.AgainstEmpty(apiKey, nameof(apiKey));
             Guard.AgainstEmpty(application, nameof(application));
@@ -59,15 +59,15 @@ namespace Microsoft.Extensions.DependencyInjection
                     var httpFactory = provider.GetService<IHttpClientFactory>();
                     return new SeqWriter(
                         httpClientFunc: () => httpFactory.CreateClient("SeqProxy"),
-                        seqUrl,
+                        seqUrl!,
                         application,
                         appVersion,
-                        apiKey,
+                        apiKey!,
                         scrubClaimType);
                 });
         }
 
-        static void AddHttpClient(IServiceCollection services, Action<IServiceProvider, HttpClient> configureClient)
+        static void AddHttpClient(IServiceCollection services, Action<IServiceProvider, HttpClient>? configureClient)
         {
             if (configureClient == null)
             {

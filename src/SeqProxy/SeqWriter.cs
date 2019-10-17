@@ -82,12 +82,10 @@ namespace SeqProxy
             var httpClient = httpClientFunc();
             try
             {
-                using (var content = new StringContent(payload, Encoding.UTF8, "application/vnd.serilog.clef"))
-                using (var seqResponse = await httpClient.PostAsync(url, content, cancellation))
-                {
-                    response.StatusCode = (int) seqResponse.StatusCode;
-                    await seqResponse.Content.CopyToAsync(response.Body);
-                }
+                using var content = new StringContent(payload, Encoding.UTF8, "application/vnd.serilog.clef");
+                using var seqResponse = await httpClient.PostAsync(url, content, cancellation);
+                response.StatusCode = (int) seqResponse.StatusCode;
+                await seqResponse.Content.CopyToAsync(response.Body);
             }
             catch (TaskCanceledException)
             {

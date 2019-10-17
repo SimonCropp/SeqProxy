@@ -59,20 +59,18 @@ public class SeqIntegrationTests :
 
     static async Task WriteAndVerify(string content, string url = "/api/events/raw")
     {
-        using (var server = TestServerBuilder.Build())
-        using (var client = server.CreateClient())
+        using var server = TestServerBuilder.Build();
+        using var client = server.CreateClient();
+        try
         {
-            try
-            {
-                client.DefaultRequestHeaders.Add("User-Agent", "TheUserAgent");
-                var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-                var httpResponseMessage = await client.PostAsync(url, httpContent);
-                httpResponseMessage.EnsureSuccessStatusCode();
-            }
-            finally
-            {
-                await server.Host.StopAsync();
-            }
+            client.DefaultRequestHeaders.Add("User-Agent", "TheUserAgent");
+            var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
+            var httpResponseMessage = await client.PostAsync(url, httpContent);
+            httpResponseMessage.EnsureSuccessStatusCode();
+        }
+        finally
+        {
+            await server.Host.StopAsync();
         }
     }
 

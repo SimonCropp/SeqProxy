@@ -20,7 +20,7 @@ namespace SeqProxy
             string seqUrl,
             string application,
             Version version,
-            string apiKey,
+            string? apiKey,
             Func<string, string> scrubClaimType)
         {
             Guard.AgainstEmpty(apiKey, nameof(apiKey));
@@ -33,7 +33,7 @@ namespace SeqProxy
             prefixBuilder = new PrefixBuilder(application, version, scrubClaimType);
         }
 
-        static string GetSeqUrl(string seqUrl, string apiKey)
+        static string GetSeqUrl(string seqUrl, string? apiKey)
         {
             var baseUri = new Uri(seqUrl);
             string uri;

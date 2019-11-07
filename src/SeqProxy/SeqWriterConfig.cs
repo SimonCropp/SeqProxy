@@ -62,7 +62,7 @@ namespace Microsoft.Extensions.DependencyInjection
                         seqUrl!,
                         application,
                         appVersion,
-                        apiKey!,
+                        apiKey,
                         scrubClaimType);
                 });
         }

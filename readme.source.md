@@ -88,6 +88,10 @@ snippet: HandleWithAuth
 
 #### Using a Controller
 
+`BaseSeqController` is an implementation of `ControllerBase` that provides a HTTP post and some basic routing.
+
+snippet: BaseSeqController.cs
+
 Add a new [controller](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/actions) that overrides `BaseSeqController`.
 
 snippet: SimpleController

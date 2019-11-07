@@ -110,8 +110,14 @@ public void ConfigureServices(IServiceCollection services)
 ```cs
 namespace SeqProxy
 {
+    /// <summary>
+    /// Used for scrubbing claims when no other scrubber is defined.
+    /// </summary>
     public static class DefaultClaimTypeScrubber
     {
+        /// <summary>
+        /// Get the string after the last /.
+        /// </summary>
         public static string Scrub(string claimType)
         {
             Guard.AgainstNullOrEmpty(claimType, nameof(claimType));
@@ -126,7 +132,7 @@ namespace SeqProxy
     }
 }
 ```
-<sup>[snippet source](/src/SeqProxy/DefaultClaimTypeScrubber.cs#L1-L17) / [anchor](#snippet-DefaultClaimTypeScrubber.cs)</sup>
+<sup>[snippet source](/src/SeqProxy/DefaultClaimTypeScrubber.cs#L1-L23) / [anchor](#snippet-DefaultClaimTypeScrubber.cs)</sup>
 <!-- endsnippet -->
 
 
@@ -182,11 +188,55 @@ async Task HandleWithAuth(HttpContext context, IAuthorizationService authService
     await seqWriter.Handle(context.User, context.Request, context.Response, context.RequestAborted);
 }
 ```
-<sup>[snippet source](/src/SeqProxy/SeqMiddlewareWithAuth.cs#L37-L50) / [anchor](#snippet-handlewithauth)</sup>
+<sup>[snippet source](/src/SeqProxy/SeqMiddlewareWithAuth.cs#L37-L52) / [anchor](#snippet-handlewithauth)</sup>
 <!-- endsnippet -->
 
 
 #### Using a Controller
+
+`BaseSeqController` is an implementation of `ControllerBase` that provides a HTTP post and some basic routing.
+
+<!-- snippet: BaseSeqController.cs -->
+<a id='snippet-BaseSeqController.cs'/></a>
+```cs
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+
+namespace SeqProxy
+{
+    /// <summary>
+    /// An implementation of <see cref="ControllerBase"/> that provides a http post and some basic routing.
+    /// </summary>
+    [Route("/api/events/raw")]
+    [Route("/seq")]
+    [ApiController]
+    public abstract class BaseSeqController :
+        ControllerBase
+    {
+        SeqWriter seqWriter;
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="BaseSeqController"/>
+        /// </summary>
+        protected BaseSeqController(SeqWriter seqWriter)
+        {
+            Guard.AgainstNull(seqWriter, nameof(seqWriter));
+            this.seqWriter = seqWriter;
+        }
+
+        /// <summary>
+        /// Handles log events via a HTTP post.
+        /// </summary>
+        [HttpPost]
+        public virtual Task Post()
+        {
+            return seqWriter.Handle(User, Request, Response, HttpContext.RequestAborted);
+        }
+    }
+}
+```
+<sup>[snippet source](/src/SeqProxy/BaseSeqController.cs#L1-L35) / [anchor](#snippet-BaseSeqController.cs)</sup>
+<!-- endsnippet -->
 
 Add a new [controller](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/actions) that overrides `BaseSeqController`.
 

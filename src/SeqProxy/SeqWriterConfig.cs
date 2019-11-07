@@ -6,8 +6,14 @@ using SeqProxy;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
+    /// <summary>
+    /// Adds
+    /// </summary>
     public static class SeqWriterConfig
     {
+        /// <summary>
+        /// Adds a Middleware to <paramref name="builder"/> that handles log requests and forwards them to SEQ.
+        /// </summary>
         public static void UseSeq(this IApplicationBuilder builder, bool useAuthorizationService = false)
         {
             if (useAuthorizationService)
@@ -18,9 +24,19 @@ namespace Microsoft.Extensions.DependencyInjection
             builder.UseMiddleware<SeqMiddleware>();
         }
 
+        /// <summary>
+        /// Adds a <see cref="SeqWriter"/> singleton to <paramref name="services"/>.
+        /// </summary>
+        /// <param name="services">The <see cref="IServiceCollection"/> to ad to.</param>
+        /// <param name="seqUrl">The SEQ api url.</param>
+        /// <param name="application">The application name. If null then the name of <see cref="Assembly.GetCallingAssembly"/> will be used.</param>
+        /// <param name="appVersion">The application version. If null then the version of <see cref="Assembly.GetCallingAssembly"/> will be used.</param>
+        /// <param name="apiKey">The SEQ api key to use. Will be appended to <paramref name="seqUrl"/> when writing log entries.</param>
+        /// <param name="scrubClaimType">Scrubber for claim types. If null then <see cref="DefaultClaimTypeScrubber.Scrub"/> will be used.</param>
+        /// <param name="configureClient">Call back for manipulating the <see cref="HttpClient"/> use for writing log entries to SEQ.</param>
         public static void AddSeqWriter(
             this IServiceCollection services,
-            string? seqUrl,
+            string seqUrl,
             string? application = null,
             Version? appVersion = null,
             string? apiKey = null,

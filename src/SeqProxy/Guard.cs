@@ -11,7 +11,7 @@ static class Guard
         }
     }
 
-    public static void AgainstNullOrEmpty(string? value, string argumentName)
+    public static void AgainstNullOrEmpty(string value, string argumentName)
     {
         if (string.IsNullOrWhiteSpace(value))
         {

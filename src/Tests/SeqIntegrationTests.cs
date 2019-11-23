@@ -2,13 +2,13 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using ApprovalTests;
+using VerifyXunit;
 using Xunit;
 using Xunit.Abstractions;
 
 [Trait("Category", "Integration")]
 public class SeqIntegrationTests :
-    XunitApprovalBase
+    VerifyBase
 {
     [Fact]
     public Task Log()
@@ -23,7 +23,7 @@ public class SeqIntegrationTests :
     {
         var content = @"{{""Events"": [{{""Level"": ""Error"",""MessageTemplate"": ""The Message""}}]}}";
         var exception = await Assert.ThrowsAsync<Exception>(() => WriteAndVerify(content));
-        Approvals.Verify(exception .Message);
+        await Verify(exception.Message);
     }
 
     [Fact]
@@ -31,7 +31,7 @@ public class SeqIntegrationTests :
     {
         var content = @"{{'Events': [{{'Level': 'Error','MessageTemplate': 'The Message'}}]}}";
         var exception = await Assert.ThrowsAsync<Exception>(() => WriteAndVerify(content));
-        Approvals.Verify(exception.Message);
+        await Verify(exception.Message);
     }
 
     [Fact]
@@ -39,7 +39,7 @@ public class SeqIntegrationTests :
     {
         var timestamp = DateTime.Now.ToString("o");
         var content = $@"{{'@t':'{timestamp}','@mt':'Hello, {{User}}','User':'John'}}";
-        return WriteAndVerify(content,"/seqcontroller");
+        return WriteAndVerify(content, "/seqcontroller");
     }
 
     [Fact]

@@ -1,0 +1,1 @@
+'{\'Application\':\'TheAppName\',\'ApplicationVersion\':\'1.2\',\'Server\':\'TheMachineName\',\'Claims\':{\'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress\':\'User@foo.bar\',\'http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata\':\'theUserData\'},\'UserAgent\':\'theUserAgent\',\'Referrer\':\'theReferer\','

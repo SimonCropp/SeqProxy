@@ -1,17 +1,18 @@
 ﻿using System;
-using ApprovalTests;
+using System.Threading.Tasks;
+using VerifyXunit;
 using Xunit;
 using Xunit.Abstractions;
 
 public class PrefixBuilderTests :
-    XunitApprovalBase
+    VerifyBase
 {
     [Fact]
-    public void Build()
+    public Task Build()
     {
         var builder = new PrefixBuilder("TheAppName", new Version(1, 2), s => s);
         var build = builder.Build(ClaimsBuilder.Build(), "theUserAgent", "theReferer");
-        Approvals.Verify(build, Scrubber.Scrub);
+        return Verify(build);
     }
 
     public PrefixBuilderTests(ITestOutputHelper output) :

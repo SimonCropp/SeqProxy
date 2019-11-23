@@ -1,1 +1,0 @@
-﻿apiKey is not allowed.

@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ApprovalTests;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using SeqProxy;
+using VerifyXunit;
 using Xunit;
 using Xunit.Abstractions;
 
 public class SeqWriterTests :
-    XunitApprovalBase
+    VerifyBase
 {
     [Fact]
     public async Task Multiple()
@@ -21,12 +21,12 @@ public class SeqWriterTests :
             @"{'@t':'2019-05-28','@mt':'Message1'}
 {'@t':'2019-05-29','@mt':'Message2'}");
         await writer.Handle(ClaimsBuilder.Build(), request, new MockResponse());
-        Verify(httpClient);
+        await Verify(httpClient);
     }
 
-    static void Verify(MockHttpClient httpClient)
+    Task Verify(MockHttpClient httpClient)
     {
-        ObjectApprover.Verify(httpClient.Requests.Single().Body.Split(Environment.NewLine), Scrubber.Scrub);
+        return Verify(httpClient.Requests.Single().Body.Split(Environment.NewLine));
     }
 
     [Fact]
@@ -36,7 +36,7 @@ public class SeqWriterTests :
         var writer = new SeqWriter(() => httpClient, "http://theSeqUrl", "theAppName", new Version(1, 2), "theApiKey", s => s);
         var request = new MockRequest("{'@t':'2019-05-28','@mt':'Simple Message'}");
         await writer.Handle(ClaimsBuilder.Build(), request, new MockResponse());
-        Verify(httpClient);
+        await Verify(httpClient);
     }
 
     [Fact]
@@ -55,7 +55,7 @@ public class SeqWriterTests :
 
         var user = ClaimsBuilder.Build();
         var exception = await Assert.ThrowsAsync<Exception>(() => writer.Handle(user, request, new MockResponse()));
-        Approvals.Verify(exception.Message);
+        await Verify(exception.Message);
     }
 
     [Fact]
@@ -73,7 +73,7 @@ public class SeqWriterTests :
 
         var user = ClaimsBuilder.Build();
         var exception = await Assert.ThrowsAsync<Exception>(() => writer.Handle(user, request, new MockResponse()));
-        Approvals.Verify(exception.Message);
+        await Verify(exception.Message);
     }
 
     public SeqWriterTests(ITestOutputHelper output) :

@@ -4,19 +4,17 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Fody" Version="6.0.5" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CSharp" Version="4.6.0" />
-    <PackageReference Include="ModuleInit.Fody" Version="2.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="MarkdownSnippets.MsBuild" Version="17.0.0" PrivateAssets="all" />
-    <PackageReference Include="XunitContext" Version="1.0.0" />
-    <PackageReference Include="Verify.Xunit" Version="1.0.0-beta.7" />
+    <PackageReference Include="XunitContext" Version="1.5.1" />
+    <PackageReference Include="Verify.Xunit" Version="1.0.0-beta.10" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
     <ProjectReference Include="..\SampleWeb\SampleWeb.csproj" />
     <ProjectReference Include="..\SeqProxy\SeqProxy.csproj" />
-    <PackageReference Include="ProjectDefaults" Version="1.0.32" PrivateAssets="All" />
+    <PackageReference Include="ProjectDefaults" Version="1.0.33" PrivateAssets="All" />
   </ItemGroup>
 </Project>

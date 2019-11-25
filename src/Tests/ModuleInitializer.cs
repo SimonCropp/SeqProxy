@@ -1,8 +1,10 @@
 ﻿using VerifyXunit;
+using Xunit;
 
-public static class ModuleInitializer
+[GlobalSetUp]
+public static class GlobalSetup
 {
-    public static void Initialize()
+    public static void Setup()
     {
         Global.ScrubMachineName();
     }

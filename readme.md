@@ -30,9 +30,7 @@ Enables writing seq logs by proxying requests through an ASP.NET Controller or M
     * [Add HTTP handling](#add-http-handling)
   * [Client Side Usage](#client-side-usage)
     * [Using raw JavaScript](#using-raw-javascript)
-    * [Using Structured-Log](#using-structured-log)
-<!-- endtoc -->
-
+    * [Using Structured-Log](#using-structured-log)<!-- endtoc -->
 
 
 ## NuGet package

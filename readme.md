@@ -8,7 +8,7 @@ To change this file edit the source file and then run MarkdownSnippets.
 # <img src="/src/icon.png" height="30px"> SeqProxy
 
 [![Build status](https://ci.appveyor.com/api/projects/status/7996jd4uoooy5qy2/branch/master?svg=true)](https://ci.appveyor.com/project/SimonCropp/SeqProxy)
-[![NuGet Status](https://img.shields.io/nuget/v/SeqProxy.svg?cacheSeconds=86400)](https://www.nuget.org/packages/SeqProxy/)
+[![NuGet Status](https://img.shields.io/nuget/v/SeqProxy.svg)](https://www.nuget.org/packages/SeqProxy/)
 
 Enables writing seq logs by proxying requests through an ASP.NET Controller or Middleware.
 

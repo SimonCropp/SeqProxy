@@ -173,9 +173,12 @@ This then uses [IAuthorizationService](https://docs.microsoft.com/en-us/aspnet/c
 <!-- snippet: HandleWithAuth -->
 <a id='snippet-handlewithauth'/></a>
 ```cs
-async Task HandleWithAuth(HttpContext context, IAuthorizationService authService)
+async Task HandleWithAuth(
+    HttpContext context,
+    IAuthorizationService authService)
 {
-    var authResult = await authService.AuthorizeAsync(context.User, null, "SeqLog");
+    var user = context.User;
+    var authResult = await authService.AuthorizeAsync(user, null, "SeqLog");
 
     if (!authResult.Succeeded)
     {
@@ -183,10 +186,14 @@ async Task HandleWithAuth(HttpContext context, IAuthorizationService authService
         return;
     }
 
-    await seqWriter.Handle(context.User, context.Request, context.Response, context.RequestAborted);
+    await seqWriter.Handle(
+        user,
+        context.Request,
+        context.Response,
+        context.RequestAborted);
 }
 ```
-<sup><a href='/src/SeqProxy/SeqMiddlewareWithAuth.cs#L37-L52' title='File snippet `handlewithauth` was extracted from'>snippet source</a> | <a href='#snippet-handlewithauth' title='Navigate to start of snippet `handlewithauth`'>anchor</a></sup>
+<sup><a href='/src/SeqProxy/SeqMiddlewareWithAuth.cs#L37-L59' title='File snippet `handlewithauth` was extracted from'>snippet source</a> | <a href='#snippet-handlewithauth' title='Navigate to start of snippet `handlewithauth`'>anchor</a></sup>
 <!-- endsnippet -->
 
 
@@ -331,10 +338,12 @@ Install both [structured-log npm](https://www.npmjs.com/package/structured-log) 
 <!-- snippet: StructuredLogInclude -->
 <a id='snippet-structuredloginclude'/></a>
 ```html
-<script src='https://cdn.jsdelivr.net/npm/structured-log/dist/structured-log.js'></script>
-<script src='https://cdn.jsdelivr.net/npm/structured-log-seq-sink/dist/structured-log-seq-sink.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/structured-log/dist/structured-log.js'>
+</script>
+<script src='https://cdn.jsdelivr.net/npm/structured-log-seq-sink/dist/structured-log-seq-sink.js'>
+</script>
 ```
-<sup><a href='/src/SampleWeb/sample.html#L4-L7' title='File snippet `structuredloginclude` was extracted from'>snippet source</a> | <a href='#snippet-structuredloginclude' title='Navigate to start of snippet `structuredloginclude`'>anchor</a></sup>
+<sup><a href='/src/SampleWeb/sample.html#L4-L9' title='File snippet `structuredloginclude` was extracted from'>snippet source</a> | <a href='#snippet-structuredloginclude' title='Navigate to start of snippet `structuredloginclude`'>anchor</a></sup>
 <!-- endsnippet -->
 
 

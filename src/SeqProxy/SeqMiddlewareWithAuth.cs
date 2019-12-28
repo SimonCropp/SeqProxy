@@ -36,9 +36,12 @@ class SeqMiddlewareWithAuth
 
     #region HandleWithAuth
 
-    async Task HandleWithAuth(HttpContext context, IAuthorizationService authService)
+    async Task HandleWithAuth(
+        HttpContext context,
+        IAuthorizationService authService)
     {
-        var authResult = await authService.AuthorizeAsync(context.User, null, "SeqLog");
+        var user = context.User;
+        var authResult = await authService.AuthorizeAsync(user, null, "SeqLog");
 
         if (!authResult.Succeeded)
         {
@@ -46,7 +49,11 @@ class SeqMiddlewareWithAuth
             return;
         }
 
-        await seqWriter.Handle(context.User, context.Request, context.Response, context.RequestAborted);
+        await seqWriter.Handle(
+            user,
+            context.Request,
+            context.Response,
+            context.RequestAborted);
     }
 
     #endregion

@@ -22,7 +22,6 @@ Enables writing seq logs by proxying requests through an ASP.NET Controller or M
 <!-- toc -->
 ## Contents
 
-  * [NuGet package](#nuget-package)
   * [HTTP Format/Protocol](#http-formatprotocol)
   * [Extra data](#extra-data)
   * [Usage](#usage)

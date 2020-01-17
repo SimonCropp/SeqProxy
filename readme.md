@@ -29,7 +29,8 @@ Enables writing seq logs by proxying requests through an ASP.NET Controller or M
     * [Add HTTP handling](#add-http-handling)
   * [Client Side Usage](#client-side-usage)
     * [Using raw JavaScript](#using-raw-javascript)
-    * [Using Structured-Log](#using-structured-log)<!-- endtoc -->
+    * [Using Structured-Log](#using-structured-log)
+  * [Security contact information](#security-contact-information)<!-- endtoc -->
 
 
 ## NuGet package
@@ -433,6 +434,11 @@ function LogStructuredWithExtraProps(text) {
 Then a destructured property will be written to Seq.
 
 <img src="/src/omitFromMessage.png">
+
+
+## Security contact information
+
+To report a security vulnerability, please use the [Tidelift security contact](https://tidelift.com/security). Tidelift will coordinate the fix and disclosure.
 
 
 ## Release Notes

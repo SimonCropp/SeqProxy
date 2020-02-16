@@ -12,6 +12,8 @@ To change this file edit the source file and then run MarkdownSnippets.
 
 Enables writing seq logs by proxying requests through an ASP.NET Controller or Middleware.
 
+Support is available via a [Tidelift Subscription](https://tidelift.com/subscription/pkg/nuget-seqproxy?utm_source=nuget-seqproxy&utm_medium=referral&utm_campaign=enterprise).
+
 
 ## Why
 

@@ -21,7 +21,7 @@ public class SeqIntegrationTests :
     [Fact]
     public async Task OldFormat1()
     {
-        var content = @"{{""Events"": [{{""Level"": ""Error"",""MessageTemplate"": ""The Message""}}]}}";
+        var content = @"{""Events"": [{""Level"": ""Error"",""MessageTemplate"": ""The Message""}]}";
         var exception = await Assert.ThrowsAsync<Exception>(() => WriteAndVerify(content));
         await Verify(exception.Message);
     }
@@ -29,7 +29,25 @@ public class SeqIntegrationTests :
     [Fact]
     public async Task OldFormat2()
     {
-        var content = @"{{'Events': [{{'Level': 'Error','MessageTemplate': 'The Message'}}]}}";
+        var content = @"{'Events': [{'Level': 'Error','MessageTemplate': 'The Message'}]}";
+        var exception = await Assert.ThrowsAsync<Exception>(() => WriteAndVerify(content));
+        await Verify(exception.Message);
+    }
+
+    [Fact]
+    public async Task OldFormat3()
+    {
+        var content = @"{
+  ""Events"": [{
+    ""Timestamp"": ""2015-05-09T22:09:08.12345+10:00"",
+    ""Level"": ""Warning"",
+    ""MessageTemplate"": ""Disk space is low on {Drive}"",
+    ""Properties"": {
+      ""Drive"": ""C:"",
+      ""MachineName"": ""nblumhardt-rmbp""
+    }
+  }]
+}";
         var exception = await Assert.ThrowsAsync<Exception>(() => WriteAndVerify(content));
         await Verify(exception.Message);
     }

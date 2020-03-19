@@ -114,14 +114,14 @@ namespace SeqProxy
                 throw new Exception("Blank lines are not allowed.");
             }
 
-            if (line.StartsWith(@"{{""Events"":"))
+            if (line.StartsWith(@"{""Events"":")||line.StartsWith("{'Events':"))
             {
                 throw new Exception("Only compact format is supported supported");
             }
 
-            if (line[0] != '{')
+            if (!line.StartsWith("{'"))
             {
-                throw new Exception($"Expected first char of line to be a '{{'. Line: {line}");
+                throw new Exception($"Expected line to start with `{{'`. Line: {line}");
             }
         }
     }

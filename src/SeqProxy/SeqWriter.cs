@@ -119,10 +119,11 @@ namespace SeqProxy
                 throw new Exception("Only compact format is supported supported");
             }
 
-            if (!line.StartsWith("{'"))
+            if (line.StartsWith("{'") || line.StartsWith(@"{"""))
             {
-                throw new Exception($"Expected line to start with `{{'`. Line: {line}");
+                return;
             }
+            throw new Exception($"Expected line to start with `{{'` or `{{\"`. Line: {line}");
         }
     }
 }

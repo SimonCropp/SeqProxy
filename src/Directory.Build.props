@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
   <PropertyGroup>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <PackageTags>Seq, Serilog</PackageTags>
     <Description>Enables writing seq logs by proxying requests through an ASP.NET Controller or Middleware.</Description>
   </PropertyGroup>

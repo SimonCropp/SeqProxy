@@ -6,7 +6,7 @@ using VerifyXunit;
 using Xunit;
 using Xunit.Abstractions;
 
-[Trait("Category", "Integration")]
+//[Trait("Category", "Integration")]
 public class SeqIntegrationTests :
     VerifyBase
 {
@@ -15,6 +15,14 @@ public class SeqIntegrationTests :
     {
         var timestamp = DateTime.Now.ToString("o");
         var content = $@"{{'@t':'{timestamp}','@mt':'Hello, {{User}}','User':'John'}}";
+        return WriteAndVerify(content);
+    }
+
+    [Fact]
+    public Task LogWithDoubleQuotes()
+    {
+        var timestamp = DateTime.Now.ToString("o");
+        var content = $@"{{""@t"":""{timestamp}"",""@mt"":""Hello, {{User}}"",""User"":""John""}}";
         return WriteAndVerify(content);
     }
 

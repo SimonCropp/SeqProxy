@@ -1,1 +1,1 @@
-Expected line to start with `{'`. Line: {
+Expected line to start with `{'` or `{"`. Line: {

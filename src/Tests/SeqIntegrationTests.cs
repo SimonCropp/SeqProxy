@@ -6,7 +6,7 @@ using VerifyXunit;
 using Xunit;
 using Xunit.Abstractions;
 
-//[Trait("Category", "Integration")]
+[Trait("Category", "Integration")]
 public class SeqIntegrationTests :
     VerifyBase
 {

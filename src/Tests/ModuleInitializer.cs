@@ -1,11 +1,9 @@
-﻿using Verify;
-using Xunit;
+﻿using VerifyTests;
 
-[GlobalSetUp]
-public static class GlobalSetup
+public static class ModuleInitializer
 {
-    public static void Setup()
+    public static void Initialize()
     {
-        SharedVerifySettings.ScrubMachineName();
+        VerifierSettings.ScrubMachineName();
     }
 }

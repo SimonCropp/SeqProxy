@@ -7,10 +7,9 @@ using Microsoft.Extensions.Primitives;
 using SeqProxy;
 using VerifyXunit;
 using Xunit;
-using Xunit.Abstractions;
 
-public class SeqWriterTests :
-    VerifyBase
+[UsesVerify]
+public class SeqWriterTests
 {
     [Fact]
     public async Task Multiple()
@@ -26,7 +25,7 @@ public class SeqWriterTests :
 
     Task Verify(MockHttpClient httpClient)
     {
-        return Verify(httpClient.Requests.Single().Body.Split(Environment.NewLine));
+        return Verifier.Verify(httpClient.Requests.Single().Body.Split(Environment.NewLine));
     }
 
     [Fact]
@@ -55,7 +54,7 @@ public class SeqWriterTests :
 
         var user = ClaimsBuilder.Build();
         var exception = await Assert.ThrowsAsync<Exception>(() => writer.Handle(user, request, new MockResponse()));
-        await Verify(exception.Message);
+        await Verifier.Verify(exception.Message);
     }
 
     [Fact]
@@ -73,11 +72,6 @@ public class SeqWriterTests :
 
         var user = ClaimsBuilder.Build();
         var exception = await Assert.ThrowsAsync<Exception>(() => writer.Handle(user, request, new MockResponse()));
-        await Verify(exception.Message);
-    }
-
-    public SeqWriterTests(ITestOutputHelper output) :
-        base(output)
-    {
+        await Verifier.Verify(exception.Message);
     }
 }

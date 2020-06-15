@@ -4,11 +4,10 @@ using System.Text;
 using System.Threading.Tasks;
 using VerifyXunit;
 using Xunit;
-using Xunit.Abstractions;
 
+[UsesVerify]
 [Trait("Category", "Integration")]
-public class SeqIntegrationTests :
-    VerifyBase
+public class SeqIntegrationTests
 {
     [Fact]
     public Task Log()
@@ -31,7 +30,7 @@ public class SeqIntegrationTests :
     {
         var content = @"{""Events"": [{""Level"": ""Error"",""MessageTemplate"": ""The Message""}]}";
         var exception = await Assert.ThrowsAsync<Exception>(() => WriteAndVerify(content));
-        await Verify(exception.Message);
+        await Verifier.Verify(exception.Message);
     }
 
     [Fact]
@@ -39,7 +38,7 @@ public class SeqIntegrationTests :
     {
         var content = @"{'Events': [{'Level': 'Error','MessageTemplate': 'The Message'}]}";
         var exception = await Assert.ThrowsAsync<Exception>(() => WriteAndVerify(content));
-        await Verify(exception.Message);
+        await Verifier.Verify(exception.Message);
     }
 
     [Fact]
@@ -57,7 +56,7 @@ public class SeqIntegrationTests :
   }]
 }";
         var exception = await Assert.ThrowsAsync<Exception>(() => WriteAndVerify(content));
-        await Verify(exception.Message);
+        await Verifier.Verify(exception.Message);
     }
 
     [Fact]
@@ -98,10 +97,5 @@ public class SeqIntegrationTests :
         {
             await server.Host.StopAsync();
         }
-    }
-
-    public SeqIntegrationTests(ITestOutputHelper output) :
-        base(output)
-    {
     }
 }

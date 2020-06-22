@@ -20,7 +20,7 @@ public class SeqWriterTests
             @"{'@t':'2019-05-28','@mt':'Message1'}
 {'@t':'2019-05-29','@mt':'Message2'}");
         await writer.Handle(ClaimsBuilder.Build(), request, new MockResponse());
-        await Verify(httpClient);
+        await Verifier.Verify(httpClient);
     }
 
     Task Verify(MockHttpClient httpClient)
@@ -35,7 +35,7 @@ public class SeqWriterTests
         var writer = new SeqWriter(() => httpClient, "http://theSeqUrl", "theAppName", new Version(1, 2), "theApiKey", s => s);
         var request = new MockRequest("{'@t':'2019-05-28','@mt':'Simple Message'}");
         await writer.Handle(ClaimsBuilder.Build(), request, new MockResponse());
-        await Verify(httpClient);
+        await Verifier.Verify(httpClient);
     }
 
     [Fact]

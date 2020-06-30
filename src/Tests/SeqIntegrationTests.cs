@@ -13,7 +13,7 @@ public class SeqIntegrationTests
     public Task Log()
     {
         var timestamp = DateTime.Now.ToString("o");
-        var content = $@"{{'@t':'{timestamp}','@mt':'Hello, {{User}}','User':'John'}}";
+        var content = $"{{'@t':'{timestamp}','@mt':'Hello, {{User}}','User':'John'}}";
         return WriteAndVerify(content);
     }
 
@@ -36,7 +36,7 @@ public class SeqIntegrationTests
     [Fact]
     public async Task OldFormat2()
     {
-        var content = @"{'Events': [{'Level': 'Error','MessageTemplate': 'The Message'}]}";
+        var content = "{'Events': [{'Level': 'Error','MessageTemplate': 'The Message'}]}";
         var exception = await Assert.ThrowsAsync<Exception>(() => WriteAndVerify(content));
         await Verifier.Verify(exception.Message);
     }
@@ -63,7 +63,7 @@ public class SeqIntegrationTests
     public Task LogToController()
     {
         var timestamp = DateTime.Now.ToString("o");
-        var content = $@"{{'@t':'{timestamp}','@mt':'Hello, {{User}}','User':'John'}}";
+        var content = $"{{'@t':'{timestamp}','@mt':'Hello, {{User}}','User':'John'}}";
         return WriteAndVerify(content, "/seqcontroller");
     }
 

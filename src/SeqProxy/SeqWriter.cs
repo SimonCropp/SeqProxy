@@ -69,7 +69,9 @@ namespace SeqProxy
         {
             ApiKeyValidator.ThrowIfApiKeySpecified(request);
             var builder = new StringBuilder();
-            var prefix = prefixBuilder.Build(user, request.GetUserAgent(), request.GetReferer());
+
+            var id = BuildId();
+            var prefix = prefixBuilder.Build(user, request.GetUserAgent(), request.GetReferer(), id);
             using (var streamReader = new StreamReader(request.Body))
             {
                 string line;
@@ -81,7 +83,7 @@ namespace SeqProxy
                     if (!line.Contains("\"@t\"") &&
                         !line.Contains("'@t'"))
                     {
-                        builder.Append($@"'@t':'{DateTime.UtcNow:o}',");
+                        builder.Append($"'@t':'{DateTime.UtcNow:o}',");
                     }
 
                     builder.Append(line, 1, line.Length - 1);
@@ -89,10 +91,24 @@ namespace SeqProxy
                 }
             }
 
-            await Write(builder.ToString(), response, cancellation);
+            await Write(builder.ToString(), response, id, cancellation);
         }
 
-        async Task Write(string payload, HttpResponse response, CancellationToken cancellation)
+        static string BuildId()
+        {
+            #region BuildId
+
+            var now = DateTime.UtcNow;
+            var startOfYear = new DateTime(now.Year, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            var ticks = now.Ticks - startOfYear.Ticks;
+            var id = ticks.ToString("x");
+
+            #endregion
+
+            return id;
+        }
+
+        async Task Write(string payload, HttpResponse response, string id, CancellationToken cancellation)
         {
             var httpClient = httpClientFunc();
             try
@@ -100,6 +116,8 @@ namespace SeqProxy
                 using var content = new StringContent(payload, Encoding.UTF8, "application/vnd.serilog.clef");
                 using var seqResponse = await httpClient.PostAsync(url, content, cancellation);
                 response.StatusCode = (int) seqResponse.StatusCode;
+                response.Headers.Add("SeqProxyId", id);
+
                 await seqResponse.Content.CopyToAsync(response.Body);
             }
             catch (TaskCanceledException)

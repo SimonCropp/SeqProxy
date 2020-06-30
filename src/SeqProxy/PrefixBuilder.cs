@@ -11,10 +11,11 @@ class PrefixBuilder
     public PrefixBuilder(string application, Version version, Func<string, string> scrubClaimType)
     {
         this.scrubClaimType = scrubClaimType;
-        prefix = $"{{'Application':'{application.AsJson()}','ApplicationVersion':'{version.ToString().AsJson()}','Server':'{Environment.MachineName.AsJson()}',";
+        var machine = Environment.MachineName;
+        prefix = $"{{'Application':'{application.AsJson()}','ApplicationVersion':'{version.ToString().AsJson()}','Server':'{machine.AsJson()}',";
     }
 
-    public string Build(ClaimsPrincipal user, string? userAgent, string? referrer)
+    public string Build(ClaimsPrincipal user, string? userAgent, string? referrer, string id)
     {
         var builder = new StringBuilder(prefix);
         if (user.Claims.Any())
@@ -29,6 +30,7 @@ class PrefixBuilder
             builder.Append("},");
         }
 
+        builder.Append($"'SeqProxyId':'{id}',");
         if (userAgent != null)
         {
             builder.Append($"'UserAgent':'{userAgent.AsJson()}',");

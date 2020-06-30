@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
 // Non-nullable field is uninitialized.
-#pragma warning disable CS8618 
+#pragma warning disable CS8618
 public class MockResponse :
     HttpResponse
 {
@@ -22,7 +22,7 @@ public class MockResponse :
 
     public override HttpContext HttpContext { get; }
     public override int StatusCode { get; set; }
-    public override IHeaderDictionary Headers { get; }
+    public override IHeaderDictionary Headers { get; } = new HeaderDictionary();
     public override Stream Body { get; set; } = new MemoryStream();
     public override long? ContentLength { get; set; }
     public override string ContentType { get; set; }

@@ -26,6 +26,7 @@ Support is available via a [Tidelift Subscription](https://tidelift.com/subscrip
 
   * [HTTP Format/Protocol](#http-formatprotocol)
   * [Extra data](#extra-data)
+    * [SeqProxyId](#seqproxyid)
   * [Usage](#usage)
     * [Enable in Startup](#enable-in-startup)
     * [Add HTTP handling](#add-http-handling)
@@ -61,6 +62,32 @@ For every log entry written the following information is appended:
  * The [referer header](https://en.wikipedia.org/wiki/HTTP_referer) as `Referrer`.
 
 <img src="/src/extraData.png">
+
+
+### SeqProxyId
+
+SeqProxyId is a tick based timestamp to help correlating a front-end error with a Seq log entry.
+
+It is appended to every Seq log entry and returned as a header to HTTP response.
+
+The id is generated using the following:
+
+<!-- snippet: BuildId -->
+<a id='snippet-buildid'/></a>
+```cs
+var now = DateTime.UtcNow;
+var startOfYear = new DateTime(now.Year, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+var ticks = now.Ticks - startOfYear.Ticks;
+var id = ticks.ToString("x");
+```
+<sup><a href='/src/SeqProxy/SeqWriter.cs#L99-L106' title='File snippet `buildid` was extracted from'>snippet source</a> | <a href='#snippet-buildid' title='Navigate to start of snippet `buildid`'>anchor</a></sup>
+<!-- endsnippet -->
+
+Which generates a string of the form `8e434f861302`. This string can then be given to a user as a error correlation id.
+
+Then the log entry can be accessed using a Seq filter.
+
+`http://seqServer/#/events?filter=SeqProxyId%3D'39f616eeb2e3'`
 
 
 ## Usage

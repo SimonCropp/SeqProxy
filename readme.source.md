@@ -45,6 +45,23 @@ For every log entry written the following information is appended:
 <img src="/src/extraData.png">
 
 
+### SeqProxyId
+
+SeqProxyId is a tick based timestamp to help correlating a front-end error with a Seq log entry.
+
+It is appended to every Seq log entry and returned as a header to HTTP response.
+
+The id is generated using the following:
+
+snippet: BuildId
+
+Which generates a string of the form `8e434f861302`. This string can then be given to a user as a error correlation id.
+
+Then the log entry can be accessed using a Seq filter.
+
+`http://seqServer/#/events?filter=SeqProxyId%3D'39f616eeb2e3'`
+
+
 ## Usage
 
 

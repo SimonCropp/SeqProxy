@@ -1,11 +1,7 @@
-{
-  Requests: [
-    {
-      Body: '{\'Application\':\'theAppName\',\'ApplicationVersion\':\'1.2\',\'Server\':\'TheMachineName\',\'Claims\':{\'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress\':\'User@foo.bar\',\'http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata\':\'theUserData\'},\'@t\':\'2019-05-28\',\'@mt\':\'Simple Message\'}\n'
-    }
-  ],
-  DefaultRequestHeaders: [],
-  DefaultRequestVersion: '1.1',
-  Timeout: '00:01:40',
-  MaxResponseContentBufferSize: 2147483647
-}
+{'Application':'theAppName',
+'ApplicationVersion':'1.2',
+'Server':'TheMachineName',
+'Claims':{'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress':'User@foo.bar',
+'http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata':'theUserData'},
+'@t':'2019-05-28',
+'@mt':'Simple Message'}

@@ -19,13 +19,19 @@ public class SeqWriterTests
         var request = new MockRequest(
             @"{'@t':'2019-05-28','@mt':'Message1'}
 {'@t':'2019-05-29','@mt':'Message2'}");
-        await writer.Handle(ClaimsBuilder.Build(), request, new MockResponse());
-        await Verifier.Verify(httpClient);
+        var user = ClaimsBuilder.Build();
+        await writer.Handle(user, request, new MockResponse());
+        await Verify(httpClient);
     }
 
-    Task Verify(MockHttpClient httpClient)
+    static Task Verify(MockHttpClient httpClient)
     {
-        return Verifier.Verify(httpClient.Requests.Single().Body.Split(Environment.NewLine));
+        var lines = httpClient.Requests.Single()
+            .Body
+            .Split(',')
+            .Where(x => !x.Contains("SeqProxyId"));
+
+        return Verifier.Verify(string.Join("," + Environment.NewLine, lines));
     }
 
     [Fact]
@@ -34,8 +40,9 @@ public class SeqWriterTests
         var httpClient = new MockHttpClient();
         var writer = new SeqWriter(() => httpClient, "http://theSeqUrl", "theAppName", new Version(1, 2), "theApiKey", s => s);
         var request = new MockRequest("{'@t':'2019-05-28','@mt':'Simple Message'}");
-        await writer.Handle(ClaimsBuilder.Build(), request, new MockResponse());
-        await Verifier.Verify(httpClient);
+        var user = ClaimsBuilder.Build();
+        await writer.Handle(user, request, new MockResponse());
+        await Verify(httpClient);
     }
 
     [Fact]

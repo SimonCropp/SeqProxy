@@ -83,7 +83,7 @@ var id = ticks.ToString("x");
 <sup><a href='/src/SeqProxy/SeqWriter.cs#L99-L106' title='File snippet `buildid` was extracted from'>snippet source</a> | <a href='#snippet-buildid' title='Navigate to start of snippet `buildid`'>anchor</a></sup>
 <!-- endsnippet -->
 
-Which generates a string of the form `8e434f861302`. This string can then be given to a user as a error correlation id.
+Which generates a string of the form `8e434f861302`. The current year is trimmed to shorten the id and under the assumption that retention policy is not longer than 12 months. There is a small chance of collisions, but given the use-case (error correlation), this should not impact the ability to find the correct error. This string can then be given to a user as a error correlation id.
 
 Then the log entry can be accessed using a Seq filter.
 

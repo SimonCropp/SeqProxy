@@ -10,7 +10,7 @@ To change this file edit the source file and then run MarkdownSnippets.
 [![Build status](https://ci.appveyor.com/api/projects/status/7996jd4uoooy5qy2/branch/master?svg=true)](https://ci.appveyor.com/project/SimonCropp/SeqProxy)
 [![NuGet Status](https://img.shields.io/nuget/v/SeqProxy.svg)](https://www.nuget.org/packages/SeqProxy/)
 
-Enables writing seq logs by proxying requests through an ASP.NET Controller or Middleware.
+Enables writing [Seq](https://datalust.co/seq) logs by proxying requests through an ASP.NET Controller or Middleware.
 
 Support is available via a [Tidelift Subscription](https://tidelift.com/subscription/pkg/nuget-seqproxy?utm_source=nuget-seqproxy&utm_medium=referral&utm_campaign=enterprise).
 

@@ -73,7 +73,7 @@ It is appended to every Seq log entry and returned as a header to HTTP response.
 The id is generated using the following:
 
 <!-- snippet: BuildId -->
-<a id='snippet-buildid'/></a>
+<a id='snippet-buildid'></a>
 ```cs
 var now = DateTime.UtcNow;
 var startOfYear = new DateTime(now.Year, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
@@ -98,7 +98,7 @@ Then the log entry can be accessed using a Seq filter.
 Enable in `Startup.ConfigureServices`
 
 <!-- snippet: ConfigureServices -->
-<a id='snippet-configureservices'/></a>
+<a id='snippet-configureservices'></a>
 ```cs
 public void ConfigureServices(IServiceCollection services)
 {
@@ -112,7 +112,7 @@ public void ConfigureServices(IServiceCollection services)
 There are several optional parameters:
 
 <!-- snippet: ConfigureServicesFull -->
-<a id='snippet-configureservicesfull'/></a>
+<a id='snippet-configureservicesfull'></a>
 ```cs
 public void ConfigureServices(IServiceCollection services)
 {
@@ -133,7 +133,7 @@ public void ConfigureServices(IServiceCollection services)
  * `scrubClaimType` is used to clean up claimtype strings. For example [ClaimTypes.Email](https://docs.microsoft.com/en-us/dotnet/api/system.identitymodel.claims.claimtypes.email?System_IdentityModel_Claims_ClaimTypes_Email) is `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress`, but when recording to Seq the value `emailaddress` is sufficient. Defaults to `DefaultClaimTypeScrubber.Scrub` to get the string after the last `/`.
 
 <!-- snippet: DefaultClaimTypeScrubber.cs -->
-<a id='snippet-DefaultClaimTypeScrubber.cs'/></a>
+<a id='snippet-DefaultClaimTypeScrubber.cs'></a>
 ```cs
 namespace SeqProxy
 {
@@ -173,7 +173,7 @@ There are two approaches to handling the HTTP containing log events. Using a Mid
 Using a [Middleware](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/) is done by calling `SeqWriterConfig.UseSeq` in `Startup.Configure(IApplicationBuilder builder)`:
 
 <!-- snippet: ConfigureBuilder -->
-<a id='snippet-configurebuilder'/></a>
+<a id='snippet-configurebuilder'></a>
 ```cs
 public void Configure(IApplicationBuilder builder)
 {
@@ -188,7 +188,7 @@ public void Configure(IApplicationBuilder builder)
 Authorization in the middleware can bu done by using `useAuthorizationService = true` in `UseSeq`.
 
 <!-- snippet: StartupWithAuth -->
-<a id='snippet-startupwithauth'/></a>
+<a id='snippet-startupwithauth'></a>
 ```cs
 public void Configure(IApplicationBuilder builder)
 {
@@ -200,7 +200,7 @@ public void Configure(IApplicationBuilder builder)
 This then uses [IAuthorizationService](https://docs.microsoft.com/en-us/aspnet/core/security/authorization/resourcebased) to verify the request:
 
 <!-- snippet: HandleWithAuth -->
-<a id='snippet-handlewithauth'/></a>
+<a id='snippet-handlewithauth'></a>
 ```cs
 async Task HandleWithAuth(
     HttpContext context,
@@ -231,7 +231,7 @@ async Task HandleWithAuth(
 `BaseSeqController` is an implementation of `ControllerBase` that provides a HTTP post and some basic routing.
 
 <!-- snippet: BaseSeqController.cs -->
-<a id='snippet-BaseSeqController.cs'/></a>
+<a id='snippet-BaseSeqController.cs'></a>
 ```cs
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -275,7 +275,7 @@ namespace SeqProxy
 Add a new [controller](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/actions) that overrides `BaseSeqController`.
 
 <!-- snippet: SimpleController -->
-<a id='snippet-simplecontroller'/></a>
+<a id='snippet-simplecontroller'></a>
 ```cs
 public class SeqController :
     BaseSeqController
@@ -295,7 +295,7 @@ public class SeqController :
 Adding authorization and authentication can be done with an [AuthorizeAttribute](https://docs.microsoft.com/en-us/aspnet/core/security/authorization/simple).
 
 <!-- snippet: AuthorizeController -->
-<a id='snippet-authorizecontroller'/></a>
+<a id='snippet-authorizecontroller'></a>
 ```cs
 [Authorize]
 public class SeqController :
@@ -312,7 +312,7 @@ Method level Asp attributes can by applied by overriding `BaseSeqController.Post
 For example adding an [exception filter ](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters#exception-filters).
 
 <!-- snippet: OverridePostController -->
-<a id='snippet-overridepostcontroller'/></a>
+<a id='snippet-overridepostcontroller'></a>
 ```cs
 public class SeqController :
     BaseSeqController
@@ -335,7 +335,7 @@ public class SeqController :
 Writing to Seq can be done using a HTTP post:
 
 <!-- snippet: LogRawJs -->
-<a id='snippet-lograwjs'/></a>
+<a id='snippet-lograwjs'></a>
 ```js
 function LogRawJs(text) {
     const postSettings = {
@@ -365,7 +365,7 @@ To use this approach:
 Install both [structured-log npm](https://www.npmjs.com/package/structured-log) and [structured-log-seq-sink npm](https://www.npmjs.com/package/structured-log-seq-sink). Or include them from [jsDelivr](https://www.jsdelivr.com/):
 
 <!-- snippet: StructuredLogInclude -->
-<a id='snippet-structuredloginclude'/></a>
+<a id='snippet-structuredloginclude'></a>
 ```html
 <script src='https://cdn.jsdelivr.net/npm/structured-log/dist/structured-log.js'>
 </script>
@@ -379,7 +379,7 @@ Install both [structured-log npm](https://www.npmjs.com/package/structured-log) 
 #### Configure the log
 
 <!-- snippet: StructuredLogConfig -->
-<a id='snippet-structuredlogconfig'/></a>
+<a id='snippet-structuredlogconfig'></a>
 ```js
 var levelSwitch = new structuredLog.DynamicLevelSwitch('info');
 const log = structuredLog.configure()
@@ -399,7 +399,7 @@ const log = structuredLog.configure()
 #### Write a log message
 
 <!-- snippet: StructuredLog -->
-<a id='snippet-structuredlog'/></a>
+<a id='snippet-structuredlog'></a>
 ```js
 function LogStructured(text) {
     log.info('StructuredLog input: {Text}', text);
@@ -424,7 +424,7 @@ To work around this:
 Include a filter that replaces a known token name (in this case `{@Properties}`):
 
 <!-- snippet: StructuredLogConfigExtraProp -->
-<a id='snippet-structuredlogconfigextraprop'/></a>
+<a id='snippet-structuredlogconfigextraprop'></a>
 ```js
 const logWithExtraProps = structuredLog.configure()
     .filter(logEvent => {
@@ -445,7 +445,7 @@ const logWithExtraProps = structuredLog.configure()
 Include that token name in the message template, and then include an object at the same position in the log parameters:
 
 <!-- snippet: StructuredLogWithExtraProps -->
-<a id='snippet-structuredlogwithextraprops'/></a>
+<a id='snippet-structuredlogwithextraprops'></a>
 ```js
 function LogStructuredWithExtraProps(text) {
     logWithExtraProps.info(

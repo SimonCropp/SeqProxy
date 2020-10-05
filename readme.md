@@ -73,7 +73,7 @@ var startOfYear = new DateTime(now.Year, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 var ticks = now.Ticks - startOfYear.Ticks;
 var id = ticks.ToString("x");
 ```
-<sup><a href='/src/SeqProxy/SeqWriter.cs#L99-L106' title='File snippet `buildid` was extracted from'>snippet source</a> | <a href='#snippet-buildid' title='Navigate to start of snippet `buildid`'>anchor</a></sup>
+<sup><a href='/src/SeqProxy/SeqWriter.cs#L99-L106' title='Snippet source file'>snippet source</a> | <a href='#snippet-buildid' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 Which generates a string of the form `8e434f861302`. The current year is trimmed to shorten the id and under the assumption that retention policy is not longer than 12 months. There is a small chance of collisions, but given the use-case (error correlation), this should not impact the ability to find the correct error. This string can then be given to a user as a error correlation id.
@@ -99,7 +99,7 @@ public void ConfigureServices(IServiceCollection services)
     services.AddSeqWriter(seqUrl: "http://localhost:5341");
 }
 ```
-<sup><a href='/src/SampleWeb/Startup.cs#L14-L22' title='File snippet `configureservices` was extracted from'>snippet source</a> | <a href='#snippet-configureservices' title='Navigate to start of snippet `configureservices`'>anchor</a></sup>
+<sup><a href='/src/SampleWeb/Startup.cs#L14-L22' title='Snippet source file'>snippet source</a> | <a href='#snippet-configureservices' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 There are several optional parameters:
@@ -118,7 +118,7 @@ public void ConfigureServices(IServiceCollection services)
         scrubClaimType: claimType => claimType.Split("/").Last());
 }
 ```
-<sup><a href='/src/Tests/FullStartupConfig.cs#L7-L20' title='File snippet `configureservicesfull` was extracted from'>snippet source</a> | <a href='#snippet-configureservicesfull' title='Navigate to start of snippet `configureservicesfull`'>anchor</a></sup>
+<sup><a href='/src/Tests/FullStartupConfig.cs#L7-L20' title='Snippet source file'>snippet source</a> | <a href='#snippet-configureservicesfull' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
  * `application` defaults to `Assembly.GetCallingAssembly().GetName().Name`.
@@ -152,7 +152,7 @@ namespace SeqProxy
     }
 }
 ```
-<sup><a href='/src/SeqProxy/DefaultClaimTypeScrubber.cs#L1-L23' title='File snippet `DefaultClaimTypeScrubber.cs` was extracted from'>snippet source</a> | <a href='#snippet-DefaultClaimTypeScrubber.cs' title='Navigate to start of snippet `DefaultClaimTypeScrubber.cs`'>anchor</a></sup>
+<sup><a href='/src/SeqProxy/DefaultClaimTypeScrubber.cs#L1-L23' title='Snippet source file'>snippet source</a> | <a href='#snippet-DefaultClaimTypeScrubber.cs' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -172,7 +172,7 @@ public void Configure(IApplicationBuilder builder)
 {
     builder.UseSeq();
 ```
-<sup><a href='/src/SampleWeb/Startup.cs#L24-L29' title='File snippet `configurebuilder` was extracted from'>snippet source</a> | <a href='#snippet-configurebuilder' title='Navigate to start of snippet `configurebuilder`'>anchor</a></sup>
+<sup><a href='/src/SampleWeb/Startup.cs#L24-L29' title='Snippet source file'>snippet source</a> | <a href='#snippet-configurebuilder' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -187,7 +187,7 @@ public void Configure(IApplicationBuilder builder)
 {
     builder.UseSeq(useAuthorizationService: true);
 ```
-<sup><a href='/src/Tests/StartupWithAuth.cs#L6-L11' title='File snippet `startupwithauth` was extracted from'>snippet source</a> | <a href='#snippet-startupwithauth' title='Navigate to start of snippet `startupwithauth`'>anchor</a></sup>
+<sup><a href='/src/Tests/StartupWithAuth.cs#L6-L11' title='Snippet source file'>snippet source</a> | <a href='#snippet-startupwithauth' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 This then uses [IAuthorizationService](https://docs.microsoft.com/en-us/aspnet/core/security/authorization/resourcebased) to verify the request:
@@ -215,7 +215,7 @@ async Task HandleWithAuth(
         context.RequestAborted);
 }
 ```
-<sup><a href='/src/SeqProxy/SeqMiddlewareWithAuth.cs#L37-L59' title='File snippet `handlewithauth` was extracted from'>snippet source</a> | <a href='#snippet-handlewithauth' title='Navigate to start of snippet `handlewithauth`'>anchor</a></sup>
+<sup><a href='/src/SeqProxy/SeqMiddlewareWithAuth.cs#L37-L59' title='Snippet source file'>snippet source</a> | <a href='#snippet-handlewithauth' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -262,7 +262,7 @@ namespace SeqProxy
     }
 }
 ```
-<sup><a href='/src/SeqProxy/BaseSeqController.cs#L1-L35' title='File snippet `BaseSeqController.cs` was extracted from'>snippet source</a> | <a href='#snippet-BaseSeqController.cs' title='Navigate to start of snippet `BaseSeqController.cs`'>anchor</a></sup>
+<sup><a href='/src/SeqProxy/BaseSeqController.cs#L1-L35' title='Snippet source file'>snippet source</a> | <a href='#snippet-BaseSeqController.cs' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 Add a new [controller](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/actions) that overrides `BaseSeqController`.
@@ -279,7 +279,7 @@ public class SeqController :
     }
 }
 ```
-<sup><a href='/src/Tests/ControllerSamples.cs#L8-L17' title='File snippet `simplecontroller` was extracted from'>snippet source</a> | <a href='#snippet-simplecontroller' title='Navigate to start of snippet `simplecontroller`'>anchor</a></sup>
+<sup><a href='/src/Tests/ControllerSamples.cs#L8-L17' title='Snippet source file'>snippet source</a> | <a href='#snippet-simplecontroller' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -294,7 +294,7 @@ Adding authorization and authentication can be done with an [AuthorizeAttribute]
 public class SeqController :
     BaseSeqController
 ```
-<sup><a href='/src/Tests/ControllerSamples.cs#L46-L50' title='File snippet `authorizecontroller` was extracted from'>snippet source</a> | <a href='#snippet-authorizecontroller' title='Navigate to start of snippet `authorizecontroller`'>anchor</a></sup>
+<sup><a href='/src/Tests/ControllerSamples.cs#L46-L50' title='Snippet source file'>snippet source</a> | <a href='#snippet-authorizecontroller' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -316,7 +316,7 @@ public class SeqController :
         return base.Post();
     }
 ```
-<sup><a href='/src/Tests/ControllerSamples.cs#L22-L31' title='File snippet `overridepostcontroller` was extracted from'>snippet source</a> | <a href='#snippet-overridepostcontroller' title='Navigate to start of snippet `overridepostcontroller`'>anchor</a></sup>
+<sup><a href='/src/Tests/ControllerSamples.cs#L22-L31' title='Snippet source file'>snippet source</a> | <a href='#snippet-overridepostcontroller' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -340,7 +340,7 @@ function LogRawJs(text) {
     return fetch('/api/events/raw', postSettings);
 }
 ```
-<sup><a href='/src/SampleWeb/sample.js#L59-L69' title='File snippet `lograwjs` was extracted from'>snippet source</a> | <a href='#snippet-lograwjs' title='Navigate to start of snippet `lograwjs`'>anchor</a></sup>
+<sup><a href='/src/SampleWeb/sample.js#L59-L69' title='Snippet source file'>snippet source</a> | <a href='#snippet-lograwjs' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -365,7 +365,7 @@ Install both [structured-log npm](https://www.npmjs.com/package/structured-log) 
 <script src='https://cdn.jsdelivr.net/npm/structured-log-seq-sink/dist/structured-log-seq-sink.js'>
 </script>
 ```
-<sup><a href='/src/SampleWeb/sample.html#L4-L9' title='File snippet `structuredloginclude` was extracted from'>snippet source</a> | <a href='#snippet-structuredloginclude' title='Navigate to start of snippet `structuredloginclude`'>anchor</a></sup>
+<sup><a href='/src/SampleWeb/sample.html#L4-L9' title='Snippet source file'>snippet source</a> | <a href='#snippet-structuredloginclude' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -385,7 +385,7 @@ const log = structuredLog.configure()
     }))
     .create();
 ```
-<sup><a href='/src/SampleWeb/sample.js#L1-L12' title='File snippet `structuredlogconfig` was extracted from'>snippet source</a> | <a href='#snippet-structuredlogconfig' title='Navigate to start of snippet `structuredlogconfig`'>anchor</a></sup>
+<sup><a href='/src/SampleWeb/sample.js#L1-L12' title='Snippet source file'>snippet source</a> | <a href='#snippet-structuredlogconfig' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -398,7 +398,7 @@ function LogStructured(text) {
     log.info('StructuredLog input: {Text}', text);
 }
 ```
-<sup><a href='/src/SampleWeb/sample.js#L50-L54' title='File snippet `structuredlog` was extracted from'>snippet source</a> | <a href='#snippet-structuredlog' title='Navigate to start of snippet `structuredlog`'>anchor</a></sup>
+<sup><a href='/src/SampleWeb/sample.js#L50-L54' title='Snippet source file'>snippet source</a> | <a href='#snippet-structuredlog' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -432,7 +432,7 @@ const logWithExtraProps = structuredLog.configure()
     }))
     .create();
 ```
-<sup><a href='/src/SampleWeb/sample.js#L14-L27' title='File snippet `structuredlogconfigextraprop` was extracted from'>snippet source</a> | <a href='#snippet-structuredlogconfigextraprop' title='Navigate to start of snippet `structuredlogconfigextraprop`'>anchor</a></sup>
+<sup><a href='/src/SampleWeb/sample.js#L14-L27' title='Snippet source file'>snippet source</a> | <a href='#snippet-structuredlogconfigextraprop' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 Include that token name in the message template, and then include an object at the same position in the log parameters:
@@ -450,7 +450,7 @@ function LogStructuredWithExtraProps(text) {
         });
 }
 ```
-<sup><a href='/src/SampleWeb/sample.js#L38-L48' title='File snippet `structuredlogwithextraprops` was extracted from'>snippet source</a> | <a href='#snippet-structuredlogwithextraprops' title='Navigate to start of snippet `structuredlogwithextraprops`'>anchor</a></sup>
+<sup><a href='/src/SampleWeb/sample.js#L38-L48' title='Snippet source file'>snippet source</a> | <a href='#snippet-structuredlogwithextraprops' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 Then a destructured property will be written to Seq.

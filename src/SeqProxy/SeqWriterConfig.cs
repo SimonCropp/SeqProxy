@@ -50,23 +50,13 @@ namespace Microsoft.Extensions.DependencyInjection
 
             AddHttpClient(services, configureClient);
 
-            if (scrubClaimType == null)
-            {
-                scrubClaimType = DefaultClaimTypeScrubber.Scrub;
-            }
+            scrubClaimType ??= DefaultClaimTypeScrubber.Scrub;
 
             if (application == null || appVersion == null)
             {
                 var callingAssemblyName = Assembly.GetCallingAssembly().GetName();
-                if (application == null)
-                {
-                    application = callingAssemblyName.Name;
-                }
-
-                if (appVersion == null)
-                {
-                    appVersion = callingAssemblyName.Version;
-                }
+                application ??= callingAssemblyName.Name;
+                appVersion ??= callingAssemblyName.Version;
             }
 
             services.AddSingleton(
@@ -76,8 +66,8 @@ namespace Microsoft.Extensions.DependencyInjection
                     return new SeqWriter(
                         httpClientFunc: () => httpFactory.CreateClient("SeqProxy"),
                         seqUrl!,
-                        application,
-                        appVersion,
+                        application!,
+                        appVersion!,
                         apiKey,
                         scrubClaimType);
                 });

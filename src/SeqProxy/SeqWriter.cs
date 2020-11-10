@@ -74,7 +74,7 @@ namespace SeqProxy
             var prefix = prefixBuilder.Build(user, request.GetUserAgent(), request.GetReferer(), id);
             using (var streamReader = new StreamReader(request.Body))
             {
-                string line;
+                string? line;
                 while ((line = await streamReader.ReadLineAsync()) != null)
                 {
                     ValidateLine(line);

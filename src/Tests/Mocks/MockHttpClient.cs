@@ -11,7 +11,7 @@ public class MockHttpClient : HttpClient
     public override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         Requests.Add(
-            new LoggedRequest(await request.Content.ReadAsStringAsync()));
+            new LoggedRequest(await request.Content!.ReadAsStringAsync()));
         return new HttpResponseMessage(HttpStatusCode.OK)
         {
             Content = new StringContent("{\"MinimumLevelAccepted\":\"Information\"}")

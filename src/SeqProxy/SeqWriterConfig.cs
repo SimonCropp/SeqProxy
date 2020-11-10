@@ -72,7 +72,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton(
                 provider =>
                 {
-                    var httpFactory = provider.GetService<IHttpClientFactory>();
+                    var httpFactory = provider.GetRequiredService<IHttpClientFactory>();
                     return new SeqWriter(
                         httpClientFunc: () => httpFactory.CreateClient("SeqProxy"),
                         seqUrl!,

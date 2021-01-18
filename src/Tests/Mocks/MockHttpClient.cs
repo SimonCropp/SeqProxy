@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 public class MockHttpClient : HttpClient
 {
-    public List<LoggedRequest> Requests = new List<LoggedRequest>();
+    public List<LoggedRequest> Requests = new();
 
     public override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        Requests.Add(
-            new LoggedRequest(await request.Content!.ReadAsStringAsync()));
-        return new HttpResponseMessage(HttpStatusCode.OK)
+        var content = await request.Content!.ReadAsStringAsync(cancellationToken);
+        Requests.Add(new(content));
+        return new(HttpStatusCode.OK)
         {
             Content = new StringContent("{\"MinimumLevelAccepted\":\"Information\"}")
         };

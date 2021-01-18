@@ -42,12 +42,12 @@ namespace SeqProxy
             Guard.AgainstNull(scrubClaimType, nameof(scrubClaimType));
             this.httpClientFunc = httpClientFunc;
             url = GetSeqUrl(seqUrl, apiKey);
-            prefixBuilder = new PrefixBuilder(application, version, scrubClaimType);
+            prefixBuilder = new(application, version, scrubClaimType);
         }
 
         static string GetSeqUrl(string seqUrl, string? apiKey)
         {
-            var baseUri = new Uri(seqUrl);
+            Uri baseUri = new(seqUrl);
             string uri;
             if (apiKey == null)
             {
@@ -58,7 +58,7 @@ namespace SeqProxy
                 uri = $"api/events/raw?apiKey={apiKey}";
             }
 
-            var apiUrl = new Uri(baseUri, uri);
+            Uri apiUrl = new(baseUri, uri);
             return apiUrl.ToString();
         }
 
@@ -68,11 +68,11 @@ namespace SeqProxy
         public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response, CancellationToken cancellation = default)
         {
             ApiKeyValidator.ThrowIfApiKeySpecified(request);
-            var builder = new StringBuilder();
+            StringBuilder builder = new();
 
             var id = BuildId();
             var prefix = prefixBuilder.Build(user, request.GetUserAgent(), request.GetReferer(), id);
-            using (var streamReader = new StreamReader(request.Body))
+            using (StreamReader streamReader = new(request.Body))
             {
                 string? line;
                 while ((line = await streamReader.ReadLineAsync()) != null)
@@ -99,7 +99,7 @@ namespace SeqProxy
             #region BuildId
 
             var now = DateTime.UtcNow;
-            var startOfYear = new DateTime(now.Year, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            DateTime startOfYear = new(now.Year, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             var ticks = now.Ticks - startOfYear.Ticks;
             var id = ticks.ToString("x");
 
@@ -113,7 +113,7 @@ namespace SeqProxy
             var httpClient = httpClientFunc();
             try
             {
-                using var content = new StringContent(payload, Encoding.UTF8, "application/vnd.serilog.clef");
+                using StringContent content = new(payload, Encoding.UTF8, "application/vnd.serilog.clef");
                 using var seqResponse = await httpClient.PostAsync(url, content, cancellation);
                 response.StatusCode = (int) seqResponse.StatusCode;
                 response.Headers.Add("SeqProxyId", id);
@@ -129,19 +129,19 @@ namespace SeqProxy
         {
             if (string.IsNullOrWhiteSpace(line))
             {
-                throw new Exception("Blank lines are not allowed.");
+                throw new("Blank lines are not allowed.");
             }
 
             if (line.StartsWith(@"{""Events"":")||line.StartsWith("{'Events':"))
             {
-                throw new Exception("Only compact format is supported supported");
+                throw new("Only compact format is supported supported");
             }
 
             if (line.StartsWith("{'") || line.StartsWith(@"{"""))
             {
                 return;
             }
-            throw new Exception($"Expected line to start with `{{'` or `{{\"`. Line: {line}");
+            throw new($"Expected line to start with `{{'` or `{{\"`. Line: {line}");
         }
     }
 }

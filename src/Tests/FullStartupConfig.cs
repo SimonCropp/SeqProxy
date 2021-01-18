@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 
 public class StartupSnippets
@@ -13,7 +12,7 @@ public class StartupSnippets
             seqUrl: "http://localhost:5341",
             apiKey: "TheApiKey",
             application: "MyAppName",
-            appVersion: new Version(1, 2),
+            appVersion: new(1, 2),
             scrubClaimType: claimType => claimType.Split("/").Last());
     }
 

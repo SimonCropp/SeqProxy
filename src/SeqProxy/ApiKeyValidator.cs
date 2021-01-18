@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 
 class ApiKeyValidator
 {
@@ -7,12 +6,12 @@ class ApiKeyValidator
     {
         if (request.Query.ContainsKey("apiKey"))
         {
-            throw new Exception("apiKey is not allowed.");
+            throw new("apiKey is not allowed.");
         }
 
         if (request.Headers.ContainsKey("X-Seq-ApiKey"))
         {
-            throw new Exception("apiKey is not allowed.");
+            throw new("apiKey is not allowed.");
         }
     }
 }

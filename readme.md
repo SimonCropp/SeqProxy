@@ -69,7 +69,7 @@ The id is generated using the following:
 <a id='snippet-buildid'></a>
 ```cs
 var now = DateTime.UtcNow;
-var startOfYear = new DateTime(now.Year, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+DateTime startOfYear = new(now.Year, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 var ticks = now.Ticks - startOfYear.Ticks;
 var id = ticks.ToString("x");
 ```
@@ -114,11 +114,11 @@ public void ConfigureServices(IServiceCollection services)
         seqUrl: "http://localhost:5341",
         apiKey: "TheApiKey",
         application: "MyAppName",
-        appVersion: new Version(1, 2),
+        appVersion: new(1, 2),
         scrubClaimType: claimType => claimType.Split("/").Last());
 }
 ```
-<sup><a href='/src/Tests/FullStartupConfig.cs#L7-L20' title='Snippet source file'>snippet source</a> | <a href='#snippet-configureservicesfull' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/FullStartupConfig.cs#L6-L19' title='Snippet source file'>snippet source</a> | <a href='#snippet-configureservicesfull' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
  * `application` defaults to `Assembly.GetCallingAssembly().GetName().Name`.
@@ -215,7 +215,7 @@ async Task HandleWithAuth(
         context.RequestAborted);
 }
 ```
-<sup><a href='/src/SeqProxy/SeqMiddlewareWithAuth.cs#L37-L59' title='Snippet source file'>snippet source</a> | <a href='#snippet-handlewithauth' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SeqProxy/SeqMiddlewareWithAuth.cs#L36-L58' title='Snippet source file'>snippet source</a> | <a href='#snippet-handlewithauth' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 

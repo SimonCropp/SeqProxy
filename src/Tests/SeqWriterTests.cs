@@ -14,9 +14,9 @@ public class SeqWriterTests
     [Fact]
     public async Task Multiple()
     {
-        var httpClient = new MockHttpClient();
-        var writer = new SeqWriter(() => httpClient, "http://theSeqUrl", "theAppName", new Version(1, 2), "theApiKey", s => s);
-        var request = new MockRequest(
+        MockHttpClient httpClient = new();
+        SeqWriter writer = new(() => httpClient, "http://theSeqUrl", "theAppName", new(1, 2), "theApiKey", s => s);
+        MockRequest request = new(
             @"{'@t':'2019-05-28','@mt':'Message1'}
 {'@t':'2019-05-29','@mt':'Message2'}");
         var user = ClaimsBuilder.Build();
@@ -37,9 +37,9 @@ public class SeqWriterTests
     [Fact]
     public async Task Simple()
     {
-        var httpClient = new MockHttpClient();
-        var writer = new SeqWriter(() => httpClient, "http://theSeqUrl", "theAppName", new Version(1, 2), "theApiKey", s => s);
-        var request = new MockRequest("{'@t':'2019-05-28','@mt':'Simple Message'}");
+        MockHttpClient httpClient = new();
+        SeqWriter writer = new(() => httpClient, "http://theSeqUrl", "theAppName", new(1, 2), "theApiKey", s => s);
+        MockRequest request = new("{'@t':'2019-05-28','@mt':'Simple Message'}");
         var user = ClaimsBuilder.Build();
         await writer.Handle(user, request, new MockResponse());
         await Verify(httpClient);
@@ -48,9 +48,9 @@ public class SeqWriterTests
     [Fact]
     public async Task ApiKeyQueryString()
     {
-        var httpClient = new MockHttpClient();
-        var writer = new SeqWriter(() => httpClient, "http://theSeqUrl", "theAppName", new Version(1, 2), "theApiKey", s => s);
-        var request = new MockRequest("{'@t':'2019-05-28','@mt':'Simple Message'}")
+        MockHttpClient httpClient = new();
+        SeqWriter writer = new(() => httpClient, "http://theSeqUrl", "theAppName", new(1, 2), "theApiKey", s => s);
+        MockRequest request = new("{'@t':'2019-05-28','@mt':'Simple Message'}")
         {
             Query = new QueryCollection(
                 new Dictionary<string, StringValues>
@@ -67,9 +67,9 @@ public class SeqWriterTests
     [Fact]
     public async Task ApiKeyHeaderString()
     {
-        var httpClient = new MockHttpClient();
-        var writer = new SeqWriter(() => httpClient, "http://theSeqUrl", "theAppName", new Version(1, 2), "theApiKey", s => s);
-        var request = new MockRequest("{'@t':'2019-05-28','@mt':'Simple Message'}")
+        MockHttpClient httpClient = new();
+        SeqWriter writer = new(() => httpClient, "http://theSeqUrl", "theAppName", new(1, 2), "theApiKey", s => s);
+        MockRequest request = new("{'@t':'2019-05-28','@mt':'Simple Message'}")
         {
             Headers =
             {

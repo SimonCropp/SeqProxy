@@ -13,15 +13,15 @@ public class MockRequest :
 {
     public MockRequest(string body)
     {
-        var stream = new MemoryStream();
-        var writer = new StreamWriter(stream);
+        MemoryStream stream = new();
+        StreamWriter writer = new(stream);
         writer.Write(body);
         writer.Flush();
         stream.Position = 0;
         Body = stream;
     }
 
-    public override Task<IFormCollection> ReadFormAsync(CancellationToken cancellationToken = new CancellationToken())
+    public override Task<IFormCollection> ReadFormAsync(CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }

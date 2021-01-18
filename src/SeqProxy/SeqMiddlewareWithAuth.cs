@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -17,7 +16,7 @@ class SeqMiddlewareWithAuth
         this.seqWriter = seqWriter;
         if (authService == null)
         {
-            throw new Exception("Expected IAuthorizationService to be configured.");
+            throw new("Expected IAuthorizationService to be configured.");
         }
 
         this.authService = authService;

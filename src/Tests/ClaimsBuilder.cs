@@ -4,9 +4,9 @@ static class ClaimsBuilder
 {
     public static ClaimsPrincipal Build()
     {
-        var principal = new ClaimsPrincipal();
+        ClaimsPrincipal principal = new();
         principal.AddIdentity(
-            new ClaimsIdentity(
+            new(
                 new[]
                 {
                     new Claim(ClaimTypes.Email, "User@foo.bar"),

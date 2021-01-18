@@ -17,7 +17,7 @@ class PrefixBuilder
 
     public string Build(ClaimsPrincipal user, string? userAgent, string? referrer, string id)
     {
-        var builder = new StringBuilder(prefix);
+        StringBuilder builder = new(prefix);
         if (user.Claims.Any())
         {
             builder.Append("'Claims':{");

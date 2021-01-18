@@ -4,5 +4,6 @@
     {
         Body = body;
     }
+
     public readonly string Body;
 }

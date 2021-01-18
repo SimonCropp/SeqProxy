@@ -141,7 +141,7 @@ namespace SeqProxy
         public static string Scrub(string claimType)
         {
             Guard.AgainstNullOrEmpty(claimType, nameof(claimType));
-            var lastIndexOf = claimType.LastIndexOf("/");
+            var lastIndexOf = claimType.LastIndexOf('/');
             if (lastIndexOf == -1)
             {
                 return claimType;

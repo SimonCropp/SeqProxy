@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Http;
 namespace SeqProxy
 {
     /// <summary>
-    /// Handles reads a log message from <see cref="HttpRequest"/> and forwarding it to SEQ.
+    /// Handles reads a log message from <see cref="HttpRequest"/> and forwarding it to Seq.
     /// </summary>
     public class SeqWriter
     {
@@ -21,11 +21,11 @@ namespace SeqProxy
         /// <summary>
         /// Initializes a new instance of <see cref="SeqWriter"/>
         /// </summary>
-        /// <param name="seqUrl">The SEQ api url.</param>
+        /// <param name="seqUrl">The Seq api url.</param>
         /// <param name="application">The application name.</param>
         /// <param name="version">The application version.</param>
-        /// <param name="apiKey">The SEQ api key to use. Will be appended to <paramref name="seqUrl"/> when writing log entries.</param>
-        /// <param name="httpClientFunc">Builds a <see cref="HttpClient"/> for writing log entries to SEQ.</param>
+        /// <param name="apiKey">The Seq api key to use. Will be appended to <paramref name="seqUrl"/> when writing log entries.</param>
+        /// <param name="httpClientFunc">Builds a <see cref="HttpClient"/> for writing log entries to Seq.</param>
         /// <param name="scrubClaimType">Scrubber for claim types. If null then <see cref="DefaultClaimTypeScrubber.Scrub"/> will be used.</param>
         public SeqWriter(
             Func<HttpClient> httpClientFunc,
@@ -63,7 +63,7 @@ namespace SeqProxy
         }
 
         /// <summary>
-        /// Reads a log message from <paramref name="request"/> and forwards it to SEQ.
+        /// Reads a log message from <paramref name="request"/> and forwards it to Seq.
         /// </summary>
         public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response, CancellationToken cancellation = default)
         {

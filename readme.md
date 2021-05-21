@@ -5,28 +5,12 @@
 
 Enables writing [Seq](https://datalust.co/seq) logs by proxying requests through an ASP.NET Controller or Middleware.
 
-Support is available via a [Tidelift Subscription](https://tidelift.com/subscription/pkg/nuget-seqproxy?utm_source=nuget-seqproxy&utm_medium=referral&utm_campaign=enterprise).
-
 
 ## Why
 
  * Avoid exposing the Seq API to the internet.
  * Leverage [Asp Authentication and Authorization](https://docs.microsoft.com/en-us/aspnet/core/security/) to verify and control incoming requests.
  * Append [extra data](#extra-data) to log messages during server processing.
-
-<!-- toc -->
-## Contents
-
-  * [HTTP Format/Protocol](#http-formatprotocol)
-  * [Extra data](#extra-data)
-    * [SeqProxyId](#seqproxyid)
-  * [Usage](#usage)
-    * [Enable in Startup](#enable-in-startup)
-    * [Add HTTP handling](#add-http-handling)
-  * [Client Side Usage](#client-side-usage)
-    * [Using raw JavaScript](#using-raw-javascript)
-    * [Using Structured-Log](#using-structured-log)
-  * [Security contact information](#security-contact-information)<!-- endToc -->
 
 
 ## NuGet package
@@ -457,10 +441,6 @@ Then a destructured property will be written to Seq.
 
 <img src="/src/omitFromMessage.png">
 
-
-## Security contact information
-
-To report a security vulnerability, use the [Tidelift security contact](https://tidelift.com/security). Tidelift will coordinate the fix and disclosure.
 
 
 ## Icon

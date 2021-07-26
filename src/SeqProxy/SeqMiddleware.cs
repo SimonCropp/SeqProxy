@@ -19,6 +19,7 @@ class SeqMiddleware
         {
             return next(context);
         }
+
         return seqWriter.Handle(context.User, context.Request, context.Response, context.RequestAborted);
     }
 }

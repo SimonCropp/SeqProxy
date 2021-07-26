@@ -22,22 +22,19 @@ class SeqMiddlewareWithAuth
         this.authService = authService;
     }
 
-    public async Task InvokeAsync(HttpContext context)
+    public Task InvokeAsync(HttpContext context)
     {
         if (!context.IsSeqUrl())
         {
-            await next(context);
-            return;
+            return next(context);
         }
 
-        await HandleWithAuth(context, authService);
+        return HandleWithAuth(context);
     }
 
     #region HandleWithAuth
 
-    async Task HandleWithAuth(
-        HttpContext context,
-        IAuthorizationService authService)
+    async Task HandleWithAuth(HttpContext context)
     {
         var user = context.User;
         var authResult = await authService.AuthorizeAsync(user, null, "SeqLog");

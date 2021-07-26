@@ -179,9 +179,7 @@ This then uses [IAuthorizationService](https://docs.microsoft.com/en-us/aspnet/c
 <!-- snippet: HandleWithAuth -->
 <a id='snippet-handlewithauth'></a>
 ```cs
-async Task HandleWithAuth(
-    HttpContext context,
-    IAuthorizationService authService)
+async Task HandleWithAuth(HttpContext context)
 {
     var user = context.User;
     var authResult = await authService.AuthorizeAsync(user, null, "SeqLog");
@@ -199,7 +197,7 @@ async Task HandleWithAuth(
         context.RequestAborted);
 }
 ```
-<sup><a href='/src/SeqProxy/SeqMiddlewareWithAuth.cs#L36-L58' title='Snippet source file'>snippet source</a> | <a href='#snippet-handlewithauth' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SeqProxy/SeqMiddlewareWithAuth.cs#L35-L55' title='Snippet source file'>snippet source</a> | <a href='#snippet-handlewithauth' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 

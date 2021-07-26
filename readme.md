@@ -57,7 +57,7 @@ DateTime startOfYear = new(now.Year, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 var ticks = now.Ticks - startOfYear.Ticks;
 var id = ticks.ToString("x");
 ```
-<sup><a href='/src/SeqProxy/SeqWriter.cs#L99-L106' title='Snippet source file'>snippet source</a> | <a href='#snippet-buildid' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SeqProxy/SeqWriter.cs#L97-L104' title='Snippet source file'>snippet source</a> | <a href='#snippet-buildid' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 Which generates a string of the form `8e434f861302`. The current year is trimmed to shorten the id and under the assumption that retention policy is not longer than 12 months. There is a small chance of collisions, but given the use-case (error correlation), this should not impact the ability to find the correct error. This string can then be given to a user as a error correlation id.
@@ -231,7 +231,6 @@ namespace SeqProxy
         /// </summary>
         protected BaseSeqController(SeqWriter seqWriter)
         {
-            Guard.AgainstNull(seqWriter, nameof(seqWriter));
             this.seqWriter = seqWriter;
         }
 
@@ -246,7 +245,7 @@ namespace SeqProxy
     }
 }
 ```
-<sup><a href='/src/SeqProxy/BaseSeqController.cs#L1-L35' title='Snippet source file'>snippet source</a> | <a href='#snippet-BaseSeqController.cs' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SeqProxy/BaseSeqController.cs#L1-L34' title='Snippet source file'>snippet source</a> | <a href='#snippet-BaseSeqController.cs' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 Add a new [controller](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/actions) that overrides `BaseSeqController`.

@@ -19,7 +19,6 @@ namespace SeqProxy
         /// </summary>
         protected BaseSeqController(SeqWriter seqWriter)
         {
-            Guard.AgainstNull(seqWriter, nameof(seqWriter));
             this.seqWriter = seqWriter;
         }
 

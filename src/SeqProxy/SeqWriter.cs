@@ -38,8 +38,6 @@ namespace SeqProxy
             Guard.AgainstEmpty(apiKey, nameof(apiKey));
             Guard.AgainstNullOrEmpty(application, nameof(application));
             Guard.AgainstNullOrEmpty(seqUrl, nameof(seqUrl));
-            Guard.AgainstNull(httpClientFunc, nameof(httpClientFunc));
-            Guard.AgainstNull(scrubClaimType, nameof(scrubClaimType));
             this.httpClientFunc = httpClientFunc;
             url = GetSeqUrl(seqUrl, apiKey);
             prefixBuilder = new(application, version, scrubClaimType);

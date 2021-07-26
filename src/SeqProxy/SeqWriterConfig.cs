@@ -46,7 +46,6 @@ namespace Microsoft.Extensions.DependencyInjection
             Guard.AgainstEmpty(apiKey, nameof(apiKey));
             Guard.AgainstEmpty(application, nameof(application));
             Guard.AgainstNullOrEmpty(seqUrl, nameof(seqUrl));
-            Guard.AgainstNull(services, nameof(services));
 
             AddHttpClient(services, configureClient);
 

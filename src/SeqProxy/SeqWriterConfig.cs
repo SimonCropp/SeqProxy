@@ -65,7 +65,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     var httpFactory = provider.GetRequiredService<IHttpClientFactory>();
                     return new SeqWriter(
                         httpClientFunc: () => httpFactory.CreateClient("SeqProxy"),
-                        seqUrl!,
+                        seqUrl,
                         application!,
                         appVersion!,
                         apiKey,

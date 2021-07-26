@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-class ApiKeyValidator
+static class ApiKeyValidator
 {
     public static void ThrowIfApiKeySpecified(HttpRequest request)
     {

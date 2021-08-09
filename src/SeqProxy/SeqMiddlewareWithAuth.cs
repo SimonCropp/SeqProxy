@@ -14,7 +14,7 @@ class SeqMiddlewareWithAuth
     {
         this.next = next;
         this.seqWriter = seqWriter;
-        if (authService == null)
+        if (authService is null)
         {
             throw new("Expected IAuthorizationService to be configured.");
         }

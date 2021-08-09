@@ -51,7 +51,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             scrubClaimType ??= DefaultClaimTypeScrubber.Scrub;
 
-            if (application == null || appVersion == null)
+            if (application == null || appVersion is null)
             {
                 var callingAssemblyName = Assembly.GetCallingAssembly().GetName();
                 application ??= callingAssemblyName.Name;
@@ -74,7 +74,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         static void AddHttpClient(IServiceCollection services, Action<IServiceProvider, HttpClient>? configureClient)
         {
-            if (configureClient == null)
+            if (configureClient is null)
             {
                 services.AddHttpClient("SeqProxy");
             }

@@ -31,11 +31,11 @@ class PrefixBuilder
         }
 
         builder.Append($"'SeqProxyId':'{id}',");
-        if (userAgent != null)
+        if (userAgent is not null)
         {
             builder.Append($"'UserAgent':'{userAgent.AsJson()}',");
         }
-        if (referrer != null)
+        if (referrer is not null)
         {
             builder.Append($"'Referrer':'{referrer.AsJson()}',");
         }

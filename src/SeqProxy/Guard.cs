@@ -12,7 +12,7 @@ static class Guard
 
     public static void AgainstEmpty(string? value, string argumentName)
     {
-        if (value == null)
+        if (value is null)
         {
             return;
         }

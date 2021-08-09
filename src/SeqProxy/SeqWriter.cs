@@ -47,7 +47,7 @@ namespace SeqProxy
         {
             Uri baseUri = new(seqUrl);
             string uri;
-            if (apiKey == null)
+            if (apiKey is null)
             {
                 uri = "api/events/raw";
             }
@@ -73,7 +73,7 @@ namespace SeqProxy
             using (StreamReader streamReader = new(request.Body))
             {
                 string? line;
-                while ((line = await streamReader.ReadLineAsync()) != null)
+                while ((line = await streamReader.ReadLineAsync()) is not null)
                 {
                     ValidateLine(line);
 

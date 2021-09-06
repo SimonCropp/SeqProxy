@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
 
 // Non-nullable field is uninitialized.
 #pragma warning disable CS8618
@@ -42,5 +40,5 @@ public class MockRequest :
     public override string ContentType { get; set; }
     public override Stream Body { get; set; }
     public override bool HasFormContentType { get; }
-    public override IFormCollection Form { get; set; } = new FormCollection(new Dictionary<string, StringValues>());
+    public override IFormCollection Form { get; set; } = new FormCollection(new());
 }

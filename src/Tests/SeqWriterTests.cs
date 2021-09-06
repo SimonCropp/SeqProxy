@@ -15,7 +15,7 @@ public class SeqWriterTests
     public async Task Multiple()
     {
         MockHttpClient httpClient = new();
-        SeqWriter writer = new(() => httpClient, "http://theSeqUrl", "theAppName", new(1, 2), "theApiKey", s => s);
+        SeqWriter writer = new(() => httpClient, "http://theSeqUrl", "theServer", "theAppName", new(1, 2), "theApiKey", s => s);
         MockRequest request = new(
             @"{'@t':'2019-05-28','@mt':'Message1'}
 {'@t':'2019-05-29','@mt':'Message2'}");
@@ -38,7 +38,7 @@ public class SeqWriterTests
     public async Task Simple()
     {
         MockHttpClient httpClient = new();
-        SeqWriter writer = new(() => httpClient, "http://theSeqUrl", "theAppName", new(1, 2), "theApiKey", s => s);
+        SeqWriter writer = new(() => httpClient, "http://theSeqUrl", "theServer", "theAppName", new(1, 2), "theApiKey", s => s);
         MockRequest request = new("{'@t':'2019-05-28','@mt':'Simple Message'}");
         var user = ClaimsBuilder.Build();
         await writer.Handle(user, request, new MockResponse());
@@ -49,7 +49,7 @@ public class SeqWriterTests
     public async Task ApiKeyQueryString()
     {
         MockHttpClient httpClient = new();
-        SeqWriter writer = new(() => httpClient, "http://theSeqUrl", "theAppName", new(1, 2), "theApiKey", s => s);
+        SeqWriter writer = new(() => httpClient, "http://theSeqUrl", "theServer", "theAppName", new(1, 2), "theApiKey", s => s);
         MockRequest request = new("{'@t':'2019-05-28','@mt':'Simple Message'}")
         {
             Query = new QueryCollection(
@@ -68,7 +68,7 @@ public class SeqWriterTests
     public async Task ApiKeyHeaderString()
     {
         MockHttpClient httpClient = new();
-        SeqWriter writer = new(() => httpClient, "http://theSeqUrl", "theAppName", new(1, 2), "theApiKey", s => s);
+        SeqWriter writer = new(() => httpClient, "http://theSeqUrl", "theServer", "theAppName", new(1, 2), "theApiKey", s => s);
         MockRequest request = new("{'@t':'2019-05-28','@mt':'Simple Message'}")
         {
             Headers =

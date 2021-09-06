@@ -21,15 +21,17 @@ namespace SeqProxy
         /// <summary>
         /// Initializes a new instance of <see cref="SeqWriter"/>
         /// </summary>
+        /// <param name="httpClientFunc">Builds a <see cref="HttpClient"/> for writing log entries to Seq.</param>
         /// <param name="seqUrl">The Seq api url.</param>
+        /// <param name="server">The value to use for the Seq `Server` property.</param>
         /// <param name="application">The application name.</param>
         /// <param name="version">The application version.</param>
         /// <param name="apiKey">The Seq api key to use. Will be appended to <paramref name="seqUrl"/> when writing log entries.</param>
-        /// <param name="httpClientFunc">Builds a <see cref="HttpClient"/> for writing log entries to Seq.</param>
         /// <param name="scrubClaimType">Scrubber for claim types. If null then <see cref="DefaultClaimTypeScrubber.Scrub"/> will be used.</param>
         public SeqWriter(
             Func<HttpClient> httpClientFunc,
             string seqUrl,
+            string server,
             string application,
             Version version,
             string? apiKey,
@@ -40,7 +42,7 @@ namespace SeqProxy
             Guard.AgainstNullOrEmpty(seqUrl, nameof(seqUrl));
             this.httpClientFunc = httpClientFunc;
             url = GetSeqUrl(seqUrl, apiKey);
-            prefixBuilder = new(application, version, scrubClaimType);
+            prefixBuilder = new(application, version, scrubClaimType, server);
         }
 
         static string GetSeqUrl(string seqUrl, string? apiKey)
@@ -113,7 +115,7 @@ namespace SeqProxy
             {
                 using StringContent content = new(payload, Encoding.UTF8, "application/vnd.serilog.clef");
                 using var seqResponse = await httpClient.PostAsync(url, content, cancellation);
-                response.StatusCode = (int) seqResponse.StatusCode;
+                response.StatusCode = (int)seqResponse.StatusCode;
                 response.Headers.Add("SeqProxyId", id);
 
                 await seqResponse.Content.CopyToAsync(response.Body);
@@ -130,7 +132,7 @@ namespace SeqProxy
                 throw new("Blank lines are not allowed.");
             }
 
-            if (line.StartsWith(@"{""Events"":")||line.StartsWith("{'Events':"))
+            if (line.StartsWith(@"{""Events"":") || line.StartsWith("{'Events':"))
             {
                 throw new("Only compact format is supported supported");
             }
@@ -139,6 +141,7 @@ namespace SeqProxy
             {
                 return;
             }
+
             throw new($"Expected line to start with `{{'` or `{{\"`. Line: {line}");
         }
     }

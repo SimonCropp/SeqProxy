@@ -32,6 +32,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="application">The application name. If null then the name of <see cref="Assembly.GetCallingAssembly"/> will be used.</param>
         /// <param name="appVersion">The application version. If null then the version of <see cref="Assembly.GetCallingAssembly"/> will be used.</param>
         /// <param name="apiKey">The Seq api key to use. Will be appended to <paramref name="seqUrl"/> when writing log entries.</param>
+        /// <param name="server">The value to use for the Seq `Server` property. Defaults to <see cref="Environment.MachineName"/>.</param>
         /// <param name="scrubClaimType">Scrubber for claim types. If null then <see cref="DefaultClaimTypeScrubber.Scrub"/> will be used.</param>
         /// <param name="configureClient">Call back for manipulating the <see cref="HttpClient"/> use for writing log entries to Seq.</param>
         public static void AddSeqWriter(
@@ -40,10 +41,12 @@ namespace Microsoft.Extensions.DependencyInjection
             string? application = null,
             Version? appVersion = null,
             string? apiKey = null,
+            string? server = null,
             Func<string, string>? scrubClaimType = null,
             Action<IServiceProvider, HttpClient>? configureClient = null)
         {
             Guard.AgainstEmpty(apiKey, nameof(apiKey));
+            Guard.AgainstEmpty(server, nameof(server));
             Guard.AgainstEmpty(application, nameof(application));
             Guard.AgainstNullOrEmpty(seqUrl, nameof(seqUrl));
 
@@ -58,17 +61,16 @@ namespace Microsoft.Extensions.DependencyInjection
                 appVersion ??= callingAssemblyName.Version;
             }
 
+            server ??= Environment.MachineName;
+
             services.AddSingleton(
                 provider =>
                 {
                     var httpFactory = provider.GetRequiredService<IHttpClientFactory>();
                     return new SeqWriter(
                         httpClientFunc: () => httpFactory.CreateClient("SeqProxy"),
-                        seqUrl,
-                        application!,
-                        appVersion!,
-                        apiKey,
-                        scrubClaimType);
+                        seqUrl: seqUrl,
+                        server: server, application: application!, version: appVersion!, apiKey: apiKey, scrubClaimType: scrubClaimType);
                 });
         }
 

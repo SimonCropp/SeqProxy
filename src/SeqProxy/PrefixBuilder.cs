@@ -35,10 +35,12 @@ class PrefixBuilder
         {
             builder.Append($"'UserAgent':'{userAgent.AsJson()}',");
         }
+
         if (referrer is not null)
         {
             builder.Append($"'Referrer':'{referrer.AsJson()}',");
         }
+
         return builder.ToString();
     }
 }

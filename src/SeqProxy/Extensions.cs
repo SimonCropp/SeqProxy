@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Web;
+﻿using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
 

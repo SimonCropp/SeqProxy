@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 public class StartupSnippets
 {

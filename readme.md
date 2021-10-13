@@ -57,7 +57,7 @@ DateTime startOfYear = new(now.Year, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 var ticks = now.Ticks - startOfYear.Ticks;
 var id = ticks.ToString("x");
 ```
-<sup><a href='/src/SeqProxy/SeqWriter.cs#L99-L106' title='Snippet source file'>snippet source</a> | <a href='#snippet-buildid' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SeqProxy/SeqWriter.cs#L94-L101' title='Snippet source file'>snippet source</a> | <a href='#snippet-buildid' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 Which generates a string of the form `8e434f861302`. The current year is trimmed to shorten the id and under the assumption that retention policy is not longer than 12 months. There is a small chance of collisions, but given the use-case (error correlation), this should not impact the ability to find the correct error. This string can then be given to a user as a error correlation id.
@@ -102,7 +102,7 @@ public void ConfigureServices(IServiceCollection services)
         scrubClaimType: claimType => claimType.Split("/").Last());
 }
 ```
-<sup><a href='/src/Tests/FullStartupConfig.cs#L6-L19' title='Snippet source file'>snippet source</a> | <a href='#snippet-configureservicesfull' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/FullStartupConfig.cs#L5-L18' title='Snippet source file'>snippet source</a> | <a href='#snippet-configureservicesfull' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
  * `application` defaults to `Assembly.GetCallingAssembly().GetName().Name`.
@@ -197,7 +197,7 @@ async Task HandleWithAuth(HttpContext context)
         context.RequestAborted);
 }
 ```
-<sup><a href='/src/SeqProxy/SeqMiddlewareWithAuth.cs#L35-L55' title='Snippet source file'>snippet source</a> | <a href='#snippet-handlewithauth' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SeqProxy/SeqMiddlewareWithAuth.cs#L34-L54' title='Snippet source file'>snippet source</a> | <a href='#snippet-handlewithauth' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -208,42 +208,40 @@ async Task HandleWithAuth(HttpContext context)
 <!-- snippet: BaseSeqController.cs -->
 <a id='snippet-BaseSeqController.cs'></a>
 ```cs
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace SeqProxy
+namespace SeqProxy;
+
+/// <summary>
+/// An implementation of <see cref="ControllerBase"/> that provides a http post and some basic routing.
+/// </summary>
+[Route("/api/events/raw")]
+[Route("/seq")]
+[ApiController]
+public abstract class BaseSeqController :
+    ControllerBase
 {
+    SeqWriter seqWriter;
+
     /// <summary>
-    /// An implementation of <see cref="ControllerBase"/> that provides a http post and some basic routing.
+    /// Initializes a new instance of <see cref="BaseSeqController"/>
     /// </summary>
-    [Route("/api/events/raw")]
-    [Route("/seq")]
-    [ApiController]
-    public abstract class BaseSeqController :
-        ControllerBase
+    protected BaseSeqController(SeqWriter seqWriter)
     {
-        SeqWriter seqWriter;
+        this.seqWriter = seqWriter;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of <see cref="BaseSeqController"/>
-        /// </summary>
-        protected BaseSeqController(SeqWriter seqWriter)
-        {
-            this.seqWriter = seqWriter;
-        }
-
-        /// <summary>
-        /// Handles log events via a HTTP post.
-        /// </summary>
-        [HttpPost]
-        public virtual Task Post()
-        {
-            return seqWriter.Handle(User, Request, Response, HttpContext.RequestAborted);
-        }
+    /// <summary>
+    /// Handles log events via a HTTP post.
+    /// </summary>
+    [HttpPost]
+    public virtual Task Post()
+    {
+        return seqWriter.Handle(User, Request, Response, HttpContext.RequestAborted);
     }
 }
 ```
-<sup><a href='/src/SeqProxy/BaseSeqController.cs#L1-L34' title='Snippet source file'>snippet source</a> | <a href='#snippet-BaseSeqController.cs' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SeqProxy/BaseSeqController.cs#L1-L32' title='Snippet source file'>snippet source</a> | <a href='#snippet-BaseSeqController.cs' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 Add a new [controller](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/actions) that overrides `BaseSeqController`.
@@ -260,7 +258,7 @@ public class SeqController :
     }
 }
 ```
-<sup><a href='/src/Tests/ControllerSamples.cs#L8-L17' title='Snippet source file'>snippet source</a> | <a href='#snippet-simplecontroller' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/ControllerSamples.cs#L7-L16' title='Snippet source file'>snippet source</a> | <a href='#snippet-simplecontroller' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -275,7 +273,7 @@ Adding authorization and authentication can be done with an [AuthorizeAttribute]
 public class SeqController :
     BaseSeqController
 ```
-<sup><a href='/src/Tests/ControllerSamples.cs#L46-L50' title='Snippet source file'>snippet source</a> | <a href='#snippet-authorizecontroller' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/ControllerSamples.cs#L45-L49' title='Snippet source file'>snippet source</a> | <a href='#snippet-authorizecontroller' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -297,7 +295,7 @@ public class SeqController :
         return base.Post();
     }
 ```
-<sup><a href='/src/Tests/ControllerSamples.cs#L22-L31' title='Snippet source file'>snippet source</a> | <a href='#snippet-overridepostcontroller' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/ControllerSamples.cs#L21-L30' title='Snippet source file'>snippet source</a> | <a href='#snippet-overridepostcontroller' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 

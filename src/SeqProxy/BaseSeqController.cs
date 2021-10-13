@@ -1,34 +1,32 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace SeqProxy
+namespace SeqProxy;
+
+/// <summary>
+/// An implementation of <see cref="ControllerBase"/> that provides a http post and some basic routing.
+/// </summary>
+[Route("/api/events/raw")]
+[Route("/seq")]
+[ApiController]
+public abstract class BaseSeqController :
+    ControllerBase
 {
+    SeqWriter seqWriter;
+
     /// <summary>
-    /// An implementation of <see cref="ControllerBase"/> that provides a http post and some basic routing.
+    /// Initializes a new instance of <see cref="BaseSeqController"/>
     /// </summary>
-    [Route("/api/events/raw")]
-    [Route("/seq")]
-    [ApiController]
-    public abstract class BaseSeqController :
-        ControllerBase
+    protected BaseSeqController(SeqWriter seqWriter)
     {
-        SeqWriter seqWriter;
+        this.seqWriter = seqWriter;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of <see cref="BaseSeqController"/>
-        /// </summary>
-        protected BaseSeqController(SeqWriter seqWriter)
-        {
-            this.seqWriter = seqWriter;
-        }
-
-        /// <summary>
-        /// Handles log events via a HTTP post.
-        /// </summary>
-        [HttpPost]
-        public virtual Task Post()
-        {
-            return seqWriter.Handle(User, Request, Response, HttpContext.RequestAborted);
-        }
+    /// <summary>
+    /// Handles log events via a HTTP post.
+    /// </summary>
+    [HttpPost]
+    public virtual Task Post()
+    {
+        return seqWriter.Handle(User, Request, Response, HttpContext.RequestAborted);
     }
 }

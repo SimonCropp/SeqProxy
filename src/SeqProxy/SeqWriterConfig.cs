@@ -1,5 +1,4 @@
-﻿using System.Net.Http;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using SeqProxy;
 
 namespace Microsoft.Extensions.DependencyInjection;

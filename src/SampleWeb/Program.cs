@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
 
 var builder = WebHost.CreateDefaultBuilder();
 builder.UseContentRoot(Directory.GetCurrentDirectory());

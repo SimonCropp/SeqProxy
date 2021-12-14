@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
-public class Startup
+﻿public class Startup
 {
     public Startup(IConfiguration configuration)
     {

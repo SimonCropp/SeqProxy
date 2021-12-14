@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using SeqProxy;
-using VerifyXunit;
-using Xunit;
 
 [UsesVerify]
 public class SeqWriterTests

@@ -1,8 +1,4 @@
-﻿using System.Net.Http;
-using VerifyXunit;
-using Xunit;
-
-[UsesVerify]
+﻿[UsesVerify]
 [Trait("Category", "Integration")]
 public class SeqIntegrationTests
 {
@@ -27,7 +23,7 @@ public class SeqIntegrationTests
     {
         var content = @"{""Events"": [{""Level"": ""Error"",""MessageTemplate"": ""The Message""}]}";
         var exception = await Assert.ThrowsAsync<Exception>(() => WriteAndVerify(content));
-        await Verifier.Verify(exception.Message);
+        await Verify(exception.Message);
     }
 
     [Fact]
@@ -35,7 +31,7 @@ public class SeqIntegrationTests
     {
         var content = "{'Events': [{'Level': 'Error','MessageTemplate': 'The Message'}]}";
         var exception = await Assert.ThrowsAsync<Exception>(() => WriteAndVerify(content));
-        await Verifier.Verify(exception.Message);
+        await Verify(exception.Message);
     }
 
     [Fact]
@@ -53,7 +49,7 @@ public class SeqIntegrationTests
   }]
 }";
         var exception = await Assert.ThrowsAsync<Exception>(() => WriteAndVerify(content));
-        await Verifier.Verify(exception.Message);
+        await Verify(exception.Message);
     }
 
     [Fact]

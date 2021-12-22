@@ -25,7 +25,7 @@ public class SeqWriterTests
             .Split(',')
             .Where(x => !x.Contains("SeqProxyId"));
 
-        return Verifier.Verify(string.Join("," + Environment.NewLine, lines));
+        return Verify(string.Join("," + Environment.NewLine, lines));
     }
 
     [Fact]
@@ -55,7 +55,7 @@ public class SeqWriterTests
 
         var user = ClaimsBuilder.Build();
         var exception = await Assert.ThrowsAsync<Exception>(() => writer.Handle(user, request, new MockResponse()));
-        await Verifier.Verify(exception.Message);
+        await Verify(exception.Message);
     }
 
     [Fact]
@@ -73,6 +73,6 @@ public class SeqWriterTests
 
         var user = ClaimsBuilder.Build();
         var exception = await Assert.ThrowsAsync<Exception>(() => writer.Handle(user, request, new MockResponse()));
-        await Verifier.Verify(exception.Message);
+        await Verify(exception.Message);
     }
 }

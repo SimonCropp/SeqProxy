@@ -14,6 +14,6 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     <ProjectReference Include="..\SampleWeb\SampleWeb.csproj" />
     <ProjectReference Include="..\SeqProxy\SeqProxy.csproj" />
-    <PackageReference Include="ProjectDefaults" Version="1.0.63" PrivateAssets="All" />
+    <PackageReference Include="ProjectDefaults" Version="1.0.64" PrivateAssets="all" />
   </ItemGroup>
 </Project>

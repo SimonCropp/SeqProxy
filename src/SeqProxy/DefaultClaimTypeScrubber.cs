@@ -17,6 +17,6 @@ public static class DefaultClaimTypeScrubber
             return claimType;
         }
 
-        return claimType.Substring(lastIndexOf + 1);
+        return claimType[(lastIndexOf + 1)..];
     }
 }

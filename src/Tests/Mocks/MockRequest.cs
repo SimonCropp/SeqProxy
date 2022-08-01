@@ -15,10 +15,8 @@ public class MockRequest :
         Body = stream;
     }
 
-    public override Task<IFormCollection> ReadFormAsync(CancellationToken cancellationToken = default)
-    {
+    public override Task<IFormCollection> ReadFormAsync(CancellationToken cancellationToken = default) =>
         throw new NotImplementedException();
-    }
 
     public override HttpContext HttpContext { get; }
     public override string Method { get; set; }

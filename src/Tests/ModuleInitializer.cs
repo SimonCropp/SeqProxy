@@ -4,5 +4,6 @@
     public static void Initialize()
     {
         VerifierSettings.ScrubMachineName();
+        VerifyDiffPlex.Initialize();
     }
 }

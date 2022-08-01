@@ -4,10 +4,8 @@ using Microsoft.Net.Http.Headers;
 
 static class Extensions
 {
-    public static string AsJson(this string value)
-    {
-        return HttpUtility.JavaScriptStringEncode(value);
-    }
+    public static string AsJson(this string value) =>
+        HttpUtility.JavaScriptStringEncode(value);
 
     public static string? GetUserAgent(this HttpRequest request)
     {

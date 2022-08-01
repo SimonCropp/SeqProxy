@@ -23,11 +23,10 @@ namespace OverridePostController
         BaseSeqController
     {
         [CustomExceptionFilter]
-        public override Task Post()
-        {
-            return base.Post();
-        }
-    #endregion
+        public override Task Post() =>
+            base.Post();
+
+        #endregion
         public SeqController(SeqWriter seqWriter) :
             base(seqWriter)
         {

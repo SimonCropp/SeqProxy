@@ -16,17 +16,13 @@ public abstract class BaseSeqController :
     /// <summary>
     /// Initializes a new instance of <see cref="BaseSeqController"/>
     /// </summary>
-    protected BaseSeqController(SeqWriter seqWriter)
-    {
+    protected BaseSeqController(SeqWriter seqWriter) =>
         this.seqWriter = seqWriter;
-    }
 
     /// <summary>
     /// Handles log events via a HTTP post.
     /// </summary>
     [HttpPost]
-    public virtual Task Post()
-    {
-        return seqWriter.Handle(User, Request, Response, HttpContext.RequestAborted);
-    }
+    public virtual Task Post() =>
+        seqWriter.Handle(User, Request, Response, HttpContext.RequestAborted);
 }

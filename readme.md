@@ -57,7 +57,7 @@ DateTime startOfYear = new(now.Year, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 var ticks = now.Ticks - startOfYear.Ticks;
 var id = ticks.ToString("x");
 ```
-<sup><a href='/src/SeqProxy/SeqWriter.cs#L93-L100' title='Snippet source file'>snippet source</a> | <a href='#snippet-buildid' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SeqProxy/SeqWriter.cs#L92-L99' title='Snippet source file'>snippet source</a> | <a href='#snippet-buildid' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 Which generates a string of the form `8e434f861302`. The current year is trimmed to shorten the id and under the assumption that retention policy is not longer than 12 months. There is a small chance of collisions, but given the use-case (error correlation), this should not impact the ability to find the correct error. This string can then be given to a user as a error correlation id.
@@ -83,7 +83,7 @@ public void ConfigureServices(IServiceCollection services)
     services.AddSeqWriter(seqUrl: "http://localhost:5341");
 }
 ```
-<sup><a href='/src/SampleWeb/Startup.cs#L10-L18' title='Snippet source file'>snippet source</a> | <a href='#snippet-configureservices' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SampleWeb/Startup.cs#L8-L16' title='Snippet source file'>snippet source</a> | <a href='#snippet-configureservices' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 There are several optional parameters:
@@ -112,31 +112,30 @@ public void ConfigureServices(IServiceCollection services)
 <!-- snippet: DefaultClaimTypeScrubber.cs -->
 <a id='snippet-DefaultClaimTypeScrubber.cs'></a>
 ```cs
-namespace SeqProxy
+namespace SeqProxy;
+
+/// <summary>
+/// Used for scrubbing claims when no other scrubber is defined.
+/// </summary>
+public static class DefaultClaimTypeScrubber
 {
     /// <summary>
-    /// Used for scrubbing claims when no other scrubber is defined.
+    /// Get the string after the last /.
     /// </summary>
-    public static class DefaultClaimTypeScrubber
+    public static string Scrub(string claimType)
     {
-        /// <summary>
-        /// Get the string after the last /.
-        /// </summary>
-        public static string Scrub(string claimType)
+        Guard.AgainstNullOrEmpty(claimType, nameof(claimType));
+        var lastIndexOf = claimType.LastIndexOf('/');
+        if (lastIndexOf == -1)
         {
-            Guard.AgainstNullOrEmpty(claimType, nameof(claimType));
-            var lastIndexOf = claimType.LastIndexOf('/');
-            if (lastIndexOf == -1)
-            {
-                return claimType;
-            }
-
-            return claimType.Substring(lastIndexOf + 1);
+            return claimType;
         }
+
+        return claimType.Substring(lastIndexOf + 1);
     }
 }
 ```
-<sup><a href='/src/SeqProxy/DefaultClaimTypeScrubber.cs#L1-L23' title='Snippet source file'>snippet source</a> | <a href='#snippet-DefaultClaimTypeScrubber.cs' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SeqProxy/DefaultClaimTypeScrubber.cs#L1-L22' title='Snippet source file'>snippet source</a> | <a href='#snippet-DefaultClaimTypeScrubber.cs' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -156,7 +155,7 @@ public void Configure(IApplicationBuilder builder)
 {
     builder.UseSeq();
 ```
-<sup><a href='/src/SampleWeb/Startup.cs#L20-L25' title='Snippet source file'>snippet source</a> | <a href='#snippet-configurebuilder' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SampleWeb/Startup.cs#L18-L23' title='Snippet source file'>snippet source</a> | <a href='#snippet-configurebuilder' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -226,22 +225,18 @@ public abstract class BaseSeqController :
     /// <summary>
     /// Initializes a new instance of <see cref="BaseSeqController"/>
     /// </summary>
-    protected BaseSeqController(SeqWriter seqWriter)
-    {
+    protected BaseSeqController(SeqWriter seqWriter) =>
         this.seqWriter = seqWriter;
-    }
 
     /// <summary>
     /// Handles log events via a HTTP post.
     /// </summary>
     [HttpPost]
-    public virtual Task Post()
-    {
-        return seqWriter.Handle(User, Request, Response, HttpContext.RequestAborted);
-    }
+    public virtual Task Post() =>
+        seqWriter.Handle(User, Request, Response, HttpContext.RequestAborted);
 }
 ```
-<sup><a href='/src/SeqProxy/BaseSeqController.cs#L1-L32' title='Snippet source file'>snippet source</a> | <a href='#snippet-BaseSeqController.cs' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SeqProxy/BaseSeqController.cs#L1-L28' title='Snippet source file'>snippet source</a> | <a href='#snippet-BaseSeqController.cs' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 Add a new [controller](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/actions) that overrides `BaseSeqController`.
@@ -273,7 +268,7 @@ Adding authorization and authentication can be done with an [AuthorizeAttribute]
 public class SeqController :
     BaseSeqController
 ```
-<sup><a href='/src/Tests/ControllerSamples.cs#L45-L49' title='Snippet source file'>snippet source</a> | <a href='#snippet-authorizecontroller' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/ControllerSamples.cs#L44-L48' title='Snippet source file'>snippet source</a> | <a href='#snippet-authorizecontroller' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -290,12 +285,10 @@ public class SeqController :
     BaseSeqController
 {
     [CustomExceptionFilter]
-    public override Task Post()
-    {
-        return base.Post();
-    }
+    public override Task Post() =>
+        base.Post();
 ```
-<sup><a href='/src/Tests/ControllerSamples.cs#L21-L30' title='Snippet source file'>snippet source</a> | <a href='#snippet-overridepostcontroller' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/ControllerSamples.cs#L21-L29' title='Snippet source file'>snippet source</a> | <a href='#snippet-overridepostcontroller' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 

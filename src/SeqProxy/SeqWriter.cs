@@ -22,12 +22,14 @@ public class SeqWriter
     /// <param name="apiKey">The Seq api key to use. Will be appended to <paramref name="seqUrl"/> when writing log entries.</param>
     /// <param name="scrubClaimType">Scrubber for claim types. If null then <see cref="DefaultClaimTypeScrubber.Scrub"/> will be used.</param>
     /// <param name="server">The value to use for the Seq `Server` property.</param>
-    public SeqWriter(Func<HttpClient> httpClientFunc,
+    /// <param name="user">The value to use for the Seq `User` property</param>
+    public SeqWriter(
+        Func<HttpClient> httpClientFunc,
         string seqUrl,
         string application,
         Version version,
         string? apiKey,
-        Func<string, string> scrubClaimType,
+        Func<string, string>? scrubClaimType = null,
         string? server = null,
         string? user = null)
     {

@@ -36,11 +36,13 @@ public static class SeqWriterConfig
         Version? appVersion = null,
         string? apiKey = null,
         string? server = null,
+        string? user = null,
         Func<string, string>? scrubClaimType = null,
         Action<IServiceProvider, HttpClient>? configureClient = null)
     {
         Guard.AgainstEmpty(apiKey, nameof(apiKey));
         Guard.AgainstEmpty(server, nameof(server));
+        Guard.AgainstEmpty(user, nameof(user));
         Guard.AgainstEmpty(application, nameof(application));
         Guard.AgainstNullOrEmpty(seqUrl, nameof(seqUrl));
 
@@ -56,6 +58,7 @@ public static class SeqWriterConfig
         }
 
         server ??= Environment.MachineName;
+        user ??= Environment.UserName;
 
         services.AddSingleton(
             provider =>
@@ -63,7 +66,13 @@ public static class SeqWriterConfig
                 var httpFactory = provider.GetRequiredService<IHttpClientFactory>();
                 return new SeqWriter(
                     httpClientFunc: () => httpFactory.CreateClient("SeqProxy"),
-                    seqUrl: seqUrl, application: application!, version: appVersion!, apiKey: apiKey, scrubClaimType: scrubClaimType, server: server);
+                    seqUrl: seqUrl,
+                    application: application!,
+                    version: appVersion!,
+                    apiKey: apiKey,
+                    scrubClaimType: scrubClaimType,
+                    server: server,
+                    user: user);
             });
     }
 

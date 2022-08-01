@@ -26,15 +26,13 @@ public class SeqWriter
         string application,
         Version version,
         string? apiKey,
-        Func<string, string>? scrubClaimType = null,
-        string? server = null,
-        string? user = null)
+        Func<string, string> scrubClaimType,
+        string server,
+        string user)
     {
         Guard.AgainstEmpty(apiKey, nameof(apiKey));
         Guard.AgainstNullOrEmpty(application, nameof(application));
         Guard.AgainstNullOrEmpty(seqUrl, nameof(seqUrl));
-        server ??= Environment.MachineName;
-        user ??= Environment.UserName;
         this.httpClientFunc = httpClientFunc;
         url = GetSeqUrl(seqUrl, apiKey);
         prefixBuilder = new(application, version, scrubClaimType, server, user);

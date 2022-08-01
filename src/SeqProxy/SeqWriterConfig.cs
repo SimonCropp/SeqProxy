@@ -27,6 +27,7 @@ public static class SeqWriterConfig
     /// <param name="appVersion">The application version. If null then the version of <see cref="Assembly.GetCallingAssembly"/> will be used.</param>
     /// <param name="apiKey">The Seq api key to use. Will be appended to <paramref name="seqUrl"/> when writing log entries.</param>
     /// <param name="server">The value to use for the Seq `Server` property. Defaults to <see cref="Environment.MachineName"/>.</param>
+    /// <param name="user">The value to use for the Seq `User` property. Defaults to <see cref="Environment.UserName"/>.</param>
     /// <param name="scrubClaimType">Scrubber for claim types. If null then <see cref="DefaultClaimTypeScrubber.Scrub"/> will be used.</param>
     /// <param name="configureClient">Call back for manipulating the <see cref="HttpClient"/> use for writing log entries to Seq.</param>
     public static void AddSeqWriter(

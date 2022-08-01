@@ -4,7 +4,7 @@ static class ClaimsBuilder
 {
     public static ClaimsPrincipal Build()
     {
-        ClaimsPrincipal principal = new();
+        var principal = new ClaimsPrincipal();
         principal.AddIdentity(
             new(
                 new[]

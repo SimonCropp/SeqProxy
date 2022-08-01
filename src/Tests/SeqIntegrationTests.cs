@@ -82,7 +82,7 @@ public class SeqIntegrationTests
         try
         {
             client.DefaultRequestHeaders.Add("User-Agent", "TheUserAgent");
-            StringContent httpContent = new(content, Encoding.UTF8, "application/json");
+            var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
             var httpResponseMessage = await client.PostAsync(url, httpContent);
             httpResponseMessage.EnsureSuccessStatusCode();
         }

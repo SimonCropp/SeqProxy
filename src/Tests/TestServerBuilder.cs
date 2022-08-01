@@ -5,7 +5,7 @@ static class TestServerBuilder
 {
     public static TestServer Build()
     {
-        WebHostBuilder hostBuilder = new();
+        var hostBuilder = new WebHostBuilder();
         hostBuilder.UseStartup<Startup>();
         return new(hostBuilder);
     }

@@ -7,8 +7,8 @@ public class MockRequest :
 {
     public MockRequest(string body)
     {
-        MemoryStream stream = new();
-        StreamWriter writer = new(stream);
+        var stream = new MemoryStream();
+        var writer = new StreamWriter(stream);
         writer.Write(body);
         writer.Flush();
         stream.Position = 0;

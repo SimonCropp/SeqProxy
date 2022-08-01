@@ -17,31 +17,33 @@ public class SeqWriter
     /// </summary>
     /// <param name="httpClientFunc">Builds a <see cref="HttpClient"/> for writing log entries to Seq.</param>
     /// <param name="seqUrl">The Seq api url.</param>
-    /// <param name="server">The value to use for the Seq `Server` property.</param>
     /// <param name="application">The application name.</param>
     /// <param name="version">The application version.</param>
     /// <param name="apiKey">The Seq api key to use. Will be appended to <paramref name="seqUrl"/> when writing log entries.</param>
     /// <param name="scrubClaimType">Scrubber for claim types. If null then <see cref="DefaultClaimTypeScrubber.Scrub"/> will be used.</param>
-    public SeqWriter(
-        Func<HttpClient> httpClientFunc,
+    /// <param name="server">The value to use for the Seq `Server` property.</param>
+    public SeqWriter(Func<HttpClient> httpClientFunc,
         string seqUrl,
-        string server,
         string application,
         Version version,
         string? apiKey,
-        Func<string, string> scrubClaimType)
+        Func<string, string> scrubClaimType,
+        string? server = null,
+        string? user = null)
     {
         Guard.AgainstEmpty(apiKey, nameof(apiKey));
         Guard.AgainstNullOrEmpty(application, nameof(application));
         Guard.AgainstNullOrEmpty(seqUrl, nameof(seqUrl));
+        server ??= Environment.MachineName;
+        user ??= Environment.UserName;
         this.httpClientFunc = httpClientFunc;
         url = GetSeqUrl(seqUrl, apiKey);
-        prefixBuilder = new(application, version, scrubClaimType, server);
+        prefixBuilder = new(application, version, scrubClaimType, server, user);
     }
 
     static string GetSeqUrl(string seqUrl, string? apiKey)
     {
-        Uri baseUri = new(seqUrl);
+        var baseUri = new Uri(seqUrl);
         string uri;
         if (apiKey is null)
         {
@@ -52,7 +54,7 @@ public class SeqWriter
             uri = $"api/events/raw?apiKey={apiKey}";
         }
 
-        Uri apiUrl = new(baseUri, uri);
+        var apiUrl = new Uri(baseUri, uri);
         return apiUrl.ToString();
     }
 
@@ -62,11 +64,11 @@ public class SeqWriter
     public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response, CancellationToken cancellation = default)
     {
         ApiKeyValidator.ThrowIfApiKeySpecified(request);
-        StringBuilder builder = new();
+        var builder = new StringBuilder();
 
         var id = BuildId();
         var prefix = prefixBuilder.Build(user, request.GetUserAgent(), request.GetReferer(), id);
-        using (StreamReader streamReader = new(request.Body))
+        using (var streamReader = new StreamReader(request.Body))
         {
             while (await streamReader.ReadLineAsync() is { } line)
             {
@@ -92,7 +94,7 @@ public class SeqWriter
         #region BuildId
 
         var now = DateTime.UtcNow;
-        DateTime startOfYear = new(now.Year, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+        var startOfYear = new DateTime(now.Year, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
         var ticks = now.Ticks - startOfYear.Ticks;
         var id = ticks.ToString("x");
 
@@ -106,7 +108,7 @@ public class SeqWriter
         var httpClient = httpClientFunc();
         try
         {
-            using StringContent content = new(payload, Encoding.UTF8, "application/vnd.serilog.clef");
+            using var content = new StringContent(payload, Encoding.UTF8, "application/vnd.serilog.clef");
             using var seqResponse = await httpClient.PostAsync(url, content, cancellation);
             response.StatusCode = (int)seqResponse.StatusCode;
             response.Headers.Add("SeqProxyId", id);

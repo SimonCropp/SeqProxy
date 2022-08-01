@@ -66,8 +66,7 @@ public static class SeqWriterConfig
                 var httpFactory = provider.GetRequiredService<IHttpClientFactory>();
                 return new SeqWriter(
                     httpClientFunc: () => httpFactory.CreateClient("SeqProxy"),
-                    seqUrl: seqUrl,
-                    server: server, application: application!, version: appVersion!, apiKey: apiKey, scrubClaimType: scrubClaimType);
+                    seqUrl: seqUrl, application: application!, version: appVersion!, apiKey: apiKey, scrubClaimType: scrubClaimType, server: server);
             });
     }
 

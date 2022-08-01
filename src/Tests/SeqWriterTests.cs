@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
-using SeqProxy;
-
-[UsesVerify]
+﻿[UsesVerify]
 public class SeqWriterTests
 {
     [Fact]

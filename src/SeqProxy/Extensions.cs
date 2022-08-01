@@ -1,8 +1,4 @@
-﻿using System.Web;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Net.Http.Headers;
-
-static class Extensions
+﻿static class Extensions
 {
     public static string AsJson(this string value) =>
         HttpUtility.JavaScriptStringEncode(value);

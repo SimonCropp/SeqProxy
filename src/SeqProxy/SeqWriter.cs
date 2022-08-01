@@ -1,7 +1,4 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
-
-namespace SeqProxy;
+﻿namespace SeqProxy;
 
 /// <summary>
 /// Handles reads a log message from <see cref="HttpRequest"/> and forwarding it to Seq.

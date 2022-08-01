@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using SeqProxy;
-
-class SeqMiddlewareWithAuth
+﻿class SeqMiddlewareWithAuth
 {
     RequestDelegate next;
     SeqWriter seqWriter;

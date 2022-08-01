@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Filters;
-using SeqProxy;
-
-namespace SimpleController
+﻿namespace SimpleController
 {
     #region SimpleController
     public class SeqController :

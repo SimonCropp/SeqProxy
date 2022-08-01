@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-// Non-nullable field is uninitialized.
+﻿// Non-nullable field is uninitialized.
 #pragma warning disable CS8618
 public class MockRequest :
     HttpRequest

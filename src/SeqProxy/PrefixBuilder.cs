@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-
-class PrefixBuilder
+﻿class PrefixBuilder
 {
     Func<string, string>? scrubClaimType;
     string prefix;

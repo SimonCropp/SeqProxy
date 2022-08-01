@@ -12,5 +12,9 @@
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
     <ProjectReference Include="..\SeqProxy\SeqProxy.csproj" />
     <PackageReference Include="ProjectDefaults" Version="1.0.78" PrivateAssets="all" />
+
+    <Using Include="Microsoft.AspNetCore" />
+    <Using Include="Microsoft.AspNetCore.Mvc" />
+    <Using Include="SeqProxy" />
   </ItemGroup>
 </Project>

@@ -16,5 +16,12 @@
     <ProjectReference Include="..\SampleWeb\SampleWeb.csproj" />
     <ProjectReference Include="..\SeqProxy\SeqProxy.csproj" />
     <PackageReference Include="ProjectDefaults" Version="1.0.78" PrivateAssets="all" />
+
+
+    <Using Include="SeqProxy" />
+    <Using Include="Microsoft.AspNetCore.Authorization" />
+    <Using Include="Microsoft.AspNetCore.Mvc.Filters" />
+    <Using Include="Microsoft.AspNetCore.Http" />
+    <Using Include="Microsoft.Extensions.Primitives" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-public class SampleController :
+﻿public class SampleController :
     ControllerBase
 {
     [HttpGet]

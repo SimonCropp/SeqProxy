@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using SeqProxy;
-
-class SeqMiddleware
+﻿class SeqMiddleware
 {
     RequestDelegate next;
     SeqWriter seqWriter;

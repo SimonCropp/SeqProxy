@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SeqProxy;
-
-[Route("/seqcontroller")]
+﻿[Route("/seqcontroller")]
 public class SeqController :
     BaseSeqController
 {

@@ -110,7 +110,7 @@ public class SeqWriter
             response.StatusCode = (int)seqResponse.StatusCode;
             response.Headers.Add("SeqProxyId", id);
 
-            await seqResponse.Content.CopyToAsync(response.Body);
+            await seqResponse.Content.CopyToAsync(response.Body, cancellation);
         }
         catch (TaskCanceledException)
         {

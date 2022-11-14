@@ -20,7 +20,7 @@ public class MockResponse :
     public override IHeaderDictionary Headers { get; } = new HeaderDictionary();
     public override Stream Body { get; set; } = new MemoryStream();
     public override long? ContentLength { get; set; }
-    public override string ContentType { get; set; }
+    public override string? ContentType { get; set; }
     public override IResponseCookies Cookies { get; }
     public override bool HasStarted { get; }
 }

@@ -8,12 +8,8 @@
     {
         this.next = next;
         this.seqWriter = seqWriter;
-        if (authService is null)
-        {
-            throw new("Expected IAuthorizationService to be configured.");
-        }
 
-        this.authService = authService;
+        this.authService = authService ?? throw new("Expected IAuthorizationService to be configured.");
     }
 
     public Task InvokeAsync(HttpContext context)

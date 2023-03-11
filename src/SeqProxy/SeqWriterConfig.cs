@@ -15,6 +15,7 @@ public static class SeqWriterConfig
             builder.UseMiddleware<SeqMiddlewareWithAuth>();
             return;
         }
+
         builder.UseMiddleware<SeqMiddleware>();
     }
 
@@ -51,7 +52,8 @@ public static class SeqWriterConfig
 
         scrubClaimType ??= DefaultClaimTypeScrubber.Scrub;
 
-        if (application == null || appVersion is null)
+        if (application == null ||
+            appVersion is null)
         {
             var callingAssemblyName = Assembly.GetCallingAssembly().GetName();
             application ??= callingAssemblyName.Name;

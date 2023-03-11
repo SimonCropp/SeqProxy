@@ -58,7 +58,7 @@ public class SeqWriter
     /// <summary>
     /// Reads a log message from <paramref name="request"/> and forwards it to Seq.
     /// </summary>
-    public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response, CancellationToken cancellation = default)
+    public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response, Cancellation cancellation = default)
     {
         ApiKeyValidator.ThrowIfApiKeySpecified(request);
         var builder = new StringBuilder();
@@ -100,7 +100,7 @@ public class SeqWriter
         return id;
     }
 
-    async Task Write(string payload, HttpResponse response, string id, CancellationToken cancellation)
+    async Task Write(string payload, HttpResponse response, string id, Cancellation cancellation)
     {
         var httpClient = httpClientFunc();
         try
@@ -124,12 +124,14 @@ public class SeqWriter
             throw new("Blank lines are not allowed.");
         }
 
-        if (line.StartsWith(@"{""Events"":") || line.StartsWith("{'Events':"))
+        if (line.StartsWith(@"{""Events"":") ||
+            line.StartsWith("{'Events':"))
         {
             throw new("Only compact format is supported supported");
         }
 
-        if (line.StartsWith("{'") || line.StartsWith(@"{"""))
+        if (line.StartsWith("{'") ||
+            line.StartsWith(@"{"""))
         {
             return;
         }

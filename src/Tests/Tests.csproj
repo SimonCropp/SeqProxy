@@ -14,7 +14,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <ProjectReference Include="..\SampleWeb\SampleWeb.csproj" />
     <ProjectReference Include="..\SeqProxy\SeqProxy.csproj" />
-    <PackageReference Include="ProjectDefaults" Version="1.0.89" PrivateAssets="all" />
+    <PackageReference Include="ProjectDefaults" Version="1.0.90" PrivateAssets="all" />
 
     <Using Include="SeqProxy" />
     <Using Include="Microsoft.AspNetCore.Authorization" />

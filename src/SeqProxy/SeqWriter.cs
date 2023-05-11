@@ -66,9 +66,9 @@ public class SeqWriter
         var utcNow = DateTime.UtcNow;
         var id = BuildId(utcNow);
         var prefix = prefixBuilder.Build(user, request.GetUserAgent(), request.GetReferer(), id);
-        using (var streamReader = new StreamReader(request.Body))
+        using (var reader = new StreamReader(request.Body))
         {
-            while (await streamReader.ReadLineAsync(cancellation) is { } line)
+            while (await reader.ReadLineAsync(cancellation) is { } line)
             {
                 ValidateLine(line);
 

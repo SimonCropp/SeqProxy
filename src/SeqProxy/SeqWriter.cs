@@ -67,7 +67,7 @@ public class SeqWriter
         var prefix = prefixBuilder.Build(user, request.GetUserAgent(), request.GetReferer(), id);
         using (var streamReader = new StreamReader(request.Body))
         {
-            while (await streamReader.ReadLineAsync() is { } line)
+            while (await streamReader.ReadLineAsync(cancellation) is { } line)
             {
                 ValidateLine(line);
 

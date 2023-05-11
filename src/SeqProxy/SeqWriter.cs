@@ -119,7 +119,7 @@ public class SeqWriter
 
     static void ValidateLine(string line)
     {
-        if (string.IsNullOrWhiteSpace(line))
+        if (line.Length == 0)
         {
             throw new("Blank lines are not allowed.");
         }

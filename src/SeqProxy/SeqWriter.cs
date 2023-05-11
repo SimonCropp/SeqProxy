@@ -124,12 +124,6 @@ public class SeqWriter
             throw new("Blank lines are not allowed.");
         }
 
-        if (line.StartsWith(@"{""Events"":") ||
-            line.StartsWith("{'Events':"))
-        {
-            throw new("Only compact format is supported supported");
-        }
-
         if (line.StartsWith("{'") ||
             line.StartsWith(@"{"""))
         {

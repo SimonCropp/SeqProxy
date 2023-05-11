@@ -63,7 +63,8 @@ public class SeqWriter
         ApiKeyValidator.ThrowIfApiKeySpecified(request);
         var builder = new StringBuilder();
 
-        var id = BuildId();
+        var utcNow = DateTime.UtcNow;
+        var id = BuildId(utcNow);
         var prefix = prefixBuilder.Build(user, request.GetUserAgent(), request.GetReferer(), id);
         using (var streamReader = new StreamReader(request.Body))
         {
@@ -75,7 +76,7 @@ public class SeqWriter
                 if (!line.Contains("\"@t\"") &&
                     !line.Contains("'@t'"))
                 {
-                    builder.Append($"'@t':'{DateTime.UtcNow:o}',");
+                    builder.Append($"'@t':'{utcNow:o}',");
                 }
 
                 builder.Append(line, 1, line.Length - 1);
@@ -86,13 +87,12 @@ public class SeqWriter
         await Write(builder.ToString(), response, id, cancellation);
     }
 
-    static string BuildId()
+    static string BuildId(DateTime utcNow)
     {
         #region BuildId
 
-        var now = DateTime.UtcNow;
-        var startOfYear = new DateTime(now.Year, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-        var ticks = now.Ticks - startOfYear.Ticks;
+        var startOfYear = new DateTime(utcNow.Year, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+        var ticks = utcNow.Ticks - startOfYear.Ticks;
         var id = ticks.ToString("x");
 
         #endregion

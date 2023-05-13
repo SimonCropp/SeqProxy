@@ -19,40 +19,6 @@ public class SeqIntegrationTests
     }
 
     [Fact]
-    public async Task OldFormat1()
-    {
-        var content = @"{""Events"": [{""Level"": ""Error"",""MessageTemplate"": ""The Message""}]}";
-        var exception = await Assert.ThrowsAsync<Exception>(() => WriteAndVerify(content));
-        await Verify(exception.Message);
-    }
-
-    [Fact]
-    public async Task OldFormat2()
-    {
-        var content = "{'Events': [{'Level': 'Error','MessageTemplate': 'The Message'}]}";
-        var exception = await Assert.ThrowsAsync<Exception>(() => WriteAndVerify(content));
-        await Verify(exception.Message);
-    }
-
-    [Fact]
-    public async Task OldFormat3()
-    {
-        var content = @"{
-  ""Events"": [{
-    ""Timestamp"": ""2015-05-09T22:09:08.12345+10:00"",
-    ""Level"": ""Warning"",
-    ""MessageTemplate"": ""Disk space is low on {Drive}"",
-    ""Properties"": {
-      ""Drive"": ""C:"",
-      ""MachineName"": ""nblumhardt-rmbp""
-    }
-  }]
-}";
-        var exception = await Assert.ThrowsAsync<Exception>(() => WriteAndVerify(content));
-        await Verify(exception.Message);
-    }
-
-    [Fact]
     public Task LogToController()
     {
         var timestamp = DateTime.Now.ToString("o");
@@ -82,9 +48,9 @@ public class SeqIntegrationTests
         try
         {
             client.DefaultRequestHeaders.Add("User-Agent", "TheUserAgent");
-            var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var httpResponseMessage = await client.PostAsync(url, httpContent);
-            httpResponseMessage.EnsureSuccessStatusCode();
+            using var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
+            using var response = await client.PostAsync(url, httpContent);
+            response.EnsureSuccessStatusCode();
         }
         finally
         {

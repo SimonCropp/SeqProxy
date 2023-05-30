@@ -1,7 +1,7 @@
 ﻿static class Extensions
 {
     public static string AsJson(this string value) =>
-        HttpUtility.JavaScriptStringEncode(value);
+        JavaScriptEncoder.UnsafeRelaxedJsonEscaping.Encode(value);
 
     public static string? GetUserAgent(this HttpRequest request)
     {

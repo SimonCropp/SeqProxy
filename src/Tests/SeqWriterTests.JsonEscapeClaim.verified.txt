@@ -1,0 +1,8 @@
+﻿{'Application':'theAppName',
+'ApplicationVersion':'1.2',
+'Server':'theServer',
+'User':'theUser',
+'Claims':{'\"':'User@foo.bar',
+'\"':'theUserData'},
+'@t':'2019-05-28',
+'@mt':'Simple Message'}

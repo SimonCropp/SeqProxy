@@ -50,6 +50,24 @@ public class SeqWriterTests
     }
 
     [Fact]
+    public async Task JsonEscapeClaim()
+    {
+        var httpClient = new MockHttpClient();
+        var writer = new SeqWriter(
+            () => httpClient,
+            "http://theSeqUrl",
+            "theAppName", new(1, 2),
+            "theApiKey",
+            _ => "\"",
+            "theServer",
+            "theUser");
+        var request = new MockRequest("{'@t':'2019-05-28','@mt':'Simple Message'}");
+        var user = ClaimsBuilder.Build();
+        await writer.Handle(user, request, new MockResponse());
+        await Verify(httpClient);
+    }
+
+    [Fact]
     public async Task ApiKeyQueryString()
     {
         var httpClient = new MockHttpClient();

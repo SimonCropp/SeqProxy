@@ -9,7 +9,7 @@
 
         if (request.Headers.ContainsKey("X-Seq-ApiKey"))
         {
-            throw new("apiKey is not allowed.");
+            throw new("X-Seq-ApiKey is not allowed.");
         }
     }
 }

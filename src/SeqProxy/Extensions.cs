@@ -3,6 +3,9 @@
     public static string AsJson(this string value) =>
         JavaScriptEncoder.UnsafeRelaxedJsonEscaping.Encode(value);
 
+    public static void WriteEscaped(this TextWriter writer, string value) =>
+        JavaScriptEncoder.UnsafeRelaxedJsonEscaping.Encode(writer, value);
+
     public static string? GetUserAgent(this HttpRequest request)
     {
         if (request.Headers.TryGetValue(HeaderNames.UserAgent, out var values))

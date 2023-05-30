@@ -1,1 +1,1 @@
-﻿apiKey is not allowed.
+﻿X-Seq-ApiKey is not allowed.

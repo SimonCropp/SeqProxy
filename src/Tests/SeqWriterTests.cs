@@ -11,7 +11,7 @@ public class SeqWriterTests
             "theAppName",
             new(1, 2),
             "theApiKey",
-            s => s,
+            _ => _,
             "theServer",
             "theUser");
         var request = new MockRequest(@"{'@t':'2019-05-28','@mt':'Message1'}
@@ -26,7 +26,7 @@ public class SeqWriterTests
         var lines = httpClient.Requests.Single()
             .Body
             .Split(',')
-            .Where(x => !x.Contains("SeqProxyId"));
+            .Where(_ => !_.Contains("SeqProxyId"));
 
         return Verifier.Verify(string.Join("," + Environment.NewLine, lines));
     }

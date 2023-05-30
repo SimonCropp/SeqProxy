@@ -40,7 +40,7 @@ public class SeqWriterTests
             "http://theSeqUrl",
             "theAppName", new(1, 2),
             "theApiKey",
-            s => s,
+            _ => _,
             "theServer",
             "theUser");
         var request = new MockRequest("{'@t':'2019-05-28','@mt':'Simple Message'}");

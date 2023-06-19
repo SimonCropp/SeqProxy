@@ -58,7 +58,7 @@ public class SeqWriter
     /// <summary>
     /// Reads a log message from <paramref name="request"/> and forwards it to Seq.
     /// </summary>
-    public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response, Cancellation cancellation = default)
+    public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response, Cancel cancel = default)
     {
         ApiKeyValidator.ThrowIfApiKeySpecified(request);
         var builder = new StringBuilder();
@@ -68,7 +68,7 @@ public class SeqWriter
         var prefix = prefixBuilder.Build(user, request.GetUserAgent(), request.GetReferer(), id);
         using (var reader = new StreamReader(request.Body))
         {
-            while (await reader.ReadLineAsync(cancellation) is { } line)
+            while (await reader.ReadLineAsync(cancel) is { } line)
             {
                 ValidateLine(line);
 
@@ -84,7 +84,7 @@ public class SeqWriter
             }
         }
 
-        await Write(builder.ToString(), response, id, cancellation);
+        await Write(builder.ToString(), response, id, cancel);
     }
 
     static string BuildId(DateTime utcNow)
@@ -100,17 +100,17 @@ public class SeqWriter
         return id;
     }
 
-    async Task Write(string payload, HttpResponse response, string id, Cancellation cancellation)
+    async Task Write(string payload, HttpResponse response, string id, Cancel cancel)
     {
         var httpClient = httpClientFunc();
         try
         {
             using var content = new StringContent(payload, Encoding.UTF8, "application/vnd.serilog.clef");
-            using var seqResponse = await httpClient.PostAsync(url, content, cancellation);
+            using var seqResponse = await httpClient.PostAsync(url, content, cancel);
             response.StatusCode = (int)seqResponse.StatusCode;
             response.Headers.Add("SeqProxyId", id);
 
-            await seqResponse.Content.CopyToAsync(response.Body, cancellation);
+            await seqResponse.Content.CopyToAsync(response.Body, cancel);
         }
         catch (TaskCanceledException)
         {

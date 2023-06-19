@@ -13,7 +13,7 @@ public class MockRequest :
         Body = stream;
     }
 
-    public override Task<IFormCollection> ReadFormAsync(Cancellation cancellation = default) =>
+    public override Task<IFormCollection> ReadFormAsync(Cancel cancel = default) =>
         throw new NotImplementedException();
 
     public override HttpContext HttpContext { get; }

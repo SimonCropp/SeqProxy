@@ -5,6 +5,8 @@
 
 Enables writing [Seq](https://datalust.co/seq) logs by proxying requests through an ASP.NET Controller or Middleware.
 
+**See [Milestones](../../milestones?state=closed) for release notes.**
+
 
 ## Why
 

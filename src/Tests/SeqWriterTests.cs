@@ -28,7 +28,7 @@ public class SeqWriterTests
             .Split(',')
             .Where(_ => !_.Contains("SeqProxyId"));
 
-        return Verifier.Verify(string.Join("," + Environment.NewLine, lines));
+        return Verifier.Verify(string.Join(',' + Environment.NewLine, lines));
     }
 
     [Fact]

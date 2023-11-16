@@ -14,7 +14,7 @@ public class SeqIntegrationTests
     public Task LogWithDoubleQuotes()
     {
         var timestamp = DateTime.Now.ToString("o");
-        var content = $@"{{""@t"":""{timestamp}"",""@mt"":""Hello, {{User}}"",""User"":""John""}}";
+        var content = $$"""{"@t":"{{timestamp}}","@mt":"Hello, {User}","User":"John"}""";
         return WriteAndVerify(content);
     }
 
@@ -36,8 +36,10 @@ public class SeqIntegrationTests
     [Fact]
     public Task LogMultiple()
     {
-        var content = @"{'@mt':'Message1'}
-{'@mt':'Message2'}";
+        var content = """
+                      {'@mt':'Message1'}
+                      {'@mt':'Message2'}
+                      """;
         return WriteAndVerify(content);
     }
 

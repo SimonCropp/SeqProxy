@@ -14,8 +14,11 @@ public class SeqWriterTests
             _ => _,
             "theServer",
             "theUser");
-        var request = new MockRequest(@"{'@t':'2019-05-28','@mt':'Message1'}
-{'@t':'2019-05-29','@mt':'Message2'}");
+        var request = new MockRequest(
+            """
+            {'@t':'2019-05-28','@mt':'Message1'}
+            {'@t':'2019-05-29','@mt':'Message2'}
+            """);
         var user = ClaimsBuilder.Build();
         await writer.Handle(user, request, new MockResponse());
         await Verify(httpClient);

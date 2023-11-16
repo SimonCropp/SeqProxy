@@ -30,9 +30,7 @@ namespace OverridePostController
     }
 
     public class CustomExceptionFilterAttribute :
-        ExceptionFilterAttribute
-    {
-    }
+        ExceptionFilterAttribute;
 }
 
 namespace AuthorizeController

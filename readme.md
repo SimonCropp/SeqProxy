@@ -269,7 +269,7 @@ Adding authorization and authentication can be done with an [AuthorizeAttribute]
 public class SeqController :
     BaseSeqController
 ```
-<sup><a href='/src/Tests/ControllerSamples.cs#L40-L44' title='Snippet source file'>snippet source</a> | <a href='#snippet-authorizecontroller' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/ControllerSamples.cs#L38-L42' title='Snippet source file'>snippet source</a> | <a href='#snippet-authorizecontroller' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 

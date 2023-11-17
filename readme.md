@@ -245,16 +245,10 @@ Add a new [controller](https://docs.microsoft.com/en-us/aspnet/core/mvc/controll
 <!-- snippet: SimpleController -->
 <a id='snippet-simplecontroller'></a>
 ```cs
-public class SeqController :
-    BaseSeqController
-{
-    public SeqController(SeqWriter seqWriter) :
-        base(seqWriter)
-    {
-    }
-}
+public class SeqController(SeqWriter seqWriter) :
+    BaseSeqController(seqWriter);
 ```
-<sup><a href='/src/Tests/ControllerSamples.cs#L3-L12' title='Snippet source file'>snippet source</a> | <a href='#snippet-simplecontroller' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/ControllerSamples.cs#L3-L6' title='Snippet source file'>snippet source</a> | <a href='#snippet-simplecontroller' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -269,7 +263,7 @@ Adding authorization and authentication can be done with an [AuthorizeAttribute]
 public class SeqController :
     BaseSeqController
 ```
-<sup><a href='/src/Tests/ControllerSamples.cs#L38-L42' title='Snippet source file'>snippet source</a> | <a href='#snippet-authorizecontroller' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/ControllerSamples.cs#L28-L32' title='Snippet source file'>snippet source</a> | <a href='#snippet-authorizecontroller' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -282,14 +276,14 @@ For example adding an [exception filter ](https://docs.microsoft.com/en-us/aspne
 <!-- snippet: OverridePostController -->
 <a id='snippet-overridepostcontroller'></a>
 ```cs
-public class SeqController :
-    BaseSeqController
+public class SeqController(SeqWriter seqWriter) :
+    BaseSeqController(seqWriter)
 {
     [CustomExceptionFilter]
     public override Task Post() =>
         base.Post();
 ```
-<sup><a href='/src/Tests/ControllerSamples.cs#L17-L25' title='Snippet source file'>snippet source</a> | <a href='#snippet-overridepostcontroller' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/ControllerSamples.cs#L11-L19' title='Snippet source file'>snippet source</a> | <a href='#snippet-overridepostcontroller' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 

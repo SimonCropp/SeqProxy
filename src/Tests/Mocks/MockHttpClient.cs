@@ -2,7 +2,7 @@
 
 public class MockHttpClient : HttpClient
 {
-    public List<LoggedRequest> Requests = new();
+    public List<LoggedRequest> Requests = [];
 
     public override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, Cancel cancel)
     {

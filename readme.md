@@ -425,7 +425,6 @@ Then a destructured property will be written to Seq.
 <img src="/src/omitFromMessage.png">
 
 
-
 ## Icon
 
 [Robot](https://thenounproject.com/term/robot/883226/) designed by [Maxim Kulikov](https://thenounproject.com/maxim221) from [The Noun Project](https://thenounproject.com).

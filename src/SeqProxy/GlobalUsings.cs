@@ -2,7 +2,6 @@
 
 global using System.Security.Claims;
 global using System.Text.Encodings.Web;
-global using System.Web;
 global using Microsoft.AspNetCore.Authentication;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Builder;

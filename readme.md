@@ -84,7 +84,7 @@ public void ConfigureServices(IServiceCollection services)
     services.AddSeqWriter(seqUrl: "http://localhost:5341");
 }
 ```
-<sup><a href='/src/SampleWeb/Startup.cs#L8-L16' title='Snippet source file'>snippet source</a> | <a href='#snippet-configureservices' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SampleWeb/Startup.cs#L5-L13' title='Snippet source file'>snippet source</a> | <a href='#snippet-configureservices' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 There are several optional parameters:
@@ -156,7 +156,7 @@ public void Configure(IApplicationBuilder builder)
 {
     builder.UseSeq();
 ```
-<sup><a href='/src/SampleWeb/Startup.cs#L18-L23' title='Snippet source file'>snippet source</a> | <a href='#snippet-configurebuilder' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SampleWeb/Startup.cs#L15-L20' title='Snippet source file'>snippet source</a> | <a href='#snippet-configurebuilder' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -190,14 +190,14 @@ async Task HandleWithAuth(HttpContext context)
         return;
     }
 
-    await seqWriter.Handle(
+    await writer.Handle(
         user,
         context.Request,
         context.Response,
         context.RequestAborted);
 }
 ```
-<sup><a href='/src/SeqProxy/SeqMiddlewareWithAuth.cs#L25-L45' title='Snippet source file'>snippet source</a> | <a href='#snippet-handlewithauth' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SeqProxy/SeqMiddlewareWithAuth.cs#L15-L35' title='Snippet source file'>snippet source</a> | <a href='#snippet-handlewithauth' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -221,20 +221,20 @@ namespace SeqProxy;
 public abstract class BaseSeqController :
     ControllerBase
 {
-    SeqWriter seqWriter;
+    SeqWriter writer;
 
     /// <summary>
     /// Initializes a new instance of <see cref="BaseSeqController"/>
     /// </summary>
-    protected BaseSeqController(SeqWriter seqWriter) =>
-        this.seqWriter = seqWriter;
+    protected BaseSeqController(SeqWriter writer) =>
+        this.writer = writer;
 
     /// <summary>
     /// Handles log events via a HTTP post.
     /// </summary>
     [HttpPost]
     public virtual Task Post() =>
-        seqWriter.Handle(User, Request, Response, HttpContext.RequestAborted);
+        writer.Handle(User, Request, Response, HttpContext.RequestAborted);
 }
 ```
 <sup><a href='/src/SeqProxy/BaseSeqController.cs#L1-L28' title='Snippet source file'>snippet source</a> | <a href='#snippet-BaseSeqController.cs' title='Start of snippet'>anchor</a></sup>
@@ -245,8 +245,8 @@ Add a new [controller](https://docs.microsoft.com/en-us/aspnet/core/mvc/controll
 <!-- snippet: SimpleController -->
 <a id='snippet-simplecontroller'></a>
 ```cs
-public class SeqController(SeqWriter seqWriter) :
-    BaseSeqController(seqWriter);
+public class SeqController(SeqWriter writer) :
+    BaseSeqController(writer);
 ```
 <sup><a href='/src/Tests/ControllerSamples.cs#L3-L6' title='Snippet source file'>snippet source</a> | <a href='#snippet-simplecontroller' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
@@ -260,10 +260,10 @@ Adding authorization and authentication can be done with an [AuthorizeAttribute]
 <a id='snippet-authorizecontroller'></a>
 ```cs
 [Authorize]
-public class SeqController :
-    BaseSeqController
+public class SeqController(SeqWriter writer) :
+    BaseSeqController(writer)
 ```
-<sup><a href='/src/Tests/ControllerSamples.cs#L28-L32' title='Snippet source file'>snippet source</a> | <a href='#snippet-authorizecontroller' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/ControllerSamples.cs#L28-L33' title='Snippet source file'>snippet source</a> | <a href='#snippet-authorizecontroller' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -276,8 +276,8 @@ For example adding an [exception filter ](https://docs.microsoft.com/en-us/aspne
 <!-- snippet: OverridePostController -->
 <a id='snippet-overridepostcontroller'></a>
 ```cs
-public class SeqController(SeqWriter seqWriter) :
-    BaseSeqController(seqWriter)
+public class SeqController(SeqWriter writer) :
+    BaseSeqController(writer)
 {
     [CustomExceptionFilter]
     public override Task Post() =>

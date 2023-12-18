@@ -1,13 +1,6 @@
-﻿class PrefixBuilder
+﻿class PrefixBuilder(string application, Version version, Func<string, string> scrubClaimType, string server, string user)
 {
-    Func<string, string> scrubClaimType;
-    string prefix;
-
-    public PrefixBuilder(string application, Version version, Func<string, string> scrubClaimType, string server, string user)
-    {
-        this.scrubClaimType = scrubClaimType;
-        prefix = $"{{'Application':'{application.AsJson()}','ApplicationVersion':'{version.ToString().AsJson()}','Server':'{server.AsJson()}','User':'{user.AsJson()}',";
-    }
+    string prefix = $"{{'Application':'{application.AsJson()}','ApplicationVersion':'{version.ToString().AsJson()}','Server':'{server.AsJson()}','User':'{user.AsJson()}',";
 
     public string Build(ClaimsPrincipal user, string? userAgent, string? referrer, string id)
     {
@@ -19,7 +12,7 @@
             foreach (var claim in user.Claims)
             {
                 var claimType = scrubClaimType(claim.Type);
-                builder.Append("'");
+                builder.Append('\'');
                 writer.WriteEscaped(claimType);
                 builder.Append("':'");
                 writer.WriteEscaped(claim.Value);

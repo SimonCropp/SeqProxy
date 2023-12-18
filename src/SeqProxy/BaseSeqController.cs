@@ -11,18 +11,18 @@ namespace SeqProxy;
 public abstract class BaseSeqController :
     ControllerBase
 {
-    SeqWriter seqWriter;
+    SeqWriter writer;
 
     /// <summary>
     /// Initializes a new instance of <see cref="BaseSeqController"/>
     /// </summary>
-    protected BaseSeqController(SeqWriter seqWriter) =>
-        this.seqWriter = seqWriter;
+    protected BaseSeqController(SeqWriter writer) =>
+        this.writer = writer;
 
     /// <summary>
     /// Handles log events via a HTTP post.
     /// </summary>
     [HttpPost]
     public virtual Task Post() =>
-        seqWriter.Handle(User, Request, Response, HttpContext.RequestAborted);
+        writer.Handle(User, Request, Response, HttpContext.RequestAborted);
 }

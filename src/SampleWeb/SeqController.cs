@@ -1,9 +1,3 @@
 ﻿[Route("/seqcontroller")]
-public class SeqController :
-    BaseSeqController
-{
-    public SeqController(SeqWriter seqWriter) :
-        base(seqWriter)
-    {
-    }
-}
+public class SeqController(SeqWriter writer) :
+    BaseSeqController(writer);

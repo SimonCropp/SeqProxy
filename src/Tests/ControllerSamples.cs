@@ -1,16 +1,16 @@
 ﻿namespace SimpleController
 {
     #region SimpleController
-    public class SeqController(SeqWriter seqWriter) :
-        BaseSeqController(seqWriter);
+    public class SeqController(SeqWriter writer) :
+        BaseSeqController(writer);
     #endregion
 }
 
 namespace OverridePostController
 {
     #region OverridePostController
-    public class SeqController(SeqWriter seqWriter) :
-        BaseSeqController(seqWriter)
+    public class SeqController(SeqWriter writer) :
+        BaseSeqController(writer)
     {
         [CustomExceptionFilter]
         public override Task Post() =>
@@ -27,13 +27,11 @@ namespace AuthorizeController
 {
     #region AuthorizeController
     [Authorize]
-    public class SeqController :
-        BaseSeqController
+    public class SeqController(SeqWriter writer) :
+        BaseSeqController(writer)
+
     #endregion
+
     {
-        public SeqController(SeqWriter seqWriter) :
-            base(seqWriter)
-        {
-        }
     }
 }

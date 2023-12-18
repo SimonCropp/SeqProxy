@@ -1,16 +1,6 @@
-﻿class SeqMiddlewareWithAuth
+﻿class SeqMiddlewareWithAuth(RequestDelegate next, SeqWriter writer, IAuthorizationService? authService = null)
 {
-    RequestDelegate next;
-    SeqWriter seqWriter;
-    IAuthorizationService authService;
-
-    public SeqMiddlewareWithAuth(RequestDelegate next, SeqWriter seqWriter, IAuthorizationService? authService = null)
-    {
-        this.next = next;
-        this.seqWriter = seqWriter;
-
-        this.authService = authService ?? throw new("Expected IAuthorizationService to be configured.");
-    }
+    IAuthorizationService authService = authService ?? throw new("Expected IAuthorizationService to be configured.");
 
     public Task InvokeAsync(HttpContext context)
     {
@@ -35,7 +25,7 @@
             return;
         }
 
-        await seqWriter.Handle(
+        await writer.Handle(
             user,
             context.Request,
             context.Response,

@@ -1,5 +1,4 @@
-﻿[UsesVerify]
-public class SeqWriterTests
+﻿public class SeqWriterTests
 {
     [Fact]
     public async Task Multiple()

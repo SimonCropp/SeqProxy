@@ -1,5 +1,4 @@
-﻿[UsesVerify]
-[Trait("Category", "Integration")]
+﻿[Trait("Category", "Integration")]
 public class SeqIntegrationTests
 {
     [Fact]

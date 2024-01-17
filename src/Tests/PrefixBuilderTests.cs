@@ -1,5 +1,4 @@
-﻿[UsesVerify]
-public class PrefixBuilderTests
+﻿public class PrefixBuilderTests
 {
     [Fact]
     public Task Build()

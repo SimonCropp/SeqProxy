@@ -109,15 +109,9 @@
             _ => _,
             "theServer",
             "theUser");
-        var request = new MockRequest("{'@t':'2019-05-28','@mt':'Simple Message'}")
-        {
-            Headers =
-            {
-                {
-                    "X-Seq-ApiKey", "foo"
-                }
-            }
-        };
+        // ReSharper disable once UseObjectOrCollectionInitializer
+        var request = new MockRequest("{'@t':'2019-05-28','@mt':'Simple Message'}");
+        request.Headers["X-Seq-ApiKey"] = "foo";
 
         var user = ClaimsBuilder.Build();
         var exception = await Assert.ThrowsAsync<Exception>(() => writer.Handle(user, request, new MockResponse()));

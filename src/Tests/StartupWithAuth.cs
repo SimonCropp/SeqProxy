@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-
+﻿#pragma warning disable CA1822
 public class StartupWithAuth
 {
     #region StartupWithAuth

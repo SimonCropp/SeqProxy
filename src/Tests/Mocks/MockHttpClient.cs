@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-public class MockHttpClient : HttpClient
+﻿public class MockHttpClient : HttpClient
 {
     public List<LoggedRequest> Requests = [];
 

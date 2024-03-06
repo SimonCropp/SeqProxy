@@ -103,7 +103,7 @@ public void ConfigureServices(IServiceCollection services)
         scrubClaimType: claimType => claimType.Split("/").Last());
 }
 ```
-<sup><a href='/src/Tests/FullStartupConfig.cs#L5-L18' title='Snippet source file'>snippet source</a> | <a href='#snippet-configureservicesfull' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/FullStartupConfig.cs#L4-L17' title='Snippet source file'>snippet source</a> | <a href='#snippet-configureservicesfull' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
  * `application` defaults to `Assembly.GetCallingAssembly().GetName().Name`.
@@ -171,7 +171,7 @@ public void Configure(IApplicationBuilder builder)
 {
     builder.UseSeq(useAuthorizationService: true);
 ```
-<sup><a href='/src/Tests/StartupWithAuth.cs#L6-L11' title='Snippet source file'>snippet source</a> | <a href='#snippet-startupwithauth' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/StartupWithAuth.cs#L4-L9' title='Snippet source file'>snippet source</a> | <a href='#snippet-startupwithauth' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 This then uses [IAuthorizationService](https://docs.microsoft.com/en-us/aspnet/core/security/authorization/resourcebased) to verify the request:
@@ -208,8 +208,6 @@ async Task HandleWithAuth(HttpContext context)
 <!-- snippet: BaseSeqController.cs -->
 <a id='snippet-BaseSeqController.cs'></a>
 ```cs
-using Microsoft.AspNetCore.Mvc;
-
 namespace SeqProxy;
 
 /// <summary>
@@ -237,7 +235,7 @@ public abstract class BaseSeqController :
         writer.Handle(User, Request, Response, HttpContext.RequestAborted);
 }
 ```
-<sup><a href='/src/SeqProxy/BaseSeqController.cs#L1-L28' title='Snippet source file'>snippet source</a> | <a href='#snippet-BaseSeqController.cs' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SeqProxy/BaseSeqController.cs#L1-L26' title='Snippet source file'>snippet source</a> | <a href='#snippet-BaseSeqController.cs' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 Add a new [controller](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/actions) that overrides `BaseSeqController`.

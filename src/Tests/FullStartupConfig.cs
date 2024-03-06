@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
+﻿#pragma warning disable CA1822
 public class StartupSnippets
 {
     #region ConfigureServicesFull

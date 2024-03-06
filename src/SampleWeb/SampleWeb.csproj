@@ -7,7 +7,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <ProjectReference Include="..\SeqProxy\SeqProxy.csproj" />
-    <PackageReference Include="ProjectDefaults" Version="1.0.118" PrivateAssets="all" />
+    <PackageReference Include="ProjectDefaults" Version="1.0.125" PrivateAssets="all" />
 
     <Using Include="Microsoft.AspNetCore" />
     <Using Include="Microsoft.AspNetCore.Mvc" />

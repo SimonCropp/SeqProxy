@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace SeqProxy;
+﻿namespace SeqProxy;
 
 /// <summary>
 /// An implementation of <see cref="ControllerBase"/> that provides a http post and some basic routing.

@@ -1,6 +1,4 @@
-﻿using MediaTypeHeaderValue = System.Net.Http.Headers.MediaTypeHeaderValue;
-
-namespace SeqProxy;
+﻿namespace SeqProxy;
 
 /// <summary>
 /// Handles reads a log message from <see cref="HttpRequest"/> and forwarding it to Seq.
@@ -10,7 +8,6 @@ public class SeqWriter
     Func<HttpClient> httpClientFunc;
     Uri url;
     PrefixBuilder prefixBuilder;
-    static MediaTypeHeaderValue contentType = new("application/vnd.serilog.clef", Encoding.UTF8.WebName);
 
     /// <summary>
     /// Initializes a new instance of <see cref="SeqWriter"/>
@@ -103,9 +100,7 @@ public class SeqWriter
             }
         }
 
-        var content = new StringContent(builder.ToString());
-        content.Headers.ContentType = contentType;
-        return content;
+        return new Content(builder.ToString());
     }
 
     static string BuildId(DateTime utcNow)

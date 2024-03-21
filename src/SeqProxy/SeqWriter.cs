@@ -6,7 +6,7 @@
 public class SeqWriter
 {
     Func<HttpClient> httpClientFunc;
-    string url;
+    Uri url;
     PrefixBuilder prefixBuilder;
 
     /// <summary>
@@ -38,7 +38,7 @@ public class SeqWriter
         prefixBuilder = new(application, version, scrubClaimType, server, user);
     }
 
-    static string GetSeqUrl(string seqUrl, string? apiKey)
+    static Uri GetSeqUrl(string seqUrl, string? apiKey)
     {
         var baseUri = new Uri(seqUrl);
         string uri;
@@ -51,8 +51,7 @@ public class SeqWriter
             uri = $"api/events/raw?apiKey={apiKey}";
         }
 
-        var apiUrl = new Uri(baseUri, uri);
-        return apiUrl.ToString();
+        return new(baseUri, uri);
     }
 
     /// <summary>

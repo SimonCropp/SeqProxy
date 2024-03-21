@@ -1,4 +1,6 @@
-﻿namespace SeqProxy;
+﻿using MediaTypeHeaderValue = System.Net.Http.Headers.MediaTypeHeaderValue;
+
+namespace SeqProxy;
 
 /// <summary>
 /// Handles reads a log message from <see cref="HttpRequest"/> and forwarding it to Seq.
@@ -8,6 +10,7 @@ public class SeqWriter
     Func<HttpClient> httpClientFunc;
     Uri url;
     PrefixBuilder prefixBuilder;
+    static MediaTypeHeaderValue contentType = new("application/vnd.serilog.clef", Encoding.UTF8.WebName);
 
     /// <summary>
     /// Initializes a new instance of <see cref="SeqWriter"/>
@@ -104,7 +107,8 @@ public class SeqWriter
         var httpClient = httpClientFunc();
         try
         {
-            using var content = new StringContent(payload, Encoding.UTF8, "application/vnd.serilog.clef");
+            using var content = new StringContent(payload);
+            content.Headers.ContentType = contentType;
             using var seqResponse = await httpClient.PostAsync(url, content, cancel);
             response.StatusCode = (int)seqResponse.StatusCode;
             response.Headers["SeqProxyId"] = id;

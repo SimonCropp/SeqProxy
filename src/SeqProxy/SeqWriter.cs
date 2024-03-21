@@ -63,10 +63,27 @@ public class SeqWriter
     public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response, Cancel cancel = default)
     {
         ApiKeyValidator.ThrowIfApiKeySpecified(request);
-        var builder = new StringBuilder();
+        var httpClient = httpClientFunc();
 
         var utcNow = DateTime.UtcNow;
         var id = BuildId(utcNow);
+        try
+        {
+            using var content = await GetContent(user, request, cancel, id, utcNow);
+            using var seqResponse = await httpClient.PostAsync(url, content, cancel);
+            response.StatusCode = (int) seqResponse.StatusCode;
+            response.Headers["SeqProxyId"] = id;
+
+            await seqResponse.Content.CopyToAsync(response.Body, cancel);
+        }
+        catch (TaskCanceledException)
+        {
+        }
+    }
+
+    async Task<HttpContent> GetContent(ClaimsPrincipal user, HttpRequest request, Cancel cancel, string id, DateTime utcNow)
+    {
+        var builder = new StringBuilder();
         var prefix = prefixBuilder.Build(user, request.GetUserAgent(), request.GetReferer(), id);
         using (var reader = new StreamReader(request.Body))
         {
@@ -86,7 +103,9 @@ public class SeqWriter
             }
         }
 
-        await Write(builder.ToString(), response, id, cancel);
+        var content = new StringContent(builder.ToString());
+        content.Headers.ContentType = contentType;
+        return content;
     }
 
     static string BuildId(DateTime utcNow)
@@ -100,24 +119,6 @@ public class SeqWriter
         #endregion
 
         return id;
-    }
-
-    async Task Write(string payload, HttpResponse response, string id, Cancel cancel)
-    {
-        var httpClient = httpClientFunc();
-        try
-        {
-            using var content = new StringContent(payload);
-            content.Headers.ContentType = contentType;
-            using var seqResponse = await httpClient.PostAsync(url, content, cancel);
-            response.StatusCode = (int)seqResponse.StatusCode;
-            response.Headers["SeqProxyId"] = id;
-
-            await seqResponse.Content.CopyToAsync(response.Body, cancel);
-        }
-        catch (TaskCanceledException)
-        {
-        }
     }
 
     static void ValidateLine(string line)

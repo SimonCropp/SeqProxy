@@ -62,6 +62,7 @@ public class SeqWriter
     public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response, Cancel cancel = default)
     {
         ApiKeyValidator.ThrowIfApiKeySpecified(request);
+        var httpClient = httpClientFunc();
         var builder = new StringBuilder();
 
         var utcNow = DateTime.UtcNow;
@@ -85,7 +86,19 @@ public class SeqWriter
             }
         }
 
-        await Write(builder.ToString(), response, id, cancel);
+        try
+        {
+            using var content = new StringContent(builder.ToString());
+            content.Headers.ContentType = contentType;
+            using var seqResponse = await httpClient.PostAsync(url, content, cancel);
+            response.StatusCode = (int)seqResponse.StatusCode;
+            response.Headers["SeqProxyId"] = id;
+
+            await seqResponse.Content.CopyToAsync(response.Body, cancel);
+        }
+        catch (TaskCanceledException)
+        {
+        }
     }
 
     static string BuildId(DateTime utcNow)
@@ -102,24 +115,6 @@ public class SeqWriter
     }
 
     static MediaTypeHeaderValue contentType = new("application/vnd.serilog.clef", Encoding.UTF8.WebName);
-
-    async Task Write(string payload, HttpResponse response, string id, Cancel cancel)
-    {
-        var httpClient = httpClientFunc();
-        try
-        {
-            using var content = new StringContent(payload);
-            content.Headers.ContentType = contentType;
-            using var seqResponse = await httpClient.PostAsync(url, content, cancel);
-            response.StatusCode = (int)seqResponse.StatusCode;
-            response.Headers["SeqProxyId"] = id;
-
-            await seqResponse.Content.CopyToAsync(response.Body, cancel);
-        }
-        catch (TaskCanceledException)
-        {
-        }
-    }
 
     static void ValidateLine(string line)
     {

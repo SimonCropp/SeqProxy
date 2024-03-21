@@ -101,13 +101,15 @@ public class SeqWriter
         return id;
     }
 
+    static MediaTypeHeaderValue contentType = new("application/vnd.serilog.clef", Encoding.UTF8.WebName);
+
     async Task Write(string payload, HttpResponse response, string id, Cancel cancel)
     {
         var httpClient = httpClientFunc();
         try
         {
             using var content = new StringContent(payload);
-            content.Headers.ContentType = new("application/vnd.serilog.clef", Encoding.UTF8.WebName);
+            content.Headers.ContentType = contentType;
             using var seqResponse = await httpClient.PostAsync(url, content, cancel);
             response.StatusCode = (int)seqResponse.StatusCode;
             response.Headers["SeqProxyId"] = id;

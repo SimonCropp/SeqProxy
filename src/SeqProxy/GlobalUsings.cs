@@ -1,6 +1,4 @@
-﻿// Global using directives
-
-global using System.Security.Claims;
+﻿global using System.Security.Claims;
 global using System.Text.Encodings.Web;
 global using Microsoft.AspNetCore.Authentication;
 global using Microsoft.AspNetCore.Authorization;

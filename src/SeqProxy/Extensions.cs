@@ -1,10 +1,20 @@
-﻿static class Extensions
+﻿using System.Text.Json;
+
+static class Extensions
 {
     public static string AsJson(this string value) =>
         JavaScriptEncoder.UnsafeRelaxedJsonEscaping.Encode(value);
 
-    public static void WriteEscaped(this TextWriter writer, string value) =>
-        JavaScriptEncoder.UnsafeRelaxedJsonEscaping.Encode(writer, value);
+    public static void WriteEscaped(this StringBuilder builder, string value)
+    {
+        var encode = JsonEncodedText.Encode(value, JavaScriptEncoder.UnsafeRelaxedJsonEscaping);
+        builder.Append(encode);
+    }
+    public static void WriteEscaped(this StringBuilder builder, CharSpan value)
+    {
+        var encode = JsonEncodedText.Encode(value, JavaScriptEncoder.UnsafeRelaxedJsonEscaping);
+        builder.Append(encode);
+    }
 
     public static string? GetUserAgent(this HttpRequest request)
     {

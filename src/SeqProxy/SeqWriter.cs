@@ -29,7 +29,7 @@ public class SeqWriter
         string application,
         Version version,
         string? apiKey,
-        Func<string, string> scrubClaimType,
+        ScrubClaimType scrubClaimType,
         string server,
         string user)
     {

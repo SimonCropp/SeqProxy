@@ -8,9 +8,9 @@ public static class DefaultClaimTypeScrubber
     /// <summary>
     /// Get the string after the last /.
     /// </summary>
-    public static string Scrub(string claimType)
+    public static CharSpan Scrub(CharSpan claimType)
     {
-        Guard.AgainstNullOrEmpty(claimType, nameof(claimType));
+        Guard.AgainstEmpty(claimType, nameof(claimType));
         var lastIndexOf = claimType.LastIndexOf('/');
         if (lastIndexOf == -1)
         {

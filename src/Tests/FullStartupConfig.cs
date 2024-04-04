@@ -11,7 +11,16 @@ public class StartupSnippets
             apiKey: "TheApiKey",
             application: "MyAppName",
             appVersion: new(1, 2),
-            scrubClaimType: claimType => claimType.Split("/").Last());
+            scrubClaimType: claimType =>
+            {
+                var lastIndexOf = claimType.LastIndexOf('/');
+                if (lastIndexOf == -1)
+                {
+                    return claimType;
+                }
+
+                return claimType[(lastIndexOf + 1)..];
+            });
     }
 
     #endregion

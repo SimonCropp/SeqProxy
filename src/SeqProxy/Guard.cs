@@ -7,6 +7,16 @@
             throw new ArgumentNullException(argumentName);
         }
     }
+    public static void AgainstEmpty(CharSpan value, string argumentName)
+    {
+        foreach (var ch in value)
+        {
+            if (char.IsWhiteSpace(ch))
+            {
+                throw new ArgumentNullException(argumentName);
+            }
+        }
+    }
 
     public static void AgainstEmpty(string? value, string argumentName)
     {

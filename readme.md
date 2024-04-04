@@ -100,10 +100,19 @@ public void ConfigureServices(IServiceCollection services)
         apiKey: "TheApiKey",
         application: "MyAppName",
         appVersion: new(1, 2),
-        scrubClaimType: claimType => claimType.Split("/").Last());
+        scrubClaimType: claimType =>
+        {
+            var lastIndexOf = claimType.LastIndexOf('/');
+            if (lastIndexOf == -1)
+            {
+                return claimType;
+            }
+
+            return claimType[(lastIndexOf + 1)..];
+        });
 }
 ```
-<sup><a href='/src/Tests/FullStartupConfig.cs#L4-L17' title='Snippet source file'>snippet source</a> | <a href='#snippet-ConfigureServicesFull' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/FullStartupConfig.cs#L4-L26' title='Snippet source file'>snippet source</a> | <a href='#snippet-ConfigureServicesFull' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
  * `application` defaults to `Assembly.GetCallingAssembly().GetName().Name`.
@@ -123,9 +132,9 @@ public static class DefaultClaimTypeScrubber
     /// <summary>
     /// Get the string after the last /.
     /// </summary>
-    public static string Scrub(string claimType)
+    public static CharSpan Scrub(CharSpan claimType)
     {
-        Guard.AgainstNullOrEmpty(claimType, nameof(claimType));
+        Guard.AgainstEmpty(claimType, nameof(claimType));
         var lastIndexOf = claimType.LastIndexOf('/');
         if (lastIndexOf == -1)
         {

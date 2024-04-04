@@ -1,11 +1,10 @@
-﻿class PrefixBuilder(string application, Version version, Func<string, string> scrubClaimType, string server, string user)
+﻿class PrefixBuilder(string application, Version version, ScrubClaimType scrubClaimType, string server, string user)
 {
     string prefix = $"{{'Application':'{application.AsJson()}','ApplicationVersion':'{version.ToString().AsJson()}','Server':'{server.AsJson()}','User':'{user.AsJson()}',";
 
     public string Build(ClaimsPrincipal user, string? userAgent, string? referrer, string id)
     {
         var builder = new StringBuilder(prefix);
-        var writer = new StringWriter(builder);
         if (user.Claims.Any())
         {
             builder.Append("'Claims':{");
@@ -13,9 +12,9 @@
             {
                 var claimType = scrubClaimType(claim.Type);
                 builder.Append('\'');
-                writer.WriteEscaped(claimType);
+                builder.WriteEscaped(claimType);
                 builder.Append("':'");
-                writer.WriteEscaped(claim.Value);
+                builder.WriteEscaped(claim.Value);
                 builder.Append("',");
             }
 
@@ -27,14 +26,14 @@
         if (userAgent is not null)
         {
             builder.Append("'UserAgent':'");
-            writer.WriteEscaped(userAgent);
+            builder.WriteEscaped(userAgent);
             builder.Append("',");
         }
 
         if (referrer is not null)
         {
             builder.Append("'Referrer':'");
-            writer.WriteEscaped(referrer);
+            builder.WriteEscaped(referrer);
             builder.Append("',");
         }
 

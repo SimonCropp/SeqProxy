@@ -39,7 +39,7 @@ public static class SeqWriterConfig
         string? apiKey = null,
         string? server = null,
         string? user = null,
-        Func<string, string>? scrubClaimType = null,
+        ScrubClaimType? scrubClaimType = null,
         Action<IServiceProvider, HttpClient>? configureClient = null)
     {
         Guard.AgainstEmpty(apiKey, nameof(apiKey));

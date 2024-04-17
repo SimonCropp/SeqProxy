@@ -7,7 +7,7 @@
   <ItemGroup>
     <Compile Remove="MockPoster.cs" />
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Polyfill" Version="4.6.0" PrivateAssets="all" />
+    <PackageReference Include="Polyfill" Version="4.6.1" PrivateAssets="all" />
     <PackageReference Include="ProjectDefaults" Version="1.0.126" PrivateAssets="all" />
     <Using Include="System.ReadOnlySpan&lt;System.Char&gt;" Alias="CharSpan" />
   </ItemGroup>

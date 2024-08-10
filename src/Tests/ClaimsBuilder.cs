@@ -7,11 +7,10 @@ static class ClaimsBuilder
         var principal = new ClaimsPrincipal();
         principal.AddIdentity(
             new(
-                new[]
-                {
-                    new Claim(ClaimTypes.Email, "User@foo.bar"),
-                    new Claim(ClaimTypes.UserData, "theUserData")
-                },
+                [
+                    new(ClaimTypes.Email, "User@foo.bar"),
+                    new(ClaimTypes.UserData, "theUserData")
+                ],
                 "FakeScheme"));
         return principal;
     }

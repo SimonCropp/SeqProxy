@@ -32,5 +32,5 @@ public class MockRequest :
     public override string? ContentType { get; set; }
     public override Stream Body { get; set; }
     public override bool HasFormContentType { get; }
-    public override IFormCollection Form { get; set; } = new FormCollection(new());
+    public override IFormCollection Form { get; set; } = new FormCollection([]);
 }

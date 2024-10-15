@@ -7,9 +7,8 @@
     <PackageTags>Seq, Serilog</PackageTags>
     <Description>Enables writing seq logs by proxying requests through an ASP.NET Controller or Middleware.</Description>
     <ResolveAssemblyReferencesSilent>true</ResolveAssemblyReferencesSilent>
-    <NuGetAuditMode>all</NuGetAuditMode>
-    <NuGetAuditLevel>low</NuGetAuditLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
   </PropertyGroup>
 </Project>

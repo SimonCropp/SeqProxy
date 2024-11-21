@@ -180,7 +180,7 @@ public void Configure(IApplicationBuilder builder)
 {
     builder.UseSeq(useAuthorizationService: true);
 ```
-<sup><a href='/src/Tests/StartupWithAuth.cs#L4-L9' title='Snippet source file'>snippet source</a> | <a href='#snippet-StartupWithAuth' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/StartupWithAuth.cs#L5-L10' title='Snippet source file'>snippet source</a> | <a href='#snippet-StartupWithAuth' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 This then uses [IAuthorizationService](https://docs.microsoft.com/en-us/aspnet/core/security/authorization/resourcebased) to verify the request:

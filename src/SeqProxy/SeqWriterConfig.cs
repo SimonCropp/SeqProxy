@@ -42,11 +42,11 @@ public static class SeqWriterConfig
         ScrubClaimType? scrubClaimType = null,
         Action<IServiceProvider, HttpClient>? configureClient = null)
     {
-        Guard.AgainstEmpty(apiKey, nameof(apiKey));
-        Guard.AgainstEmpty(server, nameof(server));
-        Guard.AgainstEmpty(user, nameof(user));
-        Guard.AgainstEmpty(application, nameof(application));
-        Guard.AgainstNullOrEmpty(seqUrl, nameof(seqUrl));
+        Ensure.NotEmpty(apiKey);
+        Ensure.NotEmpty(server);
+        Ensure.NotEmpty(user);
+        Ensure.NotEmpty(application);
+        Ensure.NotNullOrEmpty(seqUrl);
 
         AddHttpClient(services, configureClient);
 

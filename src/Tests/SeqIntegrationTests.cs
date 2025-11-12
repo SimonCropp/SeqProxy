@@ -1,4 +1,5 @@
-﻿[Trait("Category", "Integration")]
+﻿#pragma warning disable ASPDEPR008
+[Trait("Category", "Integration")]
 public class SeqIntegrationTests
 {
     [Fact]

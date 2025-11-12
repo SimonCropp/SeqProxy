@@ -10,7 +10,7 @@ public static class DefaultClaimTypeScrubber
     /// </summary>
     public static CharSpan Scrub(CharSpan claimType)
     {
-        Guard.AgainstEmpty(claimType, nameof(claimType));
+        Ensure.NotEmpty(claimType);
         var lastIndexOf = claimType.LastIndexOf('/');
         if (lastIndexOf == -1)
         {

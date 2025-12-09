@@ -22,7 +22,6 @@
     <Using Include="SeqProxy" />
     <Using Include="Microsoft.AspNetCore.Authorization" />
     <Using Include="Microsoft.AspNetCore.Mvc.Filters" />
-    <Using Include="Microsoft.AspNetCore.Http" />
     <Using Include="Microsoft.Extensions.Primitives" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 ﻿<Solution>
   <Folder Name="/Solution Items/">
     <File Path="../.gitignore" />
-    <File Path=".editorconfig" />
+    <File Path="../.editorconfig" />
     <File Path="../.gitattributes" />
     <File Path="appveyor.yml" />
     <File Path="Directory.Build.props" />

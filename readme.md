@@ -1,6 +1,6 @@
 # <img src="/src/icon.png" height="30px"> SeqProxy
 
-[![Build status](https://ci.appveyor.com/api/projects/status/7996jd4uoooy5qy2/branch/main?svg=true)](https://ci.appveyor.com/project/SimonCropp/SeqProxy)
+[![Build status](https://img.shields.io/appveyor/build/SimonCropp/SeqProxy)](https://ci.appveyor.com/project/SimonCropp/SeqProxy)
 [![NuGet Status](https://img.shields.io/nuget/v/SeqProxy.svg)](https://www.nuget.org/packages/SeqProxy/)
 
 Enables writing [Seq](https://datalust.co/seq) logs by proxying requests through an ASP.NET Controller or Middleware.

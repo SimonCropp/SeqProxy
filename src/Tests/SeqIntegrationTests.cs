@@ -1,8 +1,7 @@
 ﻿#pragma warning disable ASPDEPR008
-[Explicit]
 public class SeqIntegrationTests
 {
-    [Fact]
+    [Fact(Explicit = true)]
     public Task Log()
     {
         var timestamp = DateTime.Now.ToString("o");
@@ -10,7 +9,7 @@ public class SeqIntegrationTests
         return WriteAndVerify(content);
     }
 
-    [Fact]
+    [Fact(Explicit = true)]
     public Task LogWithDoubleQuotes()
     {
         var timestamp = DateTime.Now.ToString("o");
@@ -18,7 +17,7 @@ public class SeqIntegrationTests
         return WriteAndVerify(content);
     }
 
-    [Fact]
+    [Fact(Explicit = true)]
     public Task LogToController()
     {
         var timestamp = DateTime.Now.ToString("o");
@@ -26,14 +25,14 @@ public class SeqIntegrationTests
         return WriteAndVerify(content, "/seqcontroller");
     }
 
-    [Fact]
+    [Fact(Explicit = true)]
     public Task LogNoTimestamp()
     {
         var content = "{'@mt':'LogNoTimestamp'}";
         return WriteAndVerify(content);
     }
 
-    [Fact]
+    [Fact(Explicit = true)]
     public Task LogMultiple()
     {
         var content = """

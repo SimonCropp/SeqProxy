@@ -11,6 +11,7 @@ public class SeqWriter
     Uri url;
     PrefixBuilder prefixBuilder;
     static MediaTypeHeaderValue contentType = new("application/vnd.serilog.clef", Encoding.UTF8.WebName);
+    static UTF8Encoding utf8NoBom = new(false);
 
     /// <summary>
     /// Initializes a new instance of <see cref="SeqWriter"/>
@@ -63,31 +64,16 @@ public class SeqWriter
     public virtual async Task Handle(ClaimsPrincipal user, HttpRequest request, HttpResponse response, Cancel cancel = default)
     {
         ApiKeyValidator.ThrowIfApiKeySpecified(request);
-        var builder = new StringBuilder();
 
         var utcNow = DateTime.UtcNow;
         var id = BuildId(utcNow);
         var prefix = prefixBuilder.Build(user, request.GetUserAgent(), request.GetReferer(), id);
-        using (var reader = new StreamReader(request.Body))
-        {
-            while (await reader.ReadLineAsync(cancel) is { } line)
-            {
-                ValidateLine(line);
-                ReservedKeyValidator.ThrowIfReservedKey(line);
 
-                builder.Append(prefix);
-                if (!line.Contains("\"@t\"") &&
-                    !line.Contains("'@t'"))
-                {
-                    builder.Append($"'@t':'{utcNow:o}',");
-                }
-
-                builder.Append(line, 1, line.Length - 1);
-                builder.AppendLine();
-            }
-        }
-
-        await Write(builder.ToString(), response, id, cancel);
+        // Stream the transformed events straight to Seq so the full (potentially amplified)
+        // payload is never buffered in memory.
+        using var content = new ClefContent(request.Body, prefix, utcNow);
+        content.Headers.ContentType = contentType;
+        await Write(content, response, id, cancel);
     }
 
     static string BuildId(DateTime utcNow)
@@ -103,13 +89,11 @@ public class SeqWriter
         return id;
     }
 
-    async Task Write(string payload, HttpResponse response, string id, Cancel cancel)
+    async Task Write(HttpContent content, HttpResponse response, string id, Cancel cancel)
     {
         var httpClient = httpClientFunc();
         try
         {
-            using var content = new StringContent(payload);
-            content.Headers.ContentType = contentType;
             using var seqResponse = await httpClient.PostAsync(url, content, cancel);
             response.StatusCode = (int)seqResponse.StatusCode;
             response.Headers["SeqProxyId"] = id;
@@ -135,5 +119,43 @@ public class SeqWriter
         }
 
         throw new($"Expected line to start with `{{'` or `{{\"`. Line: {line}");
+    }
+
+    // Streams the transformed CLEF events directly to Seq so the full payload is never
+    // buffered in memory (prevents memory exhaustion from large or amplifying requests).
+    // Validation runs per line as it streams, so a malformed or forged line part-way through
+    // a multi-line request aborts the send after earlier lines have already been written.
+    class ClefContent(Stream body, string prefix, DateTime utcNow) :
+        HttpContent
+    {
+        protected override Task SerializeToStreamAsync(Stream stream, System.Net.TransportContext? context) =>
+            SerializeToStreamAsync(stream, context, Cancel.None);
+
+        protected override async Task SerializeToStreamAsync(Stream stream, System.Net.TransportContext? context, Cancel cancel)
+        {
+            using var reader = new StreamReader(body);
+            await using var writer = new StreamWriter(stream, utf8NoBom, 4096, leaveOpen: true);
+            while (await reader.ReadLineAsync(cancel) is { } line)
+            {
+                ValidateLine(line);
+                ReservedKeyValidator.ThrowIfReservedKey(line);
+
+                await writer.WriteAsync(prefix);
+                if (!line.Contains("\"@t\"") &&
+                    !line.Contains("'@t'"))
+                {
+                    await writer.WriteAsync($"'@t':'{utcNow:o}',");
+                }
+
+                await writer.WriteAsync(line.AsMemory(1), cancel);
+                await writer.WriteLineAsync();
+            }
+        }
+
+        protected override bool TryComputeLength(out long length)
+        {
+            length = 0;
+            return false;
+        }
     }
 }

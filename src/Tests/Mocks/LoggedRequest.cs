@@ -4,4 +4,5 @@
         Body = body;
 
     public readonly string Body;
+    public long? ContentLength;
 }

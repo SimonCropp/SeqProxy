@@ -2,7 +2,7 @@
 'ApplicationVersion':'1.2',
 'Server':'theServer',
 'User':'theUser',
-'Claims':{'\"':'User@foo.bar',
-'\"':'theUserData'},
+'Claims':{'\u0022':'User@foo.bar',
+'\u0022':'theUserData'},
 '@t':'2019-05-28',
 '@mt':'Simple Message'}

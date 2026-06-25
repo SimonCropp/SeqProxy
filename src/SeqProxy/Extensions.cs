@@ -3,16 +3,16 @@
 static class Extensions
 {
     public static string AsJson(this string value) =>
-        JavaScriptEncoder.UnsafeRelaxedJsonEscaping.Encode(value);
+        JavaScriptEncoder.Default.Encode(value);
 
     public static void WriteEscaped(this StringBuilder builder, string value)
     {
-        var encode = JsonEncodedText.Encode(value, JavaScriptEncoder.UnsafeRelaxedJsonEscaping);
+        var encode = JsonEncodedText.Encode(value, JavaScriptEncoder.Default);
         builder.Append(encode);
     }
     public static void WriteEscaped(this StringBuilder builder, CharSpan value)
     {
-        var encode = JsonEncodedText.Encode(value, JavaScriptEncoder.UnsafeRelaxedJsonEscaping);
+        var encode = JsonEncodedText.Encode(value, JavaScriptEncoder.Default);
         builder.Append(encode);
     }
 

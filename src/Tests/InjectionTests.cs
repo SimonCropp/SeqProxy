@@ -9,7 +9,7 @@ public class InjectionTests
 {
     // If not escaped, the leading `'` closes the enclosing string and `,'Injected':'`
     // injects a sibling property into the event.
-    const string Breakout = "evil','Injected':'pwned";
+    const string breakout = "evil','Injected':'pwned";
 
     static async Task<JObject> Handle(MockRequest request, ClaimsPrincipal user)
     {
@@ -31,33 +31,48 @@ public class InjectionTests
     [Fact]
     public async Task UserAgentHeaderCannotInjectProperties()
     {
-        var request = new MockRequest("{'@mt':'Message'}");
-        request.Headers["User-Agent"] = Breakout;
+        var request = new MockRequest("{'@mt':'Message'}")
+        {
+            Headers =
+            {
+                UserAgent = breakout
+            }
+        };
 
         var json = await Handle(request, new());
 
         // The whole value stays inside UserAgent, and no breakout property is created.
-        Assert.Equal(Breakout, (string?)json["UserAgent"]);
+        Assert.Equal(breakout, (string?)json["UserAgent"]);
         Assert.Null(json["Injected"]);
     }
 
     [Fact]
     public async Task RefererHeaderCannotInjectProperties()
     {
-        var request = new MockRequest("{'@mt':'Message'}");
-        request.Headers["Referer"] = Breakout;
+        var request = new MockRequest("{'@mt':'Message'}")
+        {
+            Headers =
+            {
+                Referer = breakout
+            }
+        };
 
         var json = await Handle(request, new());
 
-        Assert.Equal(Breakout, (string?)json["Referrer"]);
+        Assert.Equal(breakout, (string?)json["Referrer"]);
         Assert.Null(json["Injected"]);
     }
 
     [Fact]
     public async Task UserAgentHeaderCannotForgeTrustedField()
     {
-        var request = new MockRequest("{'@mt':'Message'}");
-        request.Headers["User-Agent"] = "evil','Server':'spoofed";
+        var request = new MockRequest("{'@mt':'Message'}")
+        {
+            Headers =
+            {
+                UserAgent = "evil','Server':'spoofed"
+            }
+        };
 
         var json = await Handle(request, new());
 

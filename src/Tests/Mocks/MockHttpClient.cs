@@ -1,6 +1,8 @@
 ﻿public class MockHttpClient : HttpClient
 {
     public List<LoggedRequest> Requests = [];
+    public HttpStatusCode ResponseStatus = HttpStatusCode.OK;
+    public string ResponseBody = "{\"MinimumLevelAccepted\":\"Information\"}";
 
     public override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, Cancel cancel)
     {
@@ -15,9 +17,9 @@
                 Uri = request.RequestUri,
                 ApiKey = apiKey?.FirstOrDefault()
             });
-        return new(HttpStatusCode.OK)
+        return new(ResponseStatus)
         {
-            Content = new StringContent("{\"MinimumLevelAccepted\":\"Information\"}")
+            Content = new StringContent(ResponseBody)
         };
     }
 }

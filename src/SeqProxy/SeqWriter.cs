@@ -95,10 +95,20 @@ public class SeqWriter
             }
 
             using var seqResponse = await httpClient.SendAsync(request, cancel);
-            response.StatusCode = (int)seqResponse.StatusCode;
             response.Headers["SeqProxyId"] = id;
 
-            await seqResponse.Content.CopyToAsync(response.Body, cancel);
+            if (seqResponse.IsSuccessStatusCode)
+            {
+                response.StatusCode = (int)seqResponse.StatusCode;
+                // Forward Seq's success body (e.g. MinimumLevelAccepted, used by clients for level control).
+                await seqResponse.Content.CopyToAsync(response.Body, cancel);
+            }
+            else
+            {
+                // Don't relay Seq's error status or body to the (possibly anonymous) client; that
+                // would disclose internal Seq details (version, config, ingestion errors).
+                response.StatusCode = StatusCodes.Status502BadGateway;
+            }
         }
         catch (TaskCanceledException)
         {

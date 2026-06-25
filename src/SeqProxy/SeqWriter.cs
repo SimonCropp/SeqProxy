@@ -9,6 +9,7 @@ public class SeqWriter
 {
     Func<HttpClient> httpClientFunc;
     Uri url;
+    string? apiKey;
     PrefixBuilder prefixBuilder;
     static MediaTypeHeaderValue contentType = new("application/vnd.serilog.clef", Encoding.UTF8.WebName);
     static UTF8Encoding utf8NoBom = new(false);
@@ -20,7 +21,7 @@ public class SeqWriter
     /// <param name="seqUrl">The Seq api url.</param>
     /// <param name="application">The application name.</param>
     /// <param name="version">The application version.</param>
-    /// <param name="apiKey">The Seq api key to use. Will be appended to <paramref name="seqUrl"/> when writing log entries.</param>
+    /// <param name="apiKey">The Seq api key to use. Sent as an `X-Seq-ApiKey` header when writing log entries.</param>
     /// <param name="scrubClaimType">Scrubber for claim types. If null then <see cref="DefaultClaimTypeScrubber.Scrub"/> will be used.</param>
     /// <param name="server">The value to use for the Seq `Server` property.</param>
     /// <param name="user">The value to use for the Seq `User` property</param>
@@ -38,25 +39,13 @@ public class SeqWriter
         Ensure.NotNullOrEmpty(application);
         Ensure.NotNullOrEmpty(seqUrl);
         this.httpClientFunc = httpClientFunc;
-        url = GetSeqUrl(seqUrl, apiKey);
+        this.apiKey = apiKey;
+        url = GetSeqUrl(seqUrl);
         prefixBuilder = new(application, version, scrubClaimType, server, user);
     }
 
-    static Uri GetSeqUrl(string seqUrl, string? apiKey)
-    {
-        var baseUri = new Uri(seqUrl);
-        string uri;
-        if (apiKey is null)
-        {
-            uri = "api/events/raw";
-        }
-        else
-        {
-            uri = $"api/events/raw?apiKey={apiKey}";
-        }
-
-        return new(baseUri, uri);
-    }
+    static Uri GetSeqUrl(string seqUrl) =>
+        new(new Uri(seqUrl), "api/events/raw");
 
     /// <summary>
     /// Reads a log message from <paramref name="request"/> and forwards it to Seq.
@@ -94,7 +83,18 @@ public class SeqWriter
         var httpClient = httpClientFunc();
         try
         {
-            using var seqResponse = await httpClient.PostAsync(url, content, cancel);
+            // Send the Seq api key as a header rather than in the URL query string, so it is not
+            // exposed in request logs and does not need URL-encoding.
+            using var request = new HttpRequestMessage(HttpMethod.Post, url)
+            {
+                Content = content
+            };
+            if (apiKey is not null)
+            {
+                request.Headers.Add("X-Seq-ApiKey", apiKey);
+            }
+
+            using var seqResponse = await httpClient.SendAsync(request, cancel);
             response.StatusCode = (int)seqResponse.StatusCode;
             response.Headers["SeqProxyId"] = id;
 

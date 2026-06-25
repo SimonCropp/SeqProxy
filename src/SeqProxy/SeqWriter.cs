@@ -73,6 +73,7 @@ public class SeqWriter
             while (await reader.ReadLineAsync(cancel) is { } line)
             {
                 ValidateLine(line);
+                ReservedKeyValidator.ThrowIfReservedKey(line);
 
                 builder.Append(prefix);
                 if (!line.Contains("\"@t\"") &&

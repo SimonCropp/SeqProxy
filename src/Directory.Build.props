@@ -2,7 +2,7 @@
 <Project>
   <PropertyGroup>
     <Version>9.0.3</Version>
-    <NoWarn>NU1608</NoWarn>
+    <NoWarn>NU1608;SC023</NoWarn>
     <AssemblyVersion>1.0.0</AssemblyVersion>
     <LangVersion>preview</LangVersion>
     <PackageTags>Seq, Serilog</PackageTags>
@@ -11,5 +11,6 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+    <Verify_SponsorshipLicenseIgnored>true</Verify_SponsorshipLicenseIgnored>
   </PropertyGroup>
 </Project>

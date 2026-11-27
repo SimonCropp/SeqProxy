@@ -1,7 +1,7 @@
 
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net11.0</TargetFramework>
     <OutputType>Exe</OutputType>
     <NoWarn>$(NoWarn);xUnit1051</NoWarn>
     <RootNamespace>testing</RootNamespace>
@@ -15,12 +15,19 @@
     <PackageReference Include="EmptyFiles" />
     <PackageReference Include="SimpleInfoName" />
     <PackageReference Include="Verify" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <ProjectReference Include="..\SampleWeb\SampleWeb.csproj" />
     <ProjectReference Include="..\SeqProxy\SeqProxy.csproj" />
     <PackageReference Include="ProjectDefaults" PrivateAssets="all" />
 
+    <Using Include="Microsoft.AspNetCore.Http" />
+    <Using Include="Microsoft.AspNetCore.Builder" />
+    <Using Include="Microsoft.AspNetCore.Hosting" />
+    <Using Include="Microsoft.Extensions.DependencyInjection" />
+    <Using Include="Microsoft.Extensions.Hosting" />
+    <Using Include="Microsoft.Extensions.Logging" />
     <Using Include="SeqProxy" />
     <Using Include="Microsoft.AspNetCore.Authorization" />
     <Using Include="Microsoft.AspNetCore.Mvc.Filters" />
